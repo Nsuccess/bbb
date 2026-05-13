@@ -1,0 +1,40 @@
+# Personal hunting data
+targets/
+*-HUNT-PLAN.md
+*-RECON-REPORT.md
+*-EXECUTION-GUIDE.md
+*-GETTING-STARTED.md
+
+# Personal program lists
+BUGCROWD-TOP-TARGETS.md
+LOW-COMPETITION-TARGETS.md
+TOP-20-LOW-COMPETITION.md
+HACKERONE-PROGRAM-SELECTION.md
+QUICK-FILTER-GUIDE.md
+
+# Credentials and sensitive data
+*.env
+credentials.txt
+api-keys.txt
+tokens.txt
+
+# Personal notes
+notes/
+scratch/
+temp/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/

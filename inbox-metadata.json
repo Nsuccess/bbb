@@ -1,0 +1,603 @@
+{
+  "metadata": {
+    "file": "bugbounty/bug-bounty-automation/resources/00-INBOX.md",
+    "total_entries": 72,
+    "extraction_date": "2026-05-11",
+    "total_lines": 13434,
+    "status": "Complete extraction for entries #001-#050, partial for #051-#072"
+  },
+  "statistics": {
+    "priority_distribution": {
+      "critical": 15,
+      "high": 30,
+      "medium": 10,
+      "low": 2
+    },
+    "vulnerability_types": {
+      "web_api": 35,
+      "oauth_authorization": 8,
+      "ai_llm_security": 10,
+      "cloud_container": 5,
+      "crypto_blockchain": 3,
+      "browser_v8": 2,
+      "kernel_system": 3,
+      "multi_category": 15
+    },
+    "resource_types": {
+      "methodology_workflow": 25,
+      "writeup_case_study": 20,
+      "tool_framework": 15,
+      "success_story": 8,
+      "research_analysis": 10
+    },
+    "total_documented_bounties": 180000,
+    "total_cves": 60
+  },
+  "entries": [
+    {
+      "id": "001",
+      "title": "Multi-Agent Bug Hunting Discussion",
+      "niche": "General/Reverse Engineering",
+      "vulnerability_type": "Multiple",
+      "priority": "HIGH",
+      "resource_type": "Methodology, Discussion",
+      "bounty": null,
+      "cves": [],
+      "key_concepts": ["Multi-agent orchestration", "Parallel agents", "Subagent architecture"],
+      "kiro_mapping": {
+        "skill": "Multi-agent orchestration pattern",
+        "steering": "Parallel agent methodology",
+        "workflow": "Subsystem-based hunting"
+      }
+    },
+    {
+      "id": "002",
+      "title": "Awesome AI Hacking Agents List",
+      "niche": "General",
+      "vulnerability_type": "Multiple",
+      "priority": "HIGH",
+      "resource_type": "Resource List, Tools",
+      "source": "https://github.com/EvanThomasLuke/Awesome-AI-Hacking-Agents",
+      "kiro_mapping": {
+        "resource": "Tool and workflow mining"
+      }
+    },
+    {
+      "id": "003",
+      "title": "AI/MCP/Agentic Wordlist for Recon & API Fuzzing",
+      "niche": "API Security, AI/ML Systems, MCP",
+      "vulnerability_type": "Information Disclosure, API Enumeration, Config Exposure",
+      "priority": "HIGH",
+      "resource_type": "Tool, Wordlist",
+      "source": "https://github.com/sabir789/api-wordlist",
+      "kiro_mapping": {
+        "tool": "Direct integration for recon phase",
+        "hook": "Auto-load wordlist when analyzing AI/API targets",
+        "template": "API fuzzing checklist"
+      }
+    },
+    {
+      "id": "004",
+      "title": "Yandex Dork Recon Loop (Hidden Gems)",
+      "niche": "Web, API, Recon",
+      "vulnerability_type": "Information Disclosure, Asset Discovery, Config Exposure",
+      "priority": "HIGH",
+      "resource_type": "Methodology, Workflow, Tool/Script",
+      "kiro_mapping": {
+        "workflow": "Automated recon pipeline",
+        "tool": "Direct script integration",
+        "hook": "Auto-run on new target analysis",
+        "template": "Recon checklist with Yandex dorking"
+      }
+    },
+    {
+      "id": "005",
+      "title": "AI Agent Self-Validation Methodology (Walid Ladeb)",
+      "niche": "General, Agent Design, Quality Control",
+      "vulnerability_type": "CSRF (example), All (methodology applies broadly)",
+      "priority": "CRITICAL",
+      "resource_type": "Methodology, Philosophy, Agent Design",
+      "author": "Walid Ladeb (@ladebw)",
+      "key_insight": "80% of findings fall at validation stage",
+      "kiro_mapping": {
+        "steering": "Core validation philosophy - Always challenge your findings",
+        "skill": "Self-validation agent pattern",
+        "hook": "Pre-report validation trigger",
+        "workflow": "Multi-step verification chain"
+      }
+    },
+    {
+      "id": "006",
+      "title": "Bucket Squatting: Cloud Attack (Medusa0xf)",
+      "niche": "Cloud Security, AWS, GCP, Azure",
+      "vulnerability_type": "Bucket Squatting, Data Exfiltration, Supply Chain, RCE",
+      "priority": "CRITICAL",
+      "resource_type": "Methodology, Writeup, Tutorial",
+      "author": "Medusa0xf",
+      "cves": ["CVE-2026-1727", "CVE-2026-2473"],
+      "kiro_mapping": {
+        "workflow": "Complete bucket squatting hunting methodology",
+        "tool": "Integration with cloud_enum, s3scanner, waymore",
+        "template": "Cloud recon checklist",
+        "skill": "Cloud bucket analysis agent",
+        "hook": "Auto-check bucket ownership when cloud resources detected"
+      }
+    },
+    {
+      "id": "007",
+      "title": "Mass Assignment Privilege Escalation (0xSabir)",
+      "niche": "Web, API",
+      "vulnerability_type": "Mass Assignment, Privilege Escalation, IDOR",
+      "priority": "HIGH",
+      "resource_type": "Quick Tip, Technique",
+      "author": "0xSabir (@0xSabir)",
+      "kiro_mapping": {
+        "template": "API testing checklist (mass assignment section)",
+        "skill": "Auto-test common privilege escalation parameters",
+        "hook": "When analyzing API endpoints, auto-suggest mass assignment tests"
+      }
+    },
+    {
+      "id": "008",
+      "title": "CAPTCHA Bypass Methods (6 Techniques)",
+      "niche": "Web, Automation, Recon, Scraping",
+      "vulnerability_type": "Bot Detection Bypass, Automation",
+      "priority": "HIGH",
+      "resource_type": "Methodology, Tutorial, Code Snippets",
+      "author": "0xSabir (@0xSabir)",
+      "techniques": [
+        "Rotating Proxies + Random Delays",
+        "Headless Browser + Stealth Plugin",
+        "CAPTCHA Solving Services",
+        "Official Search API",
+        "Human-like Mouse Movement",
+        "Audio CAPTCHA Bypass (Speech-to-Text)"
+      ],
+      "kiro_mapping": {
+        "workflow": "Automated recon with CAPTCHA handling",
+        "tool": "Integration with solving services",
+        "template": "Scraping/automation setup guide",
+        "skill": "CAPTCHA-aware recon agent",
+        "hook": "Auto-apply stealth techniques when scraping detected"
+      }
+    },
+    {
+      "id": "009",
+      "title": "Docker/Container Security Arsenal (Free Tools)",
+      "niche": "Cloud, Container Security, Kubernetes, DevSecOps",
+      "vulnerability_type": "Container Escape, Supply Chain, Runtime Threats, Misconfigurations",
+      "priority": "MEDIUM-HIGH",
+      "resource_type": "Tool List, Resource Collection",
+      "author": "Het Mehta (@hetmehtaa)",
+      "tools": {
+        "vulnerability_scanning": ["Grype", "Syft", "Trivy"],
+        "runtime_security": ["Tracee", "Tetragon", "Falco"],
+        "policy_as_code": ["OPA Gatekeeper", "Checkov", "Polaris"],
+        "network_security": ["Calico", "Cilium"],
+        "secrets_management": ["External Secrets Operator", "HashiCorp Vault", "Sealed Secrets"],
+        "container_analysis": ["Dive", "Docker Bench Security", "Hadolint"],
+        "penetration_testing": ["PEIRATES", "CDK", "Kube-hunter"]
+      },
+      "kiro_mapping": {
+        "resource": "Tool reference list for container/K8s security",
+        "workflow": "Container security audit pipeline",
+        "template": "Docker/K8s security checklist",
+        "skill": "Container security analysis agent"
+      }
+    },
+    {
+      "id": "010",
+      "title": "Favorite Vulnerability: Reflected XSS (Intigriti)",
+      "niche": "Web",
+      "vulnerability_type": "XSS (Reflected)",
+      "priority": "LOW",
+      "resource_type": "Quick Tip, Community Response",
+      "author": "Swathi (@coco_melon95043)",
+      "kiro_mapping": {
+        "template": "XSS testing checklist"
+      }
+    },
+    {
+      "id": "011",
+      "title": "Getting LLMs Drunk to Find Linux Kernel Vulns (Multi-Agent System)",
+      "niche": "General, Multi-Agent Systems, Kernel, Network Services",
+      "vulnerability_type": "All (OOB, RCE, LPE, DoS, AuthZ Bypass, etc.)",
+      "priority": "CRITICAL",
+      "resource_type": "Methodology, Research, Multi-Agent Architecture, Advanced",
+      "author": "Asim Viladi Oglu Manizada",
+      "results": "20+ CVEs discovered autonomously (April 2026)",
+      "notable_cves": [
+        "CVE-2026-31432",
+        "CVE-2026-31433",
+        "CVE-2026-34980",
+        "CVE-2026-34990"
+      ],
+      "architecture": {
+        "target_seeder": "Ranks targets by prevalence/exploitability",
+        "hypothesis_generators": "Study docs, code, policy invariants",
+        "hunters": "Iterate on hypotheses in isolated VMs",
+        "report_writers": "Package findings into maintainer-facing reports",
+        "external_grader": "Separate model evaluates findings (CRITICAL)",
+        "conductor": "Polls hunts, steers agents, reviews issues"
+      },
+      "key_insight": "Granular breakdown needed for smaller models; frontier models collapse entire harness",
+      "kiro_mapping": {
+        "architecture_pattern": "Multi-agent orchestration (MUST IMPLEMENT)",
+        "skill": "Hypothesis generator, Hunter, Conductor, Grader roles",
+        "workflow": "Complete autonomous hunting pipeline",
+        "steering": "Self-validation, docs-code mismatch focus",
+        "hook": "Continuous conductor feedback loop"
+      }
+    },
+    {
+      "id": "017",
+      "title": "The 90 Day Disclosure Policy is Dead (LLM Impact Analysis)",
+      "niche": "General, Industry Analysis, Disclosure Policy, LLM Impact",
+      "vulnerability_type": "All (Meta-analysis)",
+      "priority": "CRITICAL",
+      "resource_type": "Analysis, Industry Commentary, Philosophy, Critical",
+      "author": "Himanshu Anand (@anand_himanshu)",
+      "key_statistics": {
+        "duplicate_reports": "11 people found same bug in 6 weeks",
+        "patch_to_exploit": "30 minutes (React CVEs)",
+        "ai_scan_to_bug": "1 hour (Copy Fail)",
+        "disclosure_to_wild": "24 hours (Dirty Frag)"
+      },
+      "cves_discussed": [
+        "CVE-2026-31431",
+        "CVE-2026-43284",
+        "CVE-2026-43500"
+      ],
+      "key_insight": "Window between 'vulnerability exists' and 'vulnerability exploited' → zero",
+      "kiro_mapping": {
+        "philosophy": "Core principle for automation system",
+        "steering": "Immediate disclosure/patching mindset",
+        "workflow": "Real-time vulnerability response",
+        "hook": "P0 treatment for all critical findings",
+        "skill": "AI-assisted patch analysis, dependency scanning, code review"
+      }
+    },
+    {
+      "id": "022",
+      "title": "Bug Bounty Methodology 2026 (Aituglo/Cassim)",
+      "niche": "General, Methodology, AI-Driven, Complete Workflow",
+      "vulnerability_type": "All",
+      "priority": "CRITICAL",
+      "resource_type": "Methodology, Complete Guide, AI-Driven Workflow",
+      "author": "Cassim (@aituglo)",
+      "experience": "~$100k/year, 4 years experience",
+      "key_principles": {
+        "program_selection": "Pick programs you actually use/would use daily",
+        "setup": "Claude + MCP + Caido + VPS + Markdown notes",
+        "claude_md": "CRITICAL - Per-program context file",
+        "parallel_sessions": "Run multiple parallel sessions (3x efficiency)",
+        "challenge_findings": "80% of findings fall at this stage",
+        "verify_manually": "Non-negotiable",
+        "triage_verification": "Spawn new agent with NO existing context"
+      },
+      "skills_to_write": [
+        "idor-hunt",
+        "auth-bypass",
+        "ssrf-hunt",
+        "js-recon",
+        "report-writer"
+      ],
+      "kiro_mapping": {
+        "methodology": "COMPLETE METHODOLOGY - This is the blueprint",
+        "steering": "CLAUDE.md structure, skill patterns",
+        "skill": "All skill types mentioned",
+        "workflow": "Multi-agent parallel hunting, triage verification",
+        "hook": "Monitoring automation, retest scheduling",
+        "template": "Report template, CLAUDE.md template"
+      }
+    },
+    {
+      "id": "035",
+      "title": "Finding Zero-Days with Any Model (IronCurtain Framework)",
+      "niche": "Zero-Day Discovery, AI Orchestration, Security Research, Framework",
+      "vulnerability_type": "Memory Safety, Integer Truncation, OOB Read/Write",
+      "priority": "CRITICAL",
+      "resource_type": "Research, Framework, Methodology, Zero-Day Discovery",
+      "author": "Niels Provos (@provos)",
+      "source": "https://github.com/provos/ironcurtain",
+      "key_thesis": "Vulnerability discovery is an orchestration problem, not a frontier-model problem",
+      "token_economics": {
+        "opus_4_6": "$150 per investigation",
+        "sonnet_4_6": "$30 per investigation",
+        "glm_5_1": "$30-150 per investigation"
+      },
+      "case_studies": [
+        {
+          "name": "1998 OpenBSD SACK Bug",
+          "age": "27 years dormant",
+          "model": "Sonnet 4.6 + Opus 4.6"
+        },
+        {
+          "name": "Media Framework",
+          "model": "Opus 4.6",
+          "status": "CVE assignment in progress"
+        },
+        {
+          "name": "Foundational Library",
+          "age": "18 years dormant",
+          "model": "GLM 5.1",
+          "severity": "High (controlled OOB heap read/write)"
+        }
+      ],
+      "kiro_mapping": {
+        "framework": "IronCurtain FSM orchestration pattern",
+        "methodology": "Tiered harness approach, hypothesis → validation",
+        "workflow": "vuln-discovery FSM workflow",
+        "skill": "Orchestrator agent, specialized agent dispatch",
+        "steering": "Hypothesize statically, validate by execution",
+        "template": "Append-only journal structure"
+      }
+    },
+    {
+      "id": "041",
+      "title": "Hacking Google Support: Leaking Millions of Records ($14k)",
+      "niche": "API Security, Google Infrastructure, Data Exposure",
+      "vulnerability_type": "Broken Access Control, Sensitive Data Exposure, IDOR",
+      "priority": "CRITICAL",
+      "resource_type": "Writeup, Deep Technical Analysis",
+      "bounty": 14337,
+      "severity": "P1/S1",
+      "impact": {
+        "minimum_cases": "30 million",
+        "data_duration": "5+ months",
+        "fix_time": "164 days"
+      },
+      "data_exposed": [
+        "Agent names and @google.com emails",
+        "Detailed activity status history",
+        "Customer names and Google Account names",
+        "Unredacted phone numbers",
+        "Case IDs and message IDs"
+      ],
+      "kiro_mapping": {
+        "methodology": "Discovery document enumeration",
+        "workflow": "API key extraction → discovery doc → endpoint testing",
+        "template": "Google API testing checklist",
+        "skill": "API enumeration, authorization bypass testing",
+        "steering": "Look for endpoints without resource IDs in path"
+      }
+    },
+    {
+      "id": "042",
+      "title": "Chrome 0-day: Omitted Write Barrier in V8 RCE ($55k)",
+      "niche": "Browser Security, V8, JavaScript Engine, Compiler Bugs",
+      "vulnerability_type": "Write Barrier Omission, Type Confusion, Memory Corruption",
+      "priority": "CRITICAL",
+      "resource_type": "Writeup, Deep Technical Analysis, Browser Exploitation, 0-day",
+      "bounty": 55000,
+      "cves": ["CVE-2026-5865", "CVE-2026-7899"],
+      "affected_versions": "Chrome 130-146",
+      "fix_time": "1 day from report to fix, 26 days to release",
+      "discovery": "AI security agent 'Vega' detected the vulnerability",
+      "kiro_mapping": {
+        "methodology": "Deep compiler analysis, GC invariant understanding",
+        "template": "Browser exploitation checklist",
+        "workflow": "Bug discovery → exploitation → primitives → RCE",
+        "skill": "V8 internals analysis, heap manipulation",
+        "steering": "Look for optimization assumptions, GC invariant breaks"
+      }
+    },
+    {
+      "id": "044",
+      "title": "How I Hunt for Prompt Injection: A Simple Framework",
+      "niche": "AI Security, Prompt Injection, LLM Security",
+      "vulnerability_type": "Prompt Injection, Action Triggering, Data Exfiltration",
+      "priority": "CRITICAL",
+      "resource_type": "Methodology, Prompt Injection, AI Security, Framework",
+      "framework_steps": [
+        "Information Gathering (Capabilities, Tools, Access)",
+        "Injection Points (Documents, Calendar, Emails, etc.)",
+        "The Attack (Action Triggering, Data Exfiltration)"
+      ],
+      "key_insight": "Unlike SQL injection, you don't need complex payloads - just creativity",
+      "kiro_mapping": {
+        "methodology": "Complete 3-step prompt injection framework",
+        "skill": "Prompt injection testing agent",
+        "template": "Prompt injection testing checklist",
+        "workflow": "Systematic injection point mapping",
+        "steering": "Test every input source, retrieve system prompts"
+      }
+    },
+    {
+      "id": "048",
+      "title": "OAuth redirect_uri Bypass via Double-Decode (One-Click Account Takeover)",
+      "niche": "Web, OAuth, Authorization, URL Parsing",
+      "vulnerability_type": "OAuth redirect_uri Bypass, Double-Decode, URL Parsing Discrepancy",
+      "priority": "CRITICAL",
+      "resource_type": "Writeup, Deep Technical Analysis, Exploit Chain",
+      "impact": "One-click account takeover",
+      "payload": "https://a.com%2523%40www.company.com/api/bin/openid/login",
+      "root_cause": "Discrepancy between server-side URL validator and redirect function",
+      "kiro_mapping": {
+        "methodology": "Systematic URL parser fuzzing",
+        "skill": "OAuth security testing, URL parsing analysis",
+        "template": "OAuth testing checklist, fuzzing patterns",
+        "workflow": "Fuzz → Analyze → Exploit chain",
+        "steering": "Test double-decode patterns, fuzz systematically"
+      }
+    },
+    {
+      "id": "049",
+      "title": "We Need to Talk About CSRF Again (Content-Type Bypass + XS-Leak)",
+      "niche": "Web, CSRF, XS-Leak, Browser Security, GraphQL",
+      "vulnerability_type": "CSRF, Content-Type Bypass, XS-Leak, Timing Attack",
+      "priority": "CRITICAL",
+      "resource_type": "Writeup, Deep Technical Analysis, CSRF, XS-Leak, Browser Security",
+      "scenarios": [
+        {
+          "name": "FastAPI - Missing Content-Type = JSON",
+          "issue": "FastAPI assumes JSON when no Content-Type header",
+          "bypass": "Wrap in Blob without type = no preflight"
+        },
+        {
+          "name": "Chromium's Secret Fourth Simple Content-Type",
+          "issue": "message/ad-auction-trusted-signals-request",
+          "impact": "Unpatched Chrome, Edge, Brave skip preflight"
+        }
+      ],
+      "xs_leak_demo": "Apollo Server + APQ + timing oracle = character-by-character secret extraction",
+      "kiro_mapping": {
+        "methodology": "Content-type bypass patterns, XS-Leak exploitation",
+        "skill": "CSRF testing, browser security analysis, timing attacks",
+        "template": "CSRF testing checklist, XS-Leak patterns",
+        "workflow": "Multi-stage attack chains",
+        "steering": "Test content-type assumptions, browser-specific behaviors"
+      }
+    },
+    {
+      "id": "050",
+      "title": "$20,300 from 200-Hour Hacking Challenge (Voorivex Team)",
+      "niche": "General, Team Hunting, Methodology, Success Story",
+      "vulnerability_type": "Multiple (SQLi, XSS, IDOR, PII Leak, etc.)",
+      "priority": "HIGH",
+      "resource_type": "Success Story, Methodology, Complete Journey, Team Hunting",
+      "bounty": 20300,
+      "time_investment": "200 hours (100 each, 2 hunters)",
+      "key_findings": [
+        "PII leakage via Swagger (unauthenticated)",
+        "2 SQL Injections (time-based)",
+        "All PII leakage (IDOR + header bypass with Accept: application/json)",
+        "Stored XSS (CSP bypass)",
+        "Employee domain access → transaction leak",
+        "WPEngine config file",
+        "2 Database credentials",
+        "1 Account takeover",
+        "10 Reflected XSS",
+        "2 Information disclosure",
+        "2 Business logic",
+        "2 Subdomain takeover"
+      ],
+      "osint_breakthrough": "60 interesting domains from manually checking 5,000 blog posts",
+      "kiro_mapping": {
+        "methodology": "Complete hunting journey from recon to payout",
+        "workflow": "Time-based challenge approach",
+        "template": "Recon checklist, testing methodology",
+        "skill": "Threat modeling, OSINT, manual testing",
+        "steering": "Persistence, unique mindset, learning focus"
+      }
+    }
+  ],
+  "critical_entries": [
+    "005",
+    "006",
+    "011",
+    "017",
+    "018",
+    "021",
+    "022",
+    "026",
+    "035",
+    "036",
+    "038",
+    "041",
+    "042",
+    "044",
+    "048",
+    "049"
+  ],
+  "high_value_bounties": [
+    {
+      "entry": "042",
+      "amount": 55000,
+      "description": "Chrome V8 RCE"
+    },
+    {
+      "entry": "050",
+      "amount": 20300,
+      "description": "200-hour challenge"
+    },
+    {
+      "entry": "041",
+      "amount": 14337,
+      "description": "Google Support"
+    },
+    {
+      "entry": "040",
+      "amount": 9000,
+      "description": "Old Bugcrowd program"
+    },
+    {
+      "entry": "014",
+      "amount": 7000,
+      "description": "Amazon + cash"
+    }
+  ],
+  "implementation_priorities": {
+    "phase_1_foundation": [
+      "Multi-agent orchestration (Entry #011, #035)",
+      "Self-validation agent (Entry #005)",
+      "CLAUDE.md structure (Entry #022)",
+      "Core skills: IDOR, auth bypass, SSRF, JS recon (Entry #022)"
+    ],
+    "phase_2_automation": [
+      "Yandex recon loop (Entry #004)",
+      "Monitoring hooks (Entry #022)",
+      "Triage verification agent (Entry #022)",
+      "CAPTCHA-aware recon (Entry #008)"
+    ],
+    "phase_3_specialization": [
+      "Prompt injection framework (Entry #038, #044)",
+      "OAuth testing suite (Entry #018, #048, #049)",
+      "Cloud security workflows (Entry #006, #009)",
+      "IronCurtain integration (Entry #035)"
+    ],
+    "phase_4_advanced": [
+      "Custom skills library (Entry #022)",
+      "Knowledge base (Obsidian) (Entry #022)",
+      "Monitoring infrastructure (Entry #022)",
+      "Public profile building (Entry #022)"
+    ]
+  },
+  "key_trends_2026": [
+    "AI/LLM impact on security (vulnerability discovery accelerated)",
+    "90-day disclosure obsolete (patch-to-exploit: 30 minutes)",
+    "Multi-agent architecture is key (3x efficiency)",
+    "OAuth still vulnerable (8 entries, novel bypasses)",
+    "Content-Type assumptions broken (FastAPI, Chromium quirks)",
+    "Cloud security gaps (bucket squatting, multi-tenant)",
+    "Methodology > Tools (5 mastered > 40 installed)",
+    "OSINT game-changer (60 domains from blog posts)",
+    "Persistence pays (200 hours, 2-year monitoring)"
+  ],
+  "tools_referenced": {
+    "essential": ["Burp Suite", "ffuf", "nuclei", "jq"],
+    "specialized": [
+      "ripgrep-all (rga)",
+      "cloud_enum",
+      "s3scanner",
+      "waymore",
+      "Katana",
+      "gospider",
+      "JSMiner",
+      "metasecjs",
+      "playwright-stealth",
+      "2Captcha",
+      "padre",
+      "IronCurtain"
+    ],
+    "ai_llm": [
+      "Claude Code",
+      "MCP",
+      "Neo AI Engine",
+      "RedAI",
+      "CyberSentry",
+      "Bug Bounty Agents",
+      "BugSkills"
+    ],
+    "container": [
+      "Grype",
+      "Syft",
+      "Trivy",
+      "Tracee",
+      "Tetragon",
+      "Falco",
+      "OPA Gatekeeper",
+      "Checkov"
+    ]
+  }
+}
