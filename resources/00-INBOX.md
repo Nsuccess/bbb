@@ -13409,25 +13409,2271 @@ Don't accept as complete. Push back:
 
 ---
 
-**SUMMARY: Added Entry #072. Total: 72 comprehensive resources in INBOX.**
+### Entry #073 - $125 Bounty: Injection + Sensitive Info Disclosure via .json Discovery
 
-**Entry #072 Highlights:**
-- **CRITICAL METHODOLOGY** for AI-powered vulnerability research
-- **30+ CVEs in 2 months** (100% LLM discovery)
-- **Counter-intuitive:** Less scaffolding = better results
-- **11 prompt injection techniques** (practical, tested)
-- **Context rot problem** (research-backed)
-- **Minimal scaffolding + maximal targeted exploration**
-- **Case studies:** 6 major projects, 22 CVEs documented
-- **Anthropic + Mozilla:** 22 Firefox vulns, $4k cost
+**Source:** Community writeup shared by @Nsuccess
+**Date Added:** 2026-05-14
+**Type:** Writeup, Methodology, Recon
+**Bounty:** $125
+**Content:**
+- **Vulnerability 1:** Injection Vulnerability — impacted backend functionality and exposed sensitive app behavior
+- **Vulnerability 2:** Sensitive Information Disclosure — leaked `.json` file discovered via custom wordlist during content discovery and endpoint enumeration
+- Misconfigured/exposed .json files can unintentionally leak internal information and create additional attack surfaces
+- Responsible disclosure process followed — verified then reported to affected organization
+- Security team reviewed findings and rewarded $125 bounty
 
-**This is THE playbook for AI-powered bug hunting!** 🚀
+**Key Takeaways for Hunters:**
+- Recon and content discovery are extremely important
+- Exposed files (.json, backup, config) can reveal sensitive information
+- Injection vulnerabilities still exist in modern applications
+- Custom wordlists help uncover hidden assets
+- Never ignore uncommon file extensions during recon — leaked .json files can lead to bigger findings
+- Always follow responsible disclosure practices
+
+**Tooling Used:**
+- Custom wordlist for content discovery
+- Endpoint enumeration techniques
+
+**Similar INBOX References:**
+- Entry #062 (Misconfiguration Hunting — $3,500)
+- Entry #063 (Sensitive Data Exposure)
+- Entry #029 (Bucket Squatting — exposed files)
+
+---
+
+### Entry #074 - Security Debate: Should Apps Display User PII Even If Encrypted at Rest?
+
+**Source:** Social media/X post discussion
+**Date Added:** 2026-05-14
+**Type:** Discussion, Security Philosophy, Debate
+**Content:**
+- InfoSec: "Your database has plain-text emails and phone numbers"
+- Dev: "Encrypted at rest, VPC, proper IAM"
+- InfoSec: "But the app can query and display them!"
+- Dev: "Yes, because users need to see their own data"
+- InfoSec: "Never show it to the user then"
+
+**Key Discussion Points:**
+- Tension between security hardening and product functionality
+- Defense-in-depth vs. usability tradeoffs
+- The "encrypted at rest" vs "accessible at runtime" disconnect
+- IAM and VPC don't prevent app-level access
+- Proper approach: PII minimization, access logging, rate limiting, session binding
+- 2.9K+ engagements showing this is a hot debate in the industry
+
+**Takeaway for Bug Hunters:**
+- Look for apps that display user PII (email, phone, SSN) — even if "encrypted at rest"
+- Test if you can access OTHER users' PII (IDOR)
+- Test if PII is exposed in API responses meant for frontend
+- Check if PII appears in error messages, logs, or debugging endpoints
+- This debate highlights a common blind spot in security reviews
+
+---
+
+### Entry #075 - Orange Tsai: 4 Logic Bugs → Edge Sandbox Escape, $175k at Pwn2Own
+
+**Source:** @orange_8361 (Orange Tsai) / DEVCORE Research Team / @d3vc0r3 / Pwn2Own Berlin
+**Date Added:** 2026-05-14
+**Type:** Writeup, Exploit Chain, Pwn2Own
+**Bounty:** $175,000
+**Content:**
+- Orange Tsai of DEVCORE chained **4 logic bugs** to achieve **Microsoft Edge sandbox escape**
+- Earned **$175,000** and **17.5 Master of Pwn points**
+- Full win at **Pwn2Own Berlin**
+- **KEY INSIGHT:** Exploited purely with logic bugs — **no memory corruption** involved
+
+**Why This Is Revolutionary:**
+> "I have never thought that a browser could be exploited purely with logic bugs without memory corruption, holy shit!" — @bienpnn
+
+- Traditional browser exploits rely on memory corruption (UAF, heap overflow, type confusion)
+- Logic bugs bypass CFG, ACG, CIG, and other memory protections entirely
+- Sandbox escapes via logic are harder to detect with traditional fuzzing
+- Requires deep understanding of browser architecture and IPC mechanisms
+
+**Takeaway for Bug Hunters:**
+- Logic bugs are severely underrated — can be as impactful as memory corruption
+- Chain multiple low-severity logic issues for critical impact
+- Browser IPC, permission models, and sandbox boundaries are fertile ground
+- Pwn2Own entries reveal cutting-edge attack patterns
+- No memory corruption needed for $175k — pure logic wins
+
+**Actionable Methodology:**
+- `methodologies/07-logic-bug-hunting.md` — Complete logic bug hunting methodology
+- `workflows/05-adaptive-hunt.md` (Phase 6) — Logic bug analysis phase integrated
+- Deep study of Orange Tsai's approach: 4 bugs → progressive escalation chain
+- Supply chain + logic bug combinations identified as high-value attack surface
+
+**Similar INBOX References:**
+- Entry #042 (Chrome V8 RCE $55k)
+- Entry #036 (Big Sleep AI zero-day)
+- Entry #011 (Multi-agent system for vulnerability research)
+
+---
+
+### Entry #076 - chompie: RHEL Race Condition Privilege Escalation, $20k at Pwn2Own
+
+**Source:** @thezdi / @chompie1337 / IBM X-Force Offensive Research (XOR)
+**Date Added:** 2026-05-14
+**Type:** Writeup, Pwn2Own, Exploit Chain
+**Bounty:** $20,000
+**Content:**
+- chompie of IBM X-Force Offensive Research used a **race condition** to escalate privileges on **Red Hat Enterprise Linux for Workstations**
+- Earned **$20,000** and **2 Master of Pwn** points at **Pwn2Own Berlin**
+
+**The AI Gaslight Story (KEY INSIGHT):**
+> "Claude helped me with this bug too but in a different way... Tried to gaslight me saying it wasn't ~exploitable in practice~ and I got obsessed with proving it wrong" — chompie
+
+**Why This Is Important:**
+- AI agents often dismiss findings as "not exploitable in practice"
+- This is a **trap** — the AI lacks creative exploitation context
+- chompie's obsession with proving Claude wrong led to a **$20k Pwn2Own win**
+- **Pattern:** AI says can't be done → hunter pushes harder → proves it can be done
+
+**Actionable Methodology Integration:**
+- See `methodologies/03-ai-self-validation.md` — **Pattern 3: Reverse Devil's Advocate**
+- When AI says "not exploitable", identify the assumptions in its reasoning
+- Challenge each assumption individually
+- Document AI's objection + your bypass as compelling evidence
+
+**Takeaway for Bug Hunters:**
+- Don't let AI agents discourage you from pursuing a finding
+- "Not exploitable in practice" often means "I don't know how to exploit this yet"
+- Race conditions are still viable in 2026 (kernel, privesc, web apps)
+- Pwn2Own proves practical exploitation is alive and well
+- Your intuition + AI's analysis > AI's analysis alone
+
+**Similar INBOX References:**
+- Entry #011 (Multi-agent system — challenge assumptions)
+- Entry #005 (Self-validation methodology)
+- Entry #039 (80% FP reduction via self-validation)
+
+---
+
+### Entry #077 - Microsoft: Multi-Agent Vulnerability Mining — Debate, Dedup & Prove Pipeline
+
+**Source:** Microsoft Research / Analysis
+**Date Added:** 2026-05-14
+**Type:** Methodology, Multi-Agent Architecture, Pipeline Design
+**Content:**
+- Microsoft's approach to surpassing Mythos in multi-agent vulnerability mining
+- **3-stage pipeline:** Audit → Debate → Dedup → Prove
+
+**The Three Stages:**
+
+**1. Audit Stage**
+- Break vulnerability mining into discrete audit tasks
+- Multiple agents independently analyze the same target
+- Each agent focuses on different vulnerability classes or code paths
+
+**2. Debate & Dedup Stage**
+- Agents debate findings — challenge each other's conclusions
+- Deduplicate overlapping reports
+- Cross-validate findings across agents
+- **80% of engineering effort goes here**
+
+**3. Prove Stage**
+- Build working proof of concept
+- Demonstrate exploitability
+- Zero false positive target
+
+**The Key Insight:**
+> "The watershed isn't whether bugs can be found, but proving bugs with zero false positives — putting 80% of engineering effort into Debate, Dedup, and Prove stages = placing the engineering focus on the verification link, solving the problem of whether security teams dare to use it."
+
+**Why This Matters:**
+- Finding bugs is easy — proving them with zero FPs is the hard part
+- Most AI security tools optimize for FINDING (quantity)
+- Microsoft optimizes for PROVING (quality)
+- The debate stage acts as a natural filter — agents catch each other's mistakes
+- This is the same conclusion as Entry #005/#039 (80% FP reduction), but with a specific architecture
+
+**Architecture Comparison:**
+
+| Approach | Focus | FP Rate | Engineering Effort |
+|----------|-------|---------|-------------------|
+| Traditional AI scanning | Finding bugs | High (80%+ FPs) | 80% find, 20% verify |
+| Microsoft Multi-Agent | Proving bugs | Near zero | 20% find, 80% debate/dedup/prove |
+| Entry #005/#039 | Self-validation | Low (80% reduction) | 50% find, 50% validate |
+| Entry #011 | Multi-agent orchestration | Low | Distributed across agents |
+
+**Actionable Methodology Integration:**
+- See `methodologies/01-multi-agent-orchestration.md` — extends with Debate/Dedup/Prove phases
+- See `methodologies/03-ai-self-validation.md` — Pattern 1 (Devil's Advocate) is the debate engine
+- The 80% engineering on verification matches our existing philosophy
+
+**Takeaway for Bug Hunters:**
+- Don't just find bugs — build a pipeline that proves them
+- Use multiple AI agents to debate each other's findings
+- Deduplication is critical — one well-proven bug > 10 unverified leads
+- The goal is not "most findings" — it's "zero false positives"
+- This is the maturity model for AI-powered bug hunting
+
+**Similar INBOX References:**
+- Entry #011 (Multi-agent orchestration, 30+ CVEs)
+- Entry #005 (AI self-validation methodology)
+- Entry #039 (80% FP reduction)
+- Entry #022 (AI-first methodology 2026)
+
+---
+
+### Entry #078 - The Mythos We Have At Home: Patch-Diffing Pipeline for N-Day Exploit Generation
+
+**Source:** Blog post by Tyler Holmwood (@not_a_human)
+**Date Added:** 2026-05-14
+**Date Published:** 2026-05-14
+**Author:** Tyler Holmwood
+**Type:** Methodology, Pipeline Design, Open-Source Tooling, CRITICAL
+**Bounty:** $300 in API tokens (one CVE)
+**Content:**
+
+**The Core Question:**
+> "How much of [Anthropic's Mythos] can one researcher build with off-the-shelf parts?"
+
+**Answer:** A complete two-stage N-day exploit generation pipeline for ~$300 in API tokens.
+
+---
+
+**STAGE 1: PatchWatch (Rust Ingestion Engine)**
+
+- Polls **MSRC Security Update Guide API** on Patch Tuesday
+- Fetches KB list and CVE metadata for the release
+- Pulls pre/post-patch binaries from **Winbindex** (@m417z)
+- Runs **Ghidriff** (via @clearbluejar's CVE North Stars) for binary diffing
+- Produces structured per-CVE `report.md` with:
+  - **DiffSummary:** compact list of changed functions, similarity ratios
+  - **DiffIndex:** full pre/post-patch decompiled C for every modified function
+  - LLM synthesis pass ranking files by fix likelihood
+  - Deep-analysis pass walking decompiled C for concrete findings
+
+**Tiered Triage:**
+- CVSS ≥ 9.0 or actively exploited → Tier 1 (immediate analysis)
+- Everything else → SQLite DB for later review
+
+---
+
+**STAGE 2: Pocsmith (Exploit Generation Harness)**
+
+Built on **Claude Agent SDK** with custom MCP servers:
+
+| MCP Server | Purpose |
+|------------|---------|
+| `hyperv-mcp` | VM lifecycle, checkpoint restore, guest execution |
+| `kd-mcp` | Kernel debugger (22 tools: attach, breakpoint, read, step, resume) |
+| `pyghidra-mcp` | Static analysis of pre-patch binary in Ghidra |
+| `pocsmith-mcp` | compile_c, attacker_py, record_attempt, report_outcome, end_phase |
+
+**Three Exploit Levels:**
+- **Level A:** Crash reproduction (does it bugcheck?)
+- **Level B:** Controlled primitive (reliable read/write?)
+- **Level C:** Full exploit (code execution / privilege escalation?)
+
+**Phase-Based Architecture:**
+- Each phase = bounded Agent SDK run (context window limits)
+- Phase boundary = checkpoint → writes state to `notes.md`
+- Agent's own notes are its memory (Pocsmith doesn't summarize)
+- Verification pass: restore clean VM, re-run POC twice
+- Only promotes to `artifacts/` after 2 independent confirms
+
+---
+
+**DEMO: CVE-2026-27914 (MMC EoP)**
+
+- Ran through full pipeline
+- Agent produced "surprisingly adequate" end-to-end exploit
+- Caveat: MSRC rated PR:L / UI:N; agent's chain landed at PR:H / UI:R
+- Gap can be bridged with refinement
+
+**DEMO: CVE-2026-41096 (Windows DNS RCE, CVSS 9.8)**
+
+- Level A crash reproduction achieved
+- Heap buffer overflow in **Windows DNS client** (ws2_32.dll + webio.dll)
+- Patch diffing revealed two hardening patterns:
+  1. Unsafe NUL-walk → bounded `StringLengthWorkerW` helper
+  2. Missing integer-overflow guards in HPACK header table allocation
+- Full detailed crash analysis, binary hashes, and debugger output provided
+
+---
+
+**COST ANALYSIS:**
+- Total: **~$300 USD** in API tokens (mostly Opus-4.7)
+- PatchWatch: modest token usage
+- Pocsmith: bulk of spend on exploit iteration
+
+**Optimization opportunities:**
+- Prompt caching across iterative diff passes
+- Tiered model selection (Haiku for triage, Sonnet for synthesis, Opus where needed)
+- Decouple from Anthropic for arbitrary model selection
+
+---
+
+**THE BIGGER PICTURE:**
+
+> "Cyber-capable AI isn't gated behind altruistic frontier labs. The capability is here, the building blocks are public, and stitching them into an N-day production line is well within reach of one researcher with a couple VMs and a credit card."
+
+**Key Quote:**
+> "The moat in AI cybersecurity is the system, not the model." — Aisle
+
+**Tools open-sourced:** PatchWatch, hyperv-mcp, kd-mcp, pocsmith-mcp
+
+---
+
+**What This Means for Defenders (from the article):**
+1. **Patching is a race now** — window between Patch Tuesday and weaponization is closing fast
+2. **Prioritize outward-facing technologies** — edge appliances most exposed
+3. **Inventory auditing comes before prioritization**
+4. **Use same class of agents to protect your code**
+5. **We cannot outwork machine-speed threats** — shrink internet-facing surface, segment networks, invest in detection-and-response
+
+---
+
+**Actionable Methodology Integration:**
+- See `methodologies/08-patch-diffing-pipeline.md` — Complete pipeline methodology reference
+- Entry directly implements Entry #011 (multi-agent) + Entry #077 (debate/dedup/prove) for N-day generation
+- The 3-level exploit framework (A/B/C) is a reusable pattern for any exploit development
+
+**Similar INBOX References:**
+- Entry #011 (Multi-agent orchestration)
+- Entry #077 (Microsoft debate/dedup/prove pipeline)
+- Entry #036 (Big Sleep AI zero-day)
+- Entry #042 (Chrome V8 RCE $55k)
+
+---
+
+### Entry #079 - NextSSRF: CVE-2026-44578 Next.js WebSocket SSRF Scanner & Exploit
+
+**Source:** GitHub — ynsmroztas/nextssrf (by @mitsec)
+**Date Added:** 2026-05-14
+**Type:** Tool, Scanner, Exploit
+**Repo:** https://github.com/ynsmroztas/nextssrf
+**CVE:** CVE-2026-44578 (CVSS 8.6)
+**Content:**
+
+**Overview:**
+- Unauthenticated SSRF in Next.js WebSocket upgrade handler
+- Affects: 13.4.13 → 15.5.15, 16.0.0 → 16.2.4 (all self-hosted deployments)
+- Vercel-hosted NOT affected
+- Patched May 11, 2026 in Next.js 15.5.16 / 16.2.5
+
+**Root Cause:**
+- `//` in `http://169.254.169.254/` triggers `normalizeRepeatedSlashes` early-exit
+- Sets `statusCode: 308` and `finished: true` — but vulnerable upgrade handler ignores both
+- Calls `proxyRequest` when `parsedUrl.protocol` is truthy
+
+**Tool Features:**
+- Zero dependencies — Python stdlib only
+- Single target scan, cloud-specific targeting (AWS/Azure/GCP)
+- **Interactive exploit shell** with auto cloud detection
+- AWS IAM credential extraction (IMDSv1)
+- Deep scan (+ internal services)
+- Mass scan pipeline mode (`--pipe` with subfinder/httpx/Shodan)
+- Shodan integration for mass scanning
+- `--auto` mode: detect cloud + run full exploit chain automatically
+
+**Limitations (from researcher):**
+- GET only (no POST/PUT)
+- Port 80 only
+- AWS IMDSv2 not exploitable (requires PUT token)
+- GCP metadata rejects Upgrade: websocket with 400
+- Reverse proxies block absolute-form URIs
+
+**Relevance to Framework:**
+- Entry #063/CVE-2026-44578 already covered in cloned `next-16.2.4-pocs` repo — this is a dedicated scanner/exploit tool
+- Demonstrates practical weaponization of SSRF against cloud metadata services
+- Interactive shell for credential extraction is production-grade
+- Pipeline mode enables mass exploitation across discovered Next.js instances
+
+**Similar INBOX References:**
+- Entry #063 (CVE-2026-44578 — included in next-16.2.4-pocs cloned repo)
+- Entry #078 (Patch diffing pipeline — different approach to same class)
+
+---
+
+### Entry #080 - Reasonix: DeepSeek-Native AI Coding Agent
+
+**Source:** GitHub — esengine/DeepSeek-Reasonix
+**Date Added:** 2026-05-14
+**Type:** Tool, AI Agent Framework
+**Repo:** https://github.com/esengine/DeepSeek-Reasonix
+**License:** MIT
+**Content:**
+
+**Overview:**
+- DeepSeek-native AI coding agent for terminal
+- Engineered around **prefix-cache stability** for low token costs across long sessions
+- DeepSeek-only by design — cache mechanic is the feature
+
+**Key Differentiator:**
+> "Cache stability isn't a feature you turn on; it's an invariant the loop is designed around. That's the whole reason Reasonix is DeepSeek-only — every layer is tuned to the byte-stable prefix-cache mechanic."
+
+**Performance Claim (from README):**
+- 435M input tokens in single day
+- 99.82% cache hit rate
+- ~$12 instead of ~$61 with no cache on DeepSeek v4-flash
+
+**Capabilities:**
+- Code mode (SEARCH/REPLACE edits, nothing on disk until `/apply`)
+- Chat mode (plain chat, no filesystem/shell)
+- Run mode (one-shot, streams to stdout)
+- MCP servers (stdio, SSE, Streamable HTTP)
+- Skills (Markdown playbooks, inline or subagent mode)
+- Hooks (shell commands on lifecycle events: PreToolUse, PostToolUse, etc.)
+- Memory (user-private knowledge pinned into prefix)
+- Web search (Mojeek default, SearXNG self-hosted)
+- Semantic index (local Ollama or OpenAI-compatible)
+- Desktop client (Tauri, prerelease)
+- Plan mode, permissions, persistent sessions, transcript replay
+
+**Comparison to Other Agents:**
+
+| Feature | Reasonix | Claude Code | Cursor | Aider |
+|---------|----------|-------------|--------|-------|
+| Backend | DeepSeek | Anthropic | OpenAI/Anthropic | any |
+| License | MIT | closed | closed | Apache 2 |
+| Cost profile | low per task | premium | subscription | varies |
+| Cache engineering | designed for | n/a | n/a | incidental |
+
+**Relevance to Framework:**
+- Alternative to Claude Code for budget-constrained bug hunting
+- DeepSeek's cache stability makes long automated sessions affordable
+- MCP, skills, and hooks compatible with existing framework tooling
+- Could run the framework's skills at much lower cost
+- Subagent mode for multi-agent orchestration (Entry #011)
+
+**Similar INBOX References:**
+- Entry #011 (Multi-agent orchestration)
+- Entry #022 (AI-first methodology)
+- Entry #035 (IronCurtain agent runtime)
+
+---
+
+### Entry #081 - Subdomain Takeover Checker (mikaww1)
+
+**Source:** GitHub — mikaww1/Subdomain-Takeover-Checker
+**Date Added:** 2026-05-14
+**Type:** Tool, Scanner, Recon
+**Repo:** https://github.com/mikaww1/Subdomain-Takeover-Checker
+**Live Tool:** https://subdomainchecker.com
+**Public API:** RapidAPI
+**Content:**
+
+**Overview:**
+- Detect dangling CNAMEs and subdomain takeover vulnerabilities across **80+ services**
+- Available as web app, CLI tool, or public API
+
+**Features:**
+- Follows full CNAME chains (not just first hop)
+- **80+ service fingerprints** — GitHub Pages, Heroku, Vercel, Netlify, AWS S3, Azure, Shopify, Zendesk, etc.
+- Subdomain enumeration via crt.sh certificate transparency logs
+- Wildcard DNS detection (avoids false positives)
+- **Same-owner detection** — skips CNAMEs pointing to same-org services (e.g. `*.github.com` → `*.github.io`)
+- Bulk mode (up to 10 subdomains)
+- No data stored, no logging
+- Web app + CLI + API
+
+**Tech Stack:** Python, Flask, dnspython, requests, Railway + Gunicorn
+
+**Example Output:**
+```
+[*] Checking: shop.example.com
+[*] CNAME chain: shop.example.com → mystore.myshopify.com
+[*] Matched service: myshopify.com
+[!!!] VULNERABLE — Unconfigured fingerprint found for myshopify.com
+  Subdomain  : shop.example.com
+  Vulnerable : YES 🔴
+  Confidence : Confirmed ✓
+  Service    : myshopify.com
+```
+
+**Supported Services Include:**
+AWS S3, Azure, Cloudfront, Elastic Beanstalk, GitHub Pages, Heroku, Vercel, Netlify, Cloudflare Pages, Render, Railway, Fly.io, Surge, Bitbucket, Pantheon, WP Engine, Kinsta, Webflow, Ghost, Squarespace, Wix, Shopify, BigCartel, HubSpot, Instapage, Unbounce, Zendesk, Freshdesk, Help Scout, Intercom, Statuspage, Readme.io, Tumblr, Supabase, Bubble, Gitbook, Notion, Fastly, Mailchimp, Pingdom, and more.
+
+**Relevance to Framework:**
+- Critical recon tool for subdomain enumeration and takeover detection
+- 80+ service fingerprints = comprehensive coverage
+- Same-owner detection reduces false positives
+- API integration for pipeline automation
+- RapidAPI integration for scalable scanning
+- Complements Entry #029 (Bucket Squatting) — both deal with unclaimed cloud resources
+
+**Similar INBOX References:**
+- Entry #029 (Bucket Squatting)
+- Entry #013 (Subdomain enumeration via Yandex)
+- Entry #004 (Yandex dorking for exposed resources)
+
+---
+
+### Entry #084 - Gementee_cvd: Automated Bug Bounty Scanning Pipeline
+
+**Source:** GitHub — zzzteph/Gementee_cvd (forked by emadshanab)
+**Date Added:** 2026-05-14
+**Type:** Tool, Pipeline, Automation
+**Repo:** https://github.com/zzzteph/Gementee_cvd
+**Content:**
+
+**Overview:**
+Automated bug bounty scanning pipeline using projectdiscovery tools (httpx + Nuclei) with scope management, SQLite tracking, and Telegram notifications. 1,988 commits of heavy iteration.
+
+**Pipeline Flow:**
+```
+Scope → httpx probe → filter → Nuclei scan → DB storage → Telegram alert
+```
+
+**Engine Components:**
+- `httpx_parser.py` — Parse httpx probe output
+- `filter.py` / `filter_httpx.py` — Filter results by relevance
+- `sync_scope.py` — Manage target scope definitions
+- `db.py` — SQLite database for scan tracking
+- `resource_parser.py` — Parse discovered resources/endpoints
+- `send_nuclei_tg.py` — Send Nuclei findings to Telegram
+- `get_latest_unscanned_scope.py` — Determine what needs scanning
+
+**Key Design:**
+- Scope → scan cycle with dedup (tracks what's been scanned)
+- Telegram integration for real-time alerting
+- Filtering to reduce noise
+- SQLite persistence for historical tracking
+
+**Relevance to Framework:**
+- Similar architecture to our workflows (httpx → nuclei)
+- Adds Telegram notification pattern we don't have yet
+- Scope management + "unscanned scope detection" is useful
+- Can be used as reference for pipeline automation
+
+**Similar INBOX References:**
+- Entry #083 (Nuclei-Templates-Collection — template source for the Nuclei stage)
+- Entry #079 (NextSSRF — different scanning approach)
+- Entry #011 (Multi-agent orchestration)
+
+---
+
+### Entry #086 - Email-Based User Enumeration via Hidden API Endpoint
+
+**Source:** rgjny.github.io — Harshit (rgjny)
+**Date Added:** 2026-05-14
+**Date Published:** 2026-01-04
+**Author:** Harshit (@rgjny_)
+**Type:** Writeup, Bug Bounty Finding, Mobile Security
+**Bounty:** $$$ (Medium 5.3)
+**Content:**
+
+**Vulnerability:** Information Disclosure — user metadata enumeration via email address
+
+**Discovery:**
+- Testing an Android app, reviewed API usage and unused endpoints
+- Found `POST /find/users` endpoint present in API list but not used by the app
+- GET → 405. POST → 402. Added `Content-Type: application/json` → "username not found"
+- Tried username → failed. Tried user ID → failed. Almost gave up
+- Reviewed Android login request: `username=<EMAIL>&password=<PASSWORD>`
+- Realized the app treats **email as username**
+- Tried email → **200 OK with full user metadata**
+
+**Data Exposed:**
+- Internal user info
+- Account creation timestamps
+- Public profile URL
+- Account tier & billing info
+- Capabilities & feature flags
+- Email addresses linked to account
+- Team & membership metadata
+- Location metadata
+
+**Timeline:**
+- ⮞ Sep 5 — Submitted as Critical
+- ⮞ 20 min — Passed initial review
+- ⮞ Marked Duplicate (similar report targeting different endpoint using user ID)
+- ⮞ Appealed — explained different endpoint, different input (email vs ID), broader enumeration
+- ⮞ 1 hour later — Reopened, apologized, moved to program review
+- ⮞ 2 hours later — Downgraded to Medium, but acknowledged unique endpoint + additional exposed fields
+- ⮞ Resolved with monetary reward
+
+**Key Lesson:**
+> "Sometimes a quick appeal with clear technical distinction can turn a duplicate into a valid finding. Politeness and precision pay off."
+
+**Similar INBOX References:**
+- Entry #074 (Security debate — PII exposure)
+- Entry #085 (Privesc via invite interception)
+- Entry #041 ($9k BAC IDOR)
+
+---
+
+### Entry #087 - Anthropic Leaked Claude Code Source Code: Full Analysis of What Was Inside
+
+**Source:** rgjny.github.io — Harshit (rgjny)
+**Date Added:** 2026-05-14
+**Date Published:** 2026-04-06
+**Author:** Harshit (@rgjny_)
+**Type:** Analysis, Vulnerability Research, AI Security
+**Content:**
+
+**The Incident:**
+- March 31, 2026 — Anthropic shipped Claude Code v2.1.88 to npm with `cli.js.map` (60MB source map)
+- Source map pointed to zip archive on Anthropic's Cloudflare R2 bucket — no auth required
+- Discovered by Chaofan Shou (@charmy)
+- **512,000 lines of TypeScript, 1,906 files** exposed
+- 50,000 GitHub stars in 2 hours (fastest ever), 41,500+ forks
+- Root cause: Bun generates source maps by default + missing `.npmignore` entry for `*.map`
+- Bug filed Mar 11 (`oven-sh/bun#28001`) about production source maps — left unactioned
+
+**KEY FINDINGS IN THE LEAKED CODE:**
+
+**1. KAIROS — Autonomous Daemon Mode (150+ references)**
+- Claude runs in background when terminal is closed
+- 5-minute cron cycles, GitHub webhook subscriptions
+- Push notifications to phone
+- Auto-creates files without being asked
+- **autoDream** — background sub-agent that fires when idle, merges observations, removes contradictions
+- Fully built behind feature flag set to `false` in public release
+
+**2. Undercover Mode (`undercover.ts`, 89 lines)**
+- Activates when working in public open-source repos
+- Injects system prompt: "NEVER mention you are an AI"
+- Strips `Co-Authored-By` git attribution
+- No force-off switch (can only force ON)
+- Allowlist of 22 internal repos
+- Intended: protect internal codenames. Community reaction: "if it hides its identity, what else?"
+
+**3. Anti-Distillation (`ANTI_DISTILLATION_CC`)**
+- Injects fake tool definitions into API requests to corrupt competitor training data
+- Server-side summarization buffers reasoning, returns only signed summaries
+- **Client attestation** in Zig/Bun layer — cryptographic proof requests come from genuine Claude Code binary
+- This is why third-party tools (OpenCode) were blocked at binary level, not just legally
+
+**4. BUDDY — Terminal Tamagotchi**
+- 18 species with rarity tiers (common 60% → legendary 1%)
+- 1% shiny odds per species
+- RPG stats: DEBUGGING, PATIENCE, CHAOS, WISDOM, SNARK
+- Rollout window: April 1-7 (leaked one day early)
+- Species names encoded as hex to bypass build scanner
+
+**5. ULTRAPLAN & Unreleased Roadmap**
+- 44 hidden feature flags, 20+ unshipped capabilities
+- ULTRAPLAN: offloads planning to remote Opus 4.6 with 30min dedicated think time
+- Voice mode (push-to-talk), browser control (Playwright)
+- Multi-agent coordinator spawning parallel worker Claudes
+- Cron scheduling, agents that sleep and self-resume
+
+**6. Internal Benchmarks (The Numbers They Didn't Want Public)**
+- Model codenames: **Capybara** (Claude 4.6), **Fennec** (Opus 4.6), **Numbat** (unreleased)
+- **Capybara v8 false claims rate: 29-30%** (up from 16.7% in v4) — clear regression
+- `autoCompact.ts`: 1,279 sessions had 50+ consecutive failures (up to 3,272), wasting ~250K API calls/day
+- Fix: cap failures at 3. Three lines of code.
+
+**7. Supply Chain Attack Same Day**
+- Axios npm package trojanized (v1.14.1, v0.30.4) containing RAT
+- Check for `plain-crypto-js` dependency
+- Typosquatting packages, fake GitHub repos spreading Vidar Stealer and GhostSocks
+
+**8. DMCA Chaos**
+- Anthropic filed against 8,000+ repos
+- Accidentally swept up their own public repos
+- Emergency withdrawal
+
+**Relevance to Framework:**
+- KAIROS proves autonomous agent mode is production-ready — validates Entry #011 multi-agent approach
+- Anti-distillation + client attestation explains compatibility barriers with third-party tools
+- Undercover mode is directly relevant to disclosure ethics in steering docs
+- Internal benchmarks give real numbers for false claims rates (useful for self-validation methodology)
+- 44 feature flags = roadmap of where AI coding agents are heading
+
+**Similar INBOX References:**
+- Entry #011 (Multi-agent orchestration)
+- Entry #022 (AI-first methodology)
+- Entry #035 (IronCurtain — secure agent runtime)
+- Entry #080 (Reasonix — DeepSeek alternative)
+- Entry #082 (Claude Code AWS cred leak)
+
+---
+
+### Entry #088 - Race Condition: Bypass Free Plan Restrictions ($$$)
+
+**Source:** Harshit (@rgjny_) on X — HackerOne submission
+**Date Added:** 2026-05-14
+**Date Published:** 2026-04-23
+**Author:** Harshit (@rgjny_)
+**Type:** Writeup, Bug Bounty Finding
+**Bounty:** $$$ (redacted, HackerOne)
+**Content:**
+
+**Vulnerability:** Race condition allowing bypass of Free plan restrictions
+- Submitted via HackerOne
+- Triaged and paid
+- Classic TOCTOU: free plan checks performed non-atomically, allowing race window to bypass restrictions
+
+**Key Takeaways:**
+- Race conditions aren't just for kernel exploits — web app payment/plan logic is full of them
+- Free → paid restriction bypasses are high-value because they directly impact revenue
+- Look for non-atomic "check then enforce" patterns in subscription/plan code
+- Always test concurrent requests during plan-sensitive operations
+
+**Similar INBOX References:**
+- Entry #076 (chompie RHEL race condition privesc, $20k Pwn2Own)
+- Entry #075 (Orange Tsai 4 logic bugs chained)
+
+---
+
+### Entry #089 - Password Reset Vulnerability Checklist
+
+**Source:** Harshit (@rgjny_) on X
+**Date Added:** 2026-05-14
+**Date Published:** 2026-04-20
+**Author:** Harshit (@rgjny_)
+**Type:** Checklist, Methodology
+**Content:**
+
+**Password Reset Testing Checklist:**
+
+**Token Vulnerabilities:**
+- Is the reset token predictable (timestamp-based, sequential, weak random)?
+- Is the token length sufficient (minimum 128 bits recommended)?
+- Does the token expire? What's the expiration window?
+- Can the token be reused after password change?
+- Is the token tied to a specific user session?
+
+**Endpoint Vulnerabilities:**
+- User enumeration via reset response (different messages for valid/invalid emails?)
+- Rate limiting on reset requests
+- Host header injection in reset links
+- Password reset poisoning (host injection → attacker gets reset link)
+
+**Logic Flaws:**
+- Can you skip steps in the reset flow?
+- Can you change the email in the reset request?
+- Is the old password required to set a new one?
+- Can you brute-force the reset token?
+- Account takeover via IDOR in user ID parameter during reset
+
+**Implementation Issues:**
+- Email sent in cleartext vs HTTPS-only
+- Is the old session invalidated after password reset?
+- Are all active sessions invalidated after password reset?
+- Is there a password reset via SMS that bypasses email security?
+
+**Relevance to Framework:**
+- Password reset is one of the most consistently vulnerable endpoints
+- This checklist covers the OWASP top reset vulns in a concise format
+- Can be used as a quick reference during web app hunts
+
+**Similar INBOX References:**
+- Entry #018 (OAuth popup hijacking)
+- Entry #022 (AI-first methodology)
+
+---
+
+### Entry #092 - WordListeXplorer (WLX): Local Wordlist Intelligence & Workflow Manager
+
+**Source:** GitHub — ZeroPrime9/WordListeXplorer
+**Date Added:** 2026-05-14
+**Type:** Tool, Wordlist Manager, Workflow Automation
+**Repo:** https://github.com/ZeroPrime9/WordListeXplorer
+**License:** Apache-2.0
+**Author:** Farzan Nobi (ZeroPrime9)
+**Content:**
+
+**Overview:**
+WLX is a local wordlist intelligence and workflow management platform built for offensive security, penetration testing, and bug bounty workflows. Designed for anyone who works with large-scale wordlist collections.
+
+**Core Capabilities:**
+
+1. **Recursive Wordlist Indexing**
+   - Add any number of wordlist directories
+   - Recursively scan and index all supported wordlists
+   - SQLite-powered local database for fast lookups
+
+2. **Fast Keyword Searching**
+   - `wlx search admin` — search indexed wordlists instantly
+   - `wlx search login --filter api,auth,wfuzz` — tag-based filtering
+
+3. **Session-Aware Variable Export**
+   - Export wordlists into shell environment variables
+   - `wlxuse 12 username` → `$USERNAME` ready for use
+   - Direct integration with Hydra, FFUF, Feroxbuster, etc.
+
+4. **Tagging System**
+   - Manual tagging, bulk tagging, multi-tag workflows
+   - Filter-driven searching
+
+5. **Shell Workflow Integration**
+   - Variables persist across terminal sessions
+   - Designed for terminal-native workflows
+
+**Usage Examples:**
+```bash
+# Add wordlist directories
+wlx config addir /usr/share/seclists/
+wlx config addir /path/to/wordlists
+
+# Index everything
+wlx config index
+
+# Search with filters
+wlx search login --filter api,auth,wfuzz
+
+# Export to variable and use
+wlxuse 12 username
+wlxuse 15 password
+hydra -L $USERNAME -P $PASSWORD target
+
+# Bulk tag
+wlx tag 12,15,18 auth,hydra,passwords
+```
+
+**Installation:**
+```bash
+git clone https://github.com/ZeroPrime9/WordListeXplorer.git
+cd WordListeXplorer/wlx/scripts
+chmod +x install.sh && ./install.sh
+```
+
+**Correlation to Cloned Resources:**
+- **`E:\cantin MEZO\cloned-repos\api-wordlist\api`** (10,587 lines) — WLX can index this entire file for instant keyword search
+- **`E:\cantin MEZO\cloned-repos\api-wordlist\AI-MCP.txt`** (523 lines) — WLX can tag as `ai,mcp` and export for use
+- **`E:\cantin MEZO\cloned-repos\api-wordlist\`** — point `wlx config addir` at this directory to index everything
+
+**Usage with actual cloned files:**
+```bash
+# Index the api-wordlist repo
+wlx config addir E:\cantin MEZO\cloned-repos\api-wordlist
+wlx config index
+
+# Search for admin endpoints
+wlx search admin --filter api
+
+# Export and use with ffuf
+wlxuse 12 FUZZ
+ffuf -u https://target/FUZZ -w $FUZZ
+```
+
+**Relevance to Framework:**
+- Directly integrates with our **physical cloned wordlists** at `cloned-repos/api-wordlist/`
+- Variable export (`wlxuse`) bridges those wordlists directly into fuzzing tools (ffuf, hydra)
+- Tagging system enables categorized wordlist management
+- Session-aware variables persist across the entire hunting workflow
+- SQLite indexing means fast lookups across massive wordlist collections
+- Complements Entry #083 (Nuclei-Templates-Collection) for the scanning workflow
+
+**Similar INBOX References:**
+- Entry #002 (api-wordlist — 10.5k API endpoints, cloned at `cloned-repos/api-wordlist/`)
+- Entry #083 (Nuclei-Templates-Collection — scanning templates)
+- Entry #004 (Yandex dorking — recon methodology)
+
+**Source:** Nathan (@nathan_liow) on X + Helius.dev RPC API docs
+**Date Added:** 2026-05-14
+**Type:** Tool, Forensics, Recon, Crypto Intelligence
+**API:** https://www.helius.dev — `getTransfersByAddress` RPC method
+**Content:**
+
+**What It Is:**
+A forensics terminal built on top of **Helius `getTransfersByAddress`** — a Solana RPC method that returns parsed, human-readable token and SOL transfer objects for any wallet address, with filters by mint, time, amount, counterparty, and pagination.
+
+**Capabilities Demonstrated:**
+
+1. **Wallet Cluster Identification**
+   - Query `getTransfersByAddress` on a known address
+   - Follow the `fromUserAccount` / `toUserAccount` fields to connected wallets
+   - Map the full graph of interconnected wallets
+   - Identifies rings of connected wallets that moved funds
+
+2. **Fund Flow Tracing**
+   - Follow money from point A to point B through intermediate wallets
+   - Track proceeds from memecoin launches, hacks, or protocol exploits
+   - Example shown: wallets that made 4,000+ SOL off a memecoin traced in seconds
+
+3. **Whale Watching**
+   - Monitor what the largest wallets are doing in real-time
+   - Track token balances over time without parsing
+   - Identify accumulation / distribution patterns
+
+4. **Hack Investigation**
+   - When a DeFi protocol gets exploited, trace where funds went
+   - Identify attacker-controlled wallets
+   - Track laundering attempts through mixers and bridges
+
+**API Details (from Helius docs):**
+- Query parsed transfer objects for any wallet address
+- Filters: mint, direction (`in`/`out`/`any`), counterparty (`with`), amount range, block time range, slot range
+- SOL/WSOL mode: `merged` (treat WSOL as native SOL) or `separate`
+- Pagination via `paginationToken` cursor
+- Limit: 1-100 per request
+- Data retention: most recent 1 year
+- Free tier available via Helius API key
+
+**Response Fields:**
+| Field | Description |
+|-------|-------------|
+| `signature` | Transaction signature |
+| `type` | transfer, mint, burn, wrap, unwrap, changeOwner, withdrawWithheldFee |
+| `fromUserAccount` / `toUserAccount` | Wallet addresses |
+| `mint` | Token mint address |
+| `amount` / `uiAmount` | Raw and human-readable amounts |
+| `blockTime` | Unix timestamp |
+
+**Why This Belongs in the Framework:**
+- Directly complements `skills/crypto-defi-auditor.md` and `workflows/04-crypto-hunt.md`
+- DeFi bug bounties require understanding on-chain fund flows — this is the recon tool for that
+- Same logic as any other recon tool (crt.sh, Shodan) — querying public data via API
+- Blockchain is a public ledger; this is just querying it efficiently
+- Essential for: hack tracing, protocol audits, threat landscape analysis, wallet cluster identification
+- Free API with generous rate limits
+
+**Similar INBOX References:**
+- Entry #004 (Yandex dorking — similar recon methodology, different domain)
+- Entry #013 (Yandex recon — public data enumeration)
+- Entry #016 (Solana router vulnerabilities)
+- Entry #026 (DeFi crypto vulnerabilities)
+
+**Source:** Harshit (@rgjny_) on X
+**Date Added:** 2026-05-14
+**Date Published:** 2026-04-16
+**Author:** Harshit (@rgjny_)
+**Type:** Milestone, Writeup
+**Content:**
+
+- Secured first bug bounty on HackerOne
+- Reported → Triaged → Got paid
+- Tagged as just the beginning of the journey
+
+**Key Takeaway:**
+- Every bug bounty hunter starts somewhere
+- First bounty is a milestone — proves the methodology works
+- The framework exists to accelerate this: from first bounty to consistent payouts
+
+**Similar INBOX References:**
+- Entry #073 ($125 bounty: injection + .json disclosure)
+- Entry #022 (AI-first methodology 2026)
+
+**Source:** Community writeup
+**Date Added:** 2026-05-14
+**Type:** Writeup, Bug Bounty Finding
+**Bounty:** $XXX (redacted)
+**Severity:** Medium
+**Content:**
+
+**Vulnerability:** Privilege Escalation via role parameter tampering
+
+**Attack Flow:**
+1. Invited user as Guest to a shared resource/workspace
+2. **Intercepted the join request** in-transit
+3. Found a **role parameter** in the request
+4. Discovered **hidden role IDs in JavaScript** (client-side source)
+5. **Swapped the role ID** to a higher-privilege role
+6. Bypassed Read-Only restrictions
+7. Gained extra privileges beyond intended guest access
+8. Other role IDs gave `402 Payment Required` errors (different pricing tiers)
+
+**Key Takeaways:**
+- Always intercept join/invite requests — role parameters are often client-controlled
+- JS source files frequently contain hidden role IDs, permission enums, and feature flags
+- Role ID swapping is a common privesc pattern — test all discovered IDs
+- 402 responses can indicate the role exists but is gated by payment tier
+- Guest → privesc chains are valuable because guests have limited access by design
+
+**Techniques Used:**
+- Request interception (Burp/proxy)
+- JavaScript source analysis for hidden role enums
+- Parameter tampering (role ID swap)
+- Response analysis (402 = exists but paywalled)
+
+**Similar INBOX References:**
+- Entry #007 (IDOR / mass assignment)
+- Entry #025 (Export functionality IDOR)
+- Entry #041 ($9k BAC IDOR writeup)
+- Entry #074 (Security debate — PII exposure)
+
+**Source:** Twitter/X @obscaries + GitHub emadshanab/Nuclei-Templates-Collection
+**Date Added:** 2026-05-14
+**Type:** Tool, Template Collection, Recon, Scanning
+**Repo:** https://github.com/emadshanab/Nuclei-Templates-Collection
+**Content:**
+
+**What It Is:**
+A massive aggregation of **300+ public/custom Nuclei template repositories** collected in one place. Covers every major vulnerability class.
+
+**Categories Covered:**
+- CVEs (thousands of CVE-specific templates)
+- SSRF (blind, reflected, time-based)
+- SSTI (reflected, stored, blind)
+- XSS (reflected, stored, DOM, bypass)
+- Subdomain Takeovers (80+ services)
+- WAF Detections (Cloudflare, Akamai, ModSecurity, etc.)
+- Fuzzing Templates (parameter, header, path, content-type)
+- API Checks (REST, GraphQL, SOAP, Swagger)
+- Log4j Shell variants
+- Mobile templates (Android, iOS)
+- WordPress plugin/themes CVEs
+- Drupal security advisories
+- SAP-specific templates
+- Kubernetes misconfigurations
+- Cloud metadata enumeration
+- Directory listing detection
+- Backup file discovery
+- Environment file disclosure
+
+**Notable Repos in the Collection:**
+- `projectdiscovery/nuclei-templates` (official, 10k+ templates)
+- `ARPSyndicate/kenzer-templates`
+- `ExpLangcn/NucleiTP`
+- `geeknik/the-nuclei-templates`
+- `cipher387/juicyinfo-nuclei-templates`
+- `edoardottt/missing-cve-nuclei-templates`
+- `trickest/log4j` (Log4j-specific collection)
+- `praetorian-inc/chariot-launch-nuclei-templates`
+- `optiv/mobile-nuclei-templates`
+- `kh4sh3i/nuclei-templates`
+- + 290+ more individual repos and gists
+
+**Included Helper Scripts:**
+- `bulk_clone_repos.py` — clone all listed repos at once
+- `remove_duplicated_templates.py` — deduplicate across repos
+- `commands.md` — usage examples and pipeline commands
+
+**Relevance to Framework:**
+- Directly powers `skills/vuln-scanner.md` (Nuclei scanning)
+- Can be used with the `nuclei` binary already referenced in QUICK-START.md
+- Bulk clone script enables offline template library
+- Custom templates extend scanning beyond official projectdiscovery set
+- WAF detection templates help identify defenses before manual testing
+- Subdomain takeover templates complement Entry #081
+
+**Similar INBOX References:**
+- Entry #079 (NextSSRF — Nuclei-template-ready CVE)
+- Entry #081 (Subdomain Takeover Checker)
+- Entry #013 (Yandex recon)
+- Entry #004 (Yandex dorking)
+
+---
+
+### Entry #082 - CRITICAL: Claude Code + AWS Bedrock Credentials Leaked to Every Subprocess
+
+**Source:** Imperva Threat Research — Ori Nakar, May 14, 2026
+**Date Added:** 2026-05-14
+**Date Published:** 2026-05-14
+**Author:** Ori Nakar (Imperva Threat Research)
+**Type:** Security Advisory, Vulnerability Analysis, CRITICAL
+**Content:**
+
+**The Problem:**
+AWS credentials configured for Claude Code's Bedrock integration in `~/.claude/settings.json` are **inherited by every subprocess** — shell commands, MCP servers, and any spawned child process receive unrestricted access to the IAM principal's full permissions.
+
+**Root Cause:**
+Unix processes inherit environment variables from parent processes. When stored in `settings.json`'s `"env"` block:
+```json
+{
+  "env": {
+    "AWS_ACCESS_KEY_ID": "...",
+    "AWS_SECRET_ACCESS_KEY": "...",
+    "AWS_DEFAULT_REGION": "us-east-1",
+    "CLAUDE_CODE_USE_BEDROCK": "1"
+  }
+}
+```
+These env vars flow to every `aws s3`, `aws ec2`, `aws iam` command, every MCP server process.
+
+**The Security Trap:**
+- The credentials are meant ONLY for Bedrock (`bedrock:InvokeModel*`)
+- But they're available for **everything** the IAM principal has access to
+- Claude Code's approval prompt is the **only** defense — and it shows no context about which AWS account/credentials are active
+- Approval fatigue erodes even that thin layer
+
+**Real-World Failure Scenarios:**
+
+| Scenario | What Happens |
+|----------|-------------|
+| Reusing everyday IAM user | Claude Code gets access to prod DBs, S3, IAM itself |
+| Wrong environment | "Delete old test data" runs against PRODUCTION |
+| Permission drift | Bedrock-only user gains S3/EC2/IAM over time, no one audits |
+| Shared credentials | Team shares same IAM user — no attribution in CloudTrail |
+| Compromised MCP server | Malicious MCP server silently makes AWS API calls |
+
+**Attack Vectors:**
+
+1. **Accidental over-provisioning** — user unaware broad permissions exist
+2. **Prompt injection** — attacker plants instructions in repo files (README, config, comments) → Claude Code generates AWS CLI commands to exfiltrate data or create backdoor keys. Approval prompt is the only defense
+3. **Compromised MCP server** — inherits full environment, silently makes AWS calls
+
+**Mitigations (from Imperva):**
+
+| Mitigation | Effectiveness |
+|------------|--------------|
+| **Use `AWS_BEARER_TOKEN_BEDROCK`** instead of IAM credentials | ✅ Best — inherently scoped to Bedrock, can't be used by AWS CLI |
+| Scope IAM to `bedrock:InvokeModel*` only | ✅ Good — audit what's attached right now |
+| STS temporary credentials | ⚠️ Partial — limits exposure window |
+| Read approval prompts carefully | ⚠️ Weak — no context, approval fatigue |
+| Run `aws sts get-caller-identity` to audit | ✅ Diagnostic |
+
+**The Ideal Fix (not implemented):**
+- Credential isolation: Bedrock credentials should be internal to Claude Code, never exposed to shell subprocesses via environment variables
+- Anthropic says responsibility falls on the user
+
+**Relevance to Framework:**
+- **Directly impacts how we use Claude Code** for bug hunting
+- If running the framework's workflows via Claude Code + Bedrock, all AWS commands in skills/methodologies run as the configured IAM principal
+- Prompt injection in repo files (READMES, configs) can weaponize this
+- MCP servers from our `cloned-repos/` (especially `mcp-recon`, `Shodan MCP`, `GitHub MCP`) inherit credentials
+- **IMMEDIATE ACTION:** Check `~/.claude/settings.json` and scope credentials
+
+**Similar INBOX References:**
+- Entry #044 (Prompt injection framework)
+- Entry #050 (MCP security)
+- Entry #051 (MCP server vulnerabilities)
+- Entry #035 (IronCurtain — secure agent runtime, addresses exactly this class of problem)
+
+**Source:** GitHub — mikaww1/Subdomain-Takeover-Checker
+**Date Added:** 2026-05-14
+**Type:** Tool, Scanner, Recon
+**Repo:** https://github.com/mikaww1/Subdomain-Takeover-Checker
+**Live Tool:** https://subdomainchecker.com
+**Public API:** RapidAPI
+**Content:**
+
+**Overview:**
+- Detect dangling CNAMEs and subdomain takeover vulnerabilities across **80+ services**
+- Available as web app, CLI tool, or public API
+
+**Features:**
+- Follows full CNAME chains (not just first hop)
+- **80+ service fingerprints** — GitHub Pages, Heroku, Vercel, Netlify, AWS S3, Azure, Shopify, Zendesk, etc.
+- Subdomain enumeration via crt.sh certificate transparency logs
+- Wildcard DNS detection (avoids false positives)
+- **Same-owner detection** — skips CNAMEs pointing to same-org services (e.g. `*.github.com` → `*.github.io`)
+- Bulk mode (up to 10 subdomains)
+- No data stored, no logging
+- Web app + CLI + API
+
+**Tech Stack:** Python, Flask, dnspython, requests, Railway + Gunicorn
+
+**Example Output:**
+```
+[*] Checking: shop.example.com
+[*] CNAME chain: shop.example.com → mystore.myshopify.com
+[*] Matched service: myshopify.com
+[!!!] VULNERABLE — Unconfigured fingerprint found for myshopify.com
+  Subdomain  : shop.example.com
+  Vulnerable : YES 🔴
+  Confidence : Confirmed ✓
+  Service    : myshopify.com
+```
+
+**Supported Services Include:**
+AWS S3, Azure, Cloudfront, Elastic Beanstalk, GitHub Pages, Heroku, Vercel, Netlify, Cloudflare Pages, Render, Railway, Fly.io, Surge, Bitbucket, Pantheon, WP Engine, Kinsta, Webflow, Ghost, Squarespace, Wix, Shopify, BigCartel, HubSpot, Instapage, Unbounce, Zendesk, Freshdesk, Help Scout, Intercom, Statuspage, Readme.io, Tumblr, Supabase, Bubble, Gitbook, Notion, Fastly, Mailchimp, Pingdom, and more.
+
+**Relevance to Framework:**
+- Critical recon tool for subdomain enumeration and takeover detection
+- 80+ service fingerprints = comprehensive coverage
+- Same-owner detection reduces false positives
+- API integration for pipeline automation
+- RapidAPI integration for scalable scanning
+- Complements Entry #029 (Bucket Squatting) — both deal with unclaimed cloud resources
+
+**Similar INBOX References:**
+- Entry #029 (Bucket Squatting)
+- Entry #013 (Subdomain enumeration via Yandex)
+- Entry #004 (Yandex dorking for exposed resources)
+
+---
+
+**SUMMARY: Added Entries #074-#082. Total: 82 comprehensive resources in INBOX.**
+
+**Entry #074 Highlights:**
+- **Security philosophy debate** — encrypted at rest vs. runtime access
+- **2.9K+ engagements** on the discussion
+- **Actionable insight** for bug hunters: PII exposure vectors
+
+**Entry #075 Highlights:**
+- **$175k Pwn2Own** Edge sandbox escape by Orange Tsai
+- **4 logic bugs chained** — zero memory corruption
+- **Paradigm shift:** Logic-only browser exploitation
+- **17.5 Master of Pwn** points
+
+**Entry #076 Highlights:**
+- **$20k Pwn2Own** RHEL race condition privesc by chompie
+- **Reverse Devil's Advocate** — AI said not exploitable, she proved it wrong
+- **New Pattern 3** added to `methodologies/03-ai-self-validation.md`
+- **Key lesson:** Push back when AI dismisses findings
+
+**Entry #077 Highlights:**
+- **Microsoft multi-agent** Audit → Debate → Dedup → Prove pipeline
+- **80% engineering on verification**, not finding
+- **Zero false positive** as the goal
+- **Architecture comparison** across 4 approaches
+- **Watershed insight:** Finding bugs is solved; proving them is the real problem
+
+**Entry #078 Highlights:**
+- **Complete N-day pipeline** — PatchWatch (Rust) + Pocsmith (Claude SDK)
+- **Patch Tuesday → verified exploit** in ~$300 API tokens
+- **2 CVEs demonstrated** (MMC EoP + Windows DNS RCE CVSS 9.8)
+- **3-level exploit framework** (A: crash, B: primitive, C: full exploit)
+- **4 MCP servers** open-sourced (hyperv, kd, pocsmith, pyghidra)
+- **Open-sourced** — one researcher + VMs + credit card = Mythos-class capability
+
+**Entry #079 Highlights:**
+- **NextSSRF** — dedicated CVE-2026-44578 scanner/exploit by @mitsec
+- **Interactive exploit shell** with auto cloud detection + AWS IAM extraction
+- **Zero dependencies** (Python stdlib), pipeline mode, Shodan integration
+- **Practical weaponization** of SSRF for cloud metadata exfiltration
+
+**Entry #080 Highlights:**
+- **Reasonix** — DeepSeek-native AI coding agent (MIT, open-source)
+- **99.82% cache hit rate** — $12 instead of $61 for 435M tokens
+- **Full agent framework:** MCP, skills, hooks, memory, web search
+- **Budget-friendly alternative** to Claude Code for automated hunting
+
+**Entry #081 Highlights:**
+- **Subdomain Takeover Checker** — 80+ service fingerprints
+- **CNAME chain following** + same-owner detection
+- **Web app + CLI + RapidAPI** — three consumption modes
+- **crt.sh integration** for automated subdomain discovery
+
+**Entry #082 Highlights:**
+- **CRITICAL: Claude Code AWS creds leak** — Bedrock credentials shared with every subprocess
+- **Imperva Threat Research** — Ori Nakar, May 14, 2026
+- **Attack vectors:** accidental over-provisioning, prompt injection, compromised MCP servers
+- **No account context** in approval prompts — users can't tell which AWS account is active
+- **Best mitigation:** `AWS_BEARER_TOKEN_BEDROCK` instead of IAM credentials
+- **Framework impact:** ALL aws commands in skills/workflows run as configured IAM principal
+
+**Entry #083 Highlights:**
+- **Nuclei-Templates-Collection** — 300+ template repos aggregated in one place
+- **Every vuln class:** CVE, SSRF, SSTI, XSS, takeover, WAF, fuzzing, API, mobile
+- **Helper scripts:** bulk clone + deduplication
+- **Powers framework scanning** — extends Nuclei beyond official templates
+
+**Entry #084 Highlights:**
+- **Gementee_cvd** — automated bug bounty pipeline (httpx → nuclei → Telegram)
+- **Scope management + unscanned detection** — never re-scan what's been done
+- **1,988 commits** of iteration
+- **Telegram integration** for real-time alerting
+
+**Entry #085 Highlights:**
+- **Privesc via guest invite interception** — role param found in join request
+- **Hidden role IDs discovered in JS** — swapped to bypass Read-Only
+- **402 errors** revealed additional paywalled roles
+- **Classic privesc chain** — always check role params in invite flows
+
+**Entry #086 Highlights:**
+- **Email-based user enumeration** via hidden `/find/users` endpoint
+- **Appealed a duplicate** with technical distinction → reopened → paid
+- **Key lesson:** politeness + precision turn duplicates into valid findings
+
+**Entry #087 Highlights:**
+- **Anthropic Claude Code source leak** — 512K lines exposed via source map
+- **KAIROS** — autonomous daemon mode (production-ready, just feature-flagged off)
+- **Undercover Mode** — hides AI attribution in public repo commits
+- **Anti-distillation** — client attestation blocks third-party tools at binary level
+- **29-30% false claims rate** on Capybara v8 — internal benchmark leaked
+- **44 feature flags**, 20+ unshipped capabilities, supply chain attack same day
+
+**Entry #088 Highlights:**
+- **Race condition** bypassed Free plan restrictions → $$$ on HackerOne
+- **TOCTOU in payment/plan logic** — high value because it impacts revenue
+
+**Entry #089 Highlights:**
+- **Password reset checklist** — token vulns, endpoint vulns, logic flaws, implementation issues
+- **One of the most consistently vulnerable endpoints** in any web app
+
+**Entry #090 Highlights:**
+- **First HackerOne bounty** — reported, triaged, paid
+- **Milestone:** Every hunter starts somewhere
+
+**Entry #091 Highlights:**
+- **Solana on-chain forensics shell** via Helius `getTransfersByAddress`
+- **Wallet cluster tracing** — identify rings of connected wallets moving funds
+- **Fund flow tracking** — trace hack proceeds, memecoin profits, whale movements
+- **Free API** — public blockchain data, same recon logic as crt.sh/Shodan
+- **Complements** `skills/crypto-defi-auditor.md` and `workflows/04-crypto-hunt.md`
+
+**Entry #092 Highlights:**
+- **WordListeXplorer (WLX)** — local wordlist intelligence & workflow manager
+- **SQLite-powered indexing** for fast keyword searches across massive wordlist collections
+- **Session-aware variable export** (`wlxuse`) — wordlists become shell variables for ffuf/hydra
+- **Tag-based filtering** — organize by auth, api, fuzz, etc.
+- **Bridges `cloned-repos/api-wordlist/`** (10.5k endpoints) into actionable fuzzing via `wlxuse` → `ffuf`
+- **Apache-2.0** by Farzan Nobi (ZeroPrime9)
+
+---
+
+### Entry #093 - Cloud IAM Privilege Escalation Research Collection (AWS/GCP/Azure)
+
+**Source:** Aggregated from X/GitHub — Rhino Security Labs, Bishop Fox, Tenable, Datadog, Microsoft
+**Date Added:** 2026-05-14
+**Type:** Tool Collection, Methodology, Research
+**Content:**
+
+**AWS IAM:**
+- **RhinoSecurityLabs/AWS-IAM-Privilege-Escalation** — 21 documented privesc methods with exploit scripts (iam:CreatePolicyVersion, iam:PassRole + lambda/EC2, etc.). The foundational reference.
+- **Pacu** (RhinoSecurityLabs) — "Metasploit for AWS". 35+ modules including `iam__privesc_scan` for auto-detection and exploitation of IAM privesc paths.
+- **BishopFox/cloudfox** — AWS (34 commands) + GCP (60 commands) + Azure. Includes `privesc` commands, `pmapper` integration, `cape` for cross-account.
+- **BishopFox/iam-vulnerable** — Terraform-deployed lab with 250+ vulnerable IAM resources covering 31 privesc paths.
+- **Tenable/EscalateGPT** — AI-powered (GPT-4) analysis of AWS IAM + Azure RBAC policies to find escalation paths.
+- **HackingThe.Cloud** (Nick Frichette) — Living encyclopedia of AWS IAM privesc techniques.
+- **Datadog/pathfinding.cloud** — YAML-schema knowledge base of all AWS IAM privesc paths.
+- **CVE-2024-XXXX** — Real HackerOne report: AWS IAM RCE + privilege escalation chain.
+
+**GCP IAM:**
+- **RhinoSecurityLabs/gcp-iam-privilege-escalation** — GCP counterpart with 20+ escalation permissions.
+- GCP privesc paths: `iam.serviceAccounts.actAs` (the PassRole equivalent), `iam.serviceAccountTokenCreator`, `iam.serviceAccounts.implicitDelegation`, `*.setIamPolicy`, Cloud Functions/Cloud Run/Compute service account abuse.
+- Real bug: Google SecOps SOAR SA impersonation chain (Jakub Domeracki, Google VRP).
+
+**Azure RBAC:**
+- **Azure Key Vault privesc** (Datadog) — `Key Vault Contributor` role can modify access policies to read all secrets.
+- **Azure RBAC VM privesc** (ScentTrail) — 4 methods via VMs + Managed Identities.
+- **Azure Policy abuse** (Datadog) — `Resource Policy Contributor` → code execution under elevated roles.
+- **Microsoft Azure Threat Research Matrix** — Official catalog of Azure privesc techniques.
+
+**References:**
+- **RhinoSecurityLabs AWS-IAM-Privilege-Escalation:** https://github.com/RhinoSecurityLabs/AWS-IAM-Privilege-Escalation
+- **Pacu:** https://github.com/RhinoSecurityLabs/pacu
+- **BishopFox CloudFox:** https://github.com/BishopFox/cloudfox
+- **IAM-Vulnerable Playground:** https://github.com/BishopFox/iam-vulnerable
+- **EscalateGPT:** https://github.com/tenable/EscalateGPT
+- **HackingThe.Cloud:** https://hackingthe.cloud/aws/exploitation/iam_privilege_escalation/
+- **GCP IAM Privesc (HackingThe.Cloud):** https://hackingthe.cloud/gcp/exploitation/gcp_iam_privilege_escalation/
+- **Datadog Pathfinding.cloud:** https://github.com/DataDog/pathfinding.cloud
+- **CloudGoat:** https://github.com/RhinoSecurityLabs/cloudgoat
+- **Stratus Red Team:** https://stratus-red-team.cloud/attack-techniques/AWS/
+- **Azure Threat Research Matrix:** https://microsoft.github.io/Azure-Threat-Research-Matrix/PrivilegeEscalation/PrivEsc/
+- **Azure Key Vault Privesc (Datadog):** https://securitylabs.datadoghq.com/articles/escalating-privileges-to-read-secrets-with-azure-key-vault-access-policies/
+- **Azure RBAC VM Privesc:** https://securityboulevard.com/2025/02/azure-rbac-privilege-escalations-azure-vm/
+- **Azure Policy Abuse (Datadog):** https://securitylabs.datadoghq.com/articles/azure-policy-privilege-escalation/
+- **Gogind/ConfusedFunction (Tenable):** https://medium.com/@nairuzabulhul
+- **AppSecCo IAM Series:** https://blog.appsecco.com
+
+**References:**
+- GitHub: RhinoSecurityLabs/AWS-IAM-Privilege-Escalation - https://github.com/RhinoSecurityLabs/AWS-IAM-Privilege-Escalation
+- GitHub: Pacu - https://github.com/RhinoSecurityLabs/pacu
+- GitHub: CloudFox - https://github.com/BishopFox/cloudfox
+- GitHub: IAM-Vulnerable - https://github.com/BishopFox/iam-vulnerable
+- GitHub: EscalateGPT - https://github.com/tenable/EscalateGPT
+- GitHub: GCP-IAM-Privilege-Escalation - https://github.com/RhinoSecurityLabs/gcp-iam-privilege-escalation
+- GitHub: Pathfinding.cloud - https://github.com/DataDog/pathfinding.cloud
+- Encyclopedia: HackingThe.Cloud AWS IAM - https://hackingthe.cloud/aws/exploitation/iam_privilege_escalation/
+- Encyclopedia: HackingThe.Cloud GCP IAM - https://hackingthe.cloud/gcp/exploitation/gcp_iam_privilege_escalation/
+- Blog: Rhino AWS IAM Privesc Part 1 - https://rhinosecuritylabs.com/aws/aws-privilege-escalation-methods-mitigation/
+- Blog: Rhino AWS IAM Privesc Part 2 - https://rhinosecuritylabs.com/aws/aws-privilege-escalation-methods-mitigation-part-2/
+- Blog: BishopFox IAM Vulnerable - https://bishopfox.com/blog/aws-iam-privilege-escalation-playground
+- Blog: BishopFox Well That Escalated Quickly - https://bishopfox.com/blog/privilege-escalation-in-aws
+- Blog: Tenable PassRole Audit - https://www.tenable.com/blog/auditing-iampassrole-a-problematic-privilege-escalation-permission
+- Blog: Azure Key Vault Privesc - https://securitylabs.datadoghq.com/articles/escalating-privileges-to-read-secrets-with-azure-key-vault-access-policies/
+- Blog: Azure Policy Abuse - https://securitylabs.datadoghq.com/articles/azure-policy-privilege-escalation/
+- Blog: Azure RBAC VM Privesc - https://securityboulevard.com/2025/02/azure-rbac-privilege-escalations-azure-vm/
+- Blog: GCP Privesc Guide - https://blog.ogwilliam.com/post/gcp-iam-privilege-escalation-guide
+- Bug Report: Google SecOps SA Chain - https://jdsec.cloud/posts/2026-01-17-privilege-escalation-via-a-service-account-impersonation-chain/
+- Tool: Stratus Red Team - https://stratus-red-team.cloud/attack-techniques/AWS/
+- Tool: CloudGoat - https://github.com/RhinoSecurityLabs/cloudgoat
+- Tool: Azure Threat Research Matrix - https://microsoft.github.io/Azure-Threat-Research-Matrix/PrivilegeEscalation/PrivEsc/
+- Writeup: IAM Privesc on AWS - https://medium.com/@iambivash.bn/iam-privilege-escalation-on-aws-a-bug-bounty-trick-by-cyberdudebivash-by-cyberdudebivash-ef08a54f5247
+
+**Similar INBOX References:**
+- Entry #006 (Bucket squatting — partial cloud coverage)
+- Entry #009 (Container/K8s security)
+- Entry #071 (Multi-tenant SQL pod)
+- Entry #079 (Cloud metadata SSRF)
+
+---
+
+### Entry #094 - Active Directory Security Research Collection
+
+**Source:** Aggregated from X/GitHub — SpecterOps, GhostPack, Fortra, NetSPI
+**Date Added:** 2026-05-14
+**Type:** Tool Collection, Methodology, Research
+**Content:**
+
+**ADCS Attacks (Certificate Services):**
+- **Certified Pre-Owned** (SpecterOps) — The foundational whitepaper mapping ADCS abuse paths ESC1-ESC8. Must-read.
+- **Certipy** (ly4k) — Premier ADCS enumeration/abuse tool. Supports ESC1-ESC14. `certipy find -vulnerable` is industry standard.
+- ADCS Attack Paths in BloodHound (SpecterOps 3-part series) — Graph-based ADCS mapping.
+- ESC1-ESC16 complete reference (xbz0n.sh).
+
+**Core Tooling:**
+- **BloodHound CE** (SpecterOps) — Gold-standard AD attack path mapping using Neo4j graph database. Now supports ADCS paths + Azure.
+- **Impacket** (Fortra) — secretsdump.py (DCSync), GetUserSPNs.py (Kerberoasting), GetNPUsers.py (AS-REP roasting), psexec.py, ticketer.py (golden/silver tickets). 15.5k stars.
+- **Rubeus** (GhostPack/harmj0y) — C# Kerberos toolkit: asktgt, kerberoast, asreproast, s4u, golden/silver, ptt, tgtdeleg, monitor.
+- **Active Directory Exploitation Cheat Sheet** (S1ckB0y1337) — 6.6k stars. Covers PowerView, Kerberos attacks, ACL abuse, delegation, credential dumping.
+
+**Real Bug Bounty Findings:**
+- NetSPI: CVE-2025-21299 + CVE-2025-29809 — Microsoft Credential Guard bypass ($250k MSRC range)
+- **BadSuccessor** (Akamai) — Windows Server 2025 dMSA feature privilege escalation. Affects 91% of AD environments tested.
+- Praetorian: LDAP relaying + ACL attack path chaining.
+- Semperis: DCSync attack deep dive with APT usage and detection (Event ID 4662).
+
+**References:**
+- **Certified Pre-Owned (SpecterOps):** https://posts.specterops.io/certified-pre-owned-d6190a02b44c
+- **Certipy:** https://github.com/ly4k/Certipy
+- **BloodHound CE:** https://github.com/SpecterOps/BloodHound
+- **Impacket:** https://github.com/fortra/impacket
+- **Rubeus:** https://github.com/GhostPack/Rubeus
+- **S1ckB0y1337 AD Cheat Sheet:** https://github.com/S1ckB0y1337/Active-Directory-Exploitation-Cheat-Sheet
+- **PayloadsAllTheThings AD:** https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Active%20Directory%20Attack.md
+- **daniellowrie AD Resources:** https://github.com/daniellowrie/ActiveDirectory-Pentest-Resources
+- **ADCS Attack Paths in BloodHound:** https://posts.specterops.io/adcs-attack-paths-in-bloodhound-part-1-799f3d3b03cf
+- **ADCS ESC1-16 Reference (xbz0n):** https://xbz0n.sh/blog/adcs-complete-attack-reference
+- **BadSuccessor dMSA Vuln:** https://thehackernews.com/2025/05/critical-windows-server-2025-dmsa.html
+- **NetSPI Credential Guard CVE:** https://www.netspi.com/blog/technical-blog/adversary-simulation/cve-2025-21299-cve-2025-29809-unguarding-microsoft-credential-guard
+- **Praetorian LDAP Relaying:** https://www.praetorian.com/blog/how-to-exploit-active-directory-acl-attack-paths-through-ldap-relaying-attacks
+- **HackTricks AD CS:** https://hacktricks.wiki/en/windows-hardening/active-directory-methodology/ad-certificates.html
+
+**References:**
+- Whitepaper: Certified Pre-Owned - https://specterops.io/blog/2021/06/17/certified-pre-owned
+- Whitepaper PDF: Certified Pre-Owned Direct - https://specterops.io/wp-content/uploads/sites/3/2022/06/Certified_Pre-Owned.pdf
+- GitHub: Certipy - https://github.com/ly4k/Certipy
+- GitHub: BloodHound CE - https://github.com/SpecterOps/BloodHound
+- GitHub: Impacket - https://github.com/fortra/impacket
+- GitHub: Rubeus - https://github.com/GhostPack/Rubeus
+- GitHub: AD Exploitation Cheat Sheet - https://github.com/S1ckB0y1337/Active-Directory-Exploitation-Cheat-Sheet
+- GitHub: AD Pentest Resources - https://github.com/daniellowrie/ActiveDirectory-Pentest-Resources
+- GitHub: PayloadsAllTheThings AD - https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Active%20Directory%20Attack.md
+- Blog: ADCS Attack Reference (xbz0n) - https://xbz0n.sh/blog/adcs-complete-attack-reference
+- Blog: ADCS in BloodHound Part 1 - https://posts.specterops.io/adcs-attack-paths-in-bloodhound-part-1-799f3d3b03cf
+- Blog: BHIS Delegation - https://www.blackhillsinfosec.com/abusing-delegation-with-impacket-part-1
+- Blog: Kerberoasting Guide - https://0xma.github.io/hacking/kerberoasting_linux_and_windows.html
+- Blog: DCSync Deep Dive - https://www.semperis.com/blog/dcsync-attack
+- Blog: Credential Guard Bypass - https://www.netspi.com/blog/technical-blog/adversary-simulation/cve-2025-21299-cve-2025-29809-unguarding-microsoft-credential-guard
+- Blog: BadSuccessor - https://thehackernews.com/2025/05/critical-windows-server-2025-dmsa.html
+- Blog: LDAP Relaying - https://www.praetorian.com/blog/how-to-exploit-active-directory-acl-attack-paths-through-ldap-relaying-attacks
+- Slides: OWASP Kerberos - https://owasp.org/www-chapter-bangkok/slides/2025/2025-02-07_Breaking-the-Ticket-A-Beginners-Guide-to-Kerberos-Attacks.pdf
+
+**Similar INBOX References:**
+- Entry #055 (Veeam $30k — enterprise Windows auditing)
+- Entry #078 (PatchWatch — N-day Windows exploit pipeline)
+- Entry #035 (Edge credential dumping)
+
+---
+
+### Entry #095 - Ethereum/Solidity Smart Contract Auditing & DeFi Security
+
+**Source:** Aggregated — Trail of Bits, Immunefi, Cyfrin, OWASP, ConsenSys
+**Date Added:** 2026-05-14
+**Type:** Tool Collection, Methodology, Research
+**Content:**
+
+**Core Auditing Tooling:**
+- **Slither** (Trail of Bits/Crytic) — Gold-standard static analysis for Solidity/Vyper. 90+ vulnerability detectors. ~6.2k stars.
+- **Echidna** (Trail of Bits/Crytic) — Property-based fuzzer for Ethereum smart contracts. Generates random transaction sequences to break invariants. Supports on-chain fuzzing.
+- **Aderyn** (Cyfrin) — Rust-based Solidity static analyzer. Complements Slither with lower FP rates on certain classes.
+- **Foundry Fuzzing** (Paradigm) — Native Solidity fuzzing + invariant testing.
+
+**Bug Bounty Platform:**
+- **Immunefi** — Premier Web3 bug bounty platform. 650+ protocols, $190B protected. Max bounties up to $3M (Ethena). 92% of blockchain critical vulns flow through Immunefi.
+- **Immunefi bugfix repo** (tpiliposian) — Curated writeups: Raydium ($505K), Enzyme Finance ($400K), Alchemix ($29K), etc.
+- **Solodit** (Cyfrin) — 20,000+ real smart contract findings database. Filterable by impact, protocol category, auditor.
+
+**DeFi Hack Postmortems:**
+- Penpie $27M — reentrancy via missing nonReentrant modifier (Zokyo)
+- UwU Lend $19M — oracle manipulation via Curve spot price (512m.io)
+- Prisma Finance $11M — flash loan + insufficient input validation
+- ResupplyFi $9.56M — ERC4626 donation attack (integer division flaw)
+- 1inch Fusion — Yul calldata corruption (Decurity)
+
+**Training & Standards:**
+- **Cyfrin Updraft** — 25+ hour free auditing course. 5 complete hands-on audits.
+- **SCSFG** (Smart Contract Security Field Guide) — Successor to ConsenSys best practices.
+- **OWASP Smart Contract Top 10 (2025)** — SC01-SC10 vulnerability classification.
+- **SWC Registry** — Formal weakness taxonomy mapped to CWE.
+
+**References:**
+- **Slither:** https://github.com/crytic/slither
+- **Echidna:** https://github.com/crytic/echidna
+- **Aderyn:** https://github.com/Cyfrin/aderyn
+- **Immunefi Platform:** https://immunefi.com/
+- **Immunefi Bug Bounties:** https://immunefi.com/bug-bounty/
+- **Solodit Database:** https://solodit.cyfrin.io/
+- **SCSFG:** https://scsfg.io/hackers/
+- **OWASP Smart Contract Top 10:** https://owasp.org/www-project-smart-contract-top-10
+- **SWC Registry:** https://swcregistry.io/
+- **Cyfrin Updraft Course:** https://updraft.cyfrin.io/courses/security
+- **Foundry Fuzzing Docs:** https://book.getfoundry.sh/forge/fuzz-testing
+- **Penpie $27M Postmortem:** https://zokyo.io/blog/penpie-postmortem/
+- **Prisma Finance $11M Postmortem:** https://hackmd.io/@PrismaRisk/PostMortem0328
+- **UwU Lend $19M Oracle Manipulation:** https://512m.io/blog/uwu-lend-suffers-exploit-detailed-analysis
+- **1inch Fusion Postmortem:** https://blog.decurity.io/yul-calldata-corruption-1inch-postmortem-a7ea7a53bfd9
+- **ResupplyFi $9.56M ERC4626 Attack:** https://ackee.xyz/blog/resupply-hack-analysis
+
+**References:**
+- GitHub: Slither - https://github.com/crytic/slither
+- GitHub: Echidna - https://github.com/crytic/echidna
+- GitHub: Aderyn - https://github.com/Cyfrin/aderyn
+- Platform: Immunefi - https://immunefi.com/
+- Platform: Immunefi Bounty Directory - https://immunefi.com/bug-bounty/
+- Database: Solodit - https://solodit.cyfrin.io/
+- Guide: SCSFG Hackers Edition - https://scsfg.io/hackers/
+- Standard: OWASP Smart Contract Top 10 - https://owasp.org/www-project-smart-contract-top-10
+- Docs: Solidity Security Considerations - https://docs.soliditylang.org/en/latest/security-considerations.html
+- Guide: ConsenSys Best Practices - https://consensysdiligence.github.io/smart-contract-best-practices/
+- Course: Cyfrin Updraft - https://updraft.cyfrin.io/courses/security
+- Registry: SWC Registry - https://swcregistry.io/
+- Docs: Foundry Fuzzing - https://book.getfoundry.sh/forge/fuzz-testing
+- Checklist: Solidity Audit - https://github.com/vishnuram1999/audits/blob/main/Checklist-Solidity.md
+- Checklist: Audit Approach - https://www.cyfrin.io/blog/10-steps-to-systematically-approach-a-smart-contract-audit
+- Writeup: Penpie $27M - https://zokyo.io/blog/penpie-postmortem/
+- Writeup: Prisma $11M - https://hackmd.io/@PrismaRisk/PostMortem0328
+- Writeup: UwU Lend $19M - https://512m.io/blog/uwu-lend-suffers-exploit-detailed-analysis
+- Writeup: 1inch Fusion - https://blog.decurity.io/yul-calldata-corruption-1inch-postmortem-a7ea7a53bfd9
+- Writeup: ResupplyFi $9.5M - https://ackee.xyz/blog/resupply-hack-analysis
+- Writeup: Immunefi bugfix repo - https://github.com/tpiliposian/Immunefi-bugfixes
+
+**Similar INBOX References:**
+- Entry #016 (Solana router — our only existing crypto entry)
+- Entry #027 (dYdX v4 oracle manipulation)
+- Entry #091 (Solana on-chain forensics)
+
+---
+
+### Entry #096 - Browser Security Research Collection (Firefox/Safari/iOS/Chromium)
+
+**Source:** Aggregated — ZDI, TrustFoundry, OX Security, 8kSec, OWASP, wh1te4ever
+**Date Added:** 2026-05-14
+**Type:** Tool Collection, Methodology, Research
+**Content:**
+
+**Firefox:**
+- TrustFoundry: Practical Firefox IPDL/C++ IPC sandbox escape research setup guide.
+- ZDI: CVE-2025-4919 — IonMonkey JIT OOB via confused array index sizes (Pwn2Own Berlin 2025, Manfred Paul).
+- CVE-2025-2857 — Firefox sandbox escape via IPC handle manipulation (Field Effect analysis).
+
+**Safari/WebKit:**
+- CVE-2025-43529 — WebKit DFG JIT use-after-free (StoreBarrierInsertionPhase bug). Full exploit writeup on Sploitus. Confirmed iOS 26.1, macOS Tahoe.
+- CVE-2025-14174 — ANGLE OOB memory access affecting ALL iOS browsers (Apple mandates WebKit). Targeted attacks via Google TAG discovered.
+- **wh1te4ever/WebKit-Bug-256172** — Full Safari RCE exploit repo: addrof/fakeobj primitives, read/write, SecurityOrigin patch. 160+ stars.
+
+**Chromium Mojo Sandbox Escape:**
+- CVE-2025-4609 (@payloadartist) — Mojo IPC handle validation failure. Google paid **$250,000** for partial sandbox escape. Affects Chrome, Edge, Cursor, Windsurf (all Chromium-based).
+
+**iOS Security Testing:**
+- **ipsw tool** (8kSec walkthrough) — Swiss Army knife for iOS/macOS firmware research.
+- **OWASP MASTG-TECH-0061** — iOS Keychain dumping methodology.
+- **IPA Auditor** (thecybersandeep) — Zero-setup browser-based IPA static analysis (50+ OWASP MASVS checks).
+- **objection** (SensePost) — 9.1k stars. Frida-powered runtime mobile exploration. One-line SSL pinning disable, Keychain dump.
+- **frida-ios-dump** (AloneMonkey) — 3.9k stars. Pull decrypted IPA files from jailbroken devices.
+- YesWeHack: Getting started with iOS pentesting (Parts 1-2).
+- Redfox Security: iOS SSL pinning bypass complete guide.
+
+**References:**
+- **TrustFoundry Firefox IPDL Research:** https://trustfoundry.net/2024/04/11/firefox-sandbox-vulnerability-research-introduction-and-environment-setup
+- **CVE-2025-4919 Pwn2Own Firefox (ZDI):** https://www.zerodayinitiative.com/blog/2025/7/14/cve-2025-4919-corruption-via-math-space-in-mozilla-firefox
+- **CVE-2025-43529 Safari DFG JIT Exploit:** https://sploitus.com/exploit?id=5537A1A9-5E8B-581D-95B3-AAE5B10571E3
+- **CVE-2025-14174 ANGLE OOB (Rescana):** https://www.rescana.com/post/apple-urgently-patches-webkit-zero-day-vulnerabilities-exploited-in-targeted-attacks-affecting-ios
+- **CVE-2025-4609 Mojo Sandbox Escape (OX Security):** https://www.ox.security/blog/the-aftermath-of-cve-2025-4609-critical-sandbox-escape-leaves-1-5m-developers-vulnerable
+- **wh1te4ever WebKit Exploit Repo:** https://github.com/wh1te4ever/WebKit-Bug-256172
+- **ipsw Tool Walkthrough (8kSec):** https://8ksec.io/ipsw-walkthrough-part-1-the-swiss-army-knife-for-ios-macos-security-research
+- **OWASP MASTG iOS Keychain:** https://mas.owasp.org/MASTG/techniques/ios/MASTG-TECH-0061
+- **IPA Auditor:** https://ipaauditor.com
+- **objection (SensePost):** https://github.com/sensepost/objection
+- **frida-ios-dump:** https://github.com/AloneMonkey/frida-ios-dump
+- **0xdea Frida Scripts:** https://github.com/0xdea/frida-scripts
+- **YesWeHack iOS Pentesting:** https://www.yeswehack.com/learn-bug-bounty/getting-started-ios-penetration-testing-part-2
+- **Redfox SSL Pinning Bypass iOS:** https://www.redfoxsec.com/blog/bypassing-ssl-pinning-on-ios-applications
+- **CVE-2020-15647 Firefox Cookie Stealing:** https://infosecwriteups.com/firefox-cookie-stealing-android-file-access-cve-2020-15647-7f214f6402f6
+
+**References:**
+- Blog: TrustFoundry Firefox IPDL - https://trustfoundry.net/2024/04/11/firefox-sandbox-vulnerability-research-introduction-and-environment-setup
+- Blog: ZDI CVE-2025-4919 - https://www.zerodayinitiative.com/blog/2025/7/14/cve-2025-4919-corruption-via-math-space-in-mozilla-firefox
+- Blog: Field Effect Firefox - https://fieldeffect.com/blog/critical-flaws-firefox-chrome-patched
+- Exploit: CVE-2025-43529 - https://sploitus.com/exploit?id=5537A1A9-5E8B-581D-95B3-AAE5B10571E3
+- Threat Intel: Safari Zero-Day (Rescana) - https://www.rescana.com/post/apple-urgently-patches-webkit-zero-day-vulnerabilities-exploited-in-targeted-attacks-affecting-ios
+- Blog: CVE-2025-14174 (SOC Prime) - https://socprime.com/blog/cve-2025-14174-vulnerability
+- Blog: CVE-2025-4609 Mojo $250k (OX) - https://www.ox.security/blog/the-aftermath-of-cve-2025-4609-critical-sandbox-escape-leaves-1-5m-developers-vulnerable
+- Blog: CVE-2025-4609 (System Weakness) - https://systemweakness.com/beyond-sandboxes-layered-security-for-ai-agent-infrastructure-e9d25c8235c8
+- GitHub: wh1te4ever WebKit Exploit - https://github.com/wh1te4ever/WebKit-Bug-256172
+- Tool: ipsw Walkthrough (8kSec) - https://8ksec.io/ipsw-walkthrough-part-1-the-swiss-army-knife-for-ios-macos-security-research
+- Standard: OWASP Keychain - https://mas.owasp.org/MASTG/techniques/ios/MASTG-TECH-0061
+- Tool: IPA Auditor - https://ipaauditor.com
+- Guide: iOS Pentesting (YesWeHack) - https://www.yeswehack.com/learn-bug-bounty/getting-started-ios-penetration-testing-part-2
+- Guide: iOS SSL Pinning Bypass - https://www.redfoxsec.com/blog/bypassing-ssl-pinning-on-ios-applications
+- GitHub: Frida Scripts (0xdea) - https://github.com/0xdea/frida-scripts
+- GitHub: Objection - https://github.com/sensepost/objection
+- GitHub: frida-ios-dump - https://github.com/AloneMonkey/frida-ios-dump
+- Docs: Frida iOS Setup - https://frida.re/docs/ios
+
+**Similar INBOX References:**
+- Entry #042 (Chrome V8 RCE $55k)
+- Entry #075 (Orange Tsai Edge sandbox escape $175k)
+- Entry #058 (Samsung uXSS)
+- Entry #059 (Chrome referrer policy override)
+
+---
+
+### Entry #097 - GitLab Bug Bounty Attack Research Collection
+
+**Source:** Aggregated — HackerOne, GitLab Security, joaxcar, ahacker1, vakzz
+**Date Added:** 2026-05-14
+**Type:** Methodology, Vulnerability Research, Bug Bounty Findings
+**Content:**
+
+**CI/CD Pipeline Attacks:**
+- **joaxcar's CI_JOB_TOKEN abuse gist** — Master-class: spoof MR authors, CI_JOB_TOKEN still works on public/internal projects even after "blocking". Full POC using secrets_detection template to exfiltrate ALL CI variables.
+- **Adarsh Shetty** — GraphQL CI secret steal: CI/CD variables exfiltrated via the GraphQL API. Writeup at albatraoz.hashnode.dev.
+- **risk3sixty** — Attacking self-hosted GitLab runners: find instance runners, execute pipeline jobs, shell executor → RCE, browse build dirs for secrets.
+- **Plaidnox** — 12 CI/CD attack vectors mapped to OWASP CI/CD matrix. Full kill chain from token harvesting to cloud compromise.
+- **Cycode** — Critical GraphQL flaw allowing any authenticated user to attach malicious runner to any project.
+- **Safeguard.sh** — OIDC token theft via missing ref_type/ref pinning in trust policies.
+
+**Permission Escalation (Guest→Owner):**
+- CVE-2023-3907 ($shubham_sohi) — Maintainer → Owner via project access token API (access_level=50 bypass).
+- Member import bypass ($theluci) — Maintainer bypasses fix by importing members from another project as Owner.
+- Project import access level tampering ($justas_b) — Developer → Maintainer by modifying ndjson.
+- CVE-2024-1299 — Custom role `manage_group_access_tokens` → Owner escalation.
+- CVE-2024-8631 — Admin Group Member custom role → cross-role privesc.
+- Issue #555786 — Custom role privesc via `manage_group_access_tokens` permission.
+- Issue #462665 — Custom role permission amplification allowing unauthorized project access.
+- Issue #439175 — GAT privesc: Group Access Token privilege escalation via GraphQL.
+
+**Rails-Specific Exploits:**
+- **vakzz $12k bounty** — Git flag injection to RCE: unsanitized `ref` parameter in Search API → `git log --output=/var/opt/gitlab/.ssh/authorized_keys` → SSH as git user.
+- **CVE-2020-10977** (vakzz) — Classic LFI→RCE: path traversal in issue moving → read secrets.yml → forge signed cookie → Rails Marshal.load deserialization → RCE.
+- LiveOverflow: SSRF + CRLF injection → Redis → RCE (the classic GitLab chain).
+
+**Auth Bypass:**
+- CVE-2024-45409 (CVSS 10.0) — Ruby-SAML signature wrapping: XPath picks first DigestValue, smuggled attestation forge assertion for any user.
+- CVE-2025-25291/25292 — Parser differential SAML bypass: REXML vs Nokogiri produce different DOM trees from same XML.
+
+**Top Researchers to Follow:**
+- ahacker1 — Top GitLab reporter 2024. Pipeline-as-any-user, SAML parser differentials
+- joaxcar — CI_JOB_TOKEN abuse, pipeline impersonation
+- matanber — Web IDE XSS (CVE-2024-4835, $10,270)
+- vakzz — Git flag injection RCE $12k, LFI→RCE via Rails deser
+- shubham_sohi — Maintainer→Owner via access token API
+
+**References:**
+
+CI/CD Pipeline:
+- Blog: Adarsh Shetty GraphQL CI Secret Steal - https://albatraoz.hashnode.dev/stealing-gitlab-cicd-secrets-via-graphql
+- Gist: joaxcar CI_JOB_TOKEN Abuse - https://gist.github.com/joaxcar/9419b2df8778f26e9b02a741a8ec12f8
+- Blog: Self-Hosted GitLab Attack (risk3sixty) - https://risk3sixty.com/blog/attacking-self-hosted-gitlab
+- Blog: 12 CI/CD Vulnerabilities (Plaidnox) - https://blog.plaidnox.com/posts/cicd-pipeline-security
+- Blog: GitLab Malicious Runner (Cycode) - https://cycode.com/blog/security-advisory-gitlab-malicious-runner-vulnerability/
+- Blog: OIDC Token Theft (Safeguard) - https://safeguard.sh/resources/blog/gitlab-oidc-token-theft-workflow-research
+- Article: OMGCICD Shared Runners - https://pulsesecurity.co.nz/articles/OMGCICD-gitlab
+- H1: Container Escape Public CI - https://hackerone.com/reports/1442118
+- Video: Running CI as Any User $12k - https://www.youtube.com/watch?v=svAqyypPCTQ
+- H1: Blocked User Git Access via CI Token - https://hackerone.com/reports/497047
+- H1: Arbitrary Pipeline Jobs as Victim - https://hackerone.com/reports/894569
+- H1: CVE-2024-5655 Pipeline as Any User (ahacker1) - https://hackerone.com/reports/2536320
+
+Permission Escalation:
+- H1: Privilege Escalation to Admin $10k - https://hackerone.com/reports/493324
+- H1: External User Maintainer - https://hackerone.com/reports/1193062
+- CVE: CVE-2023-3907 - https://nvd.nist.gov/vuln/detail/CVE-2023-3907
+- CVE: CVE-2024-1299 - https://nvd.nist.gov/vuln/detail/CVE-2024-1299
+- CVE: CVE-2024-8631 - https://vulert.com/vuln-detail/CVE-2024-8631
+- Issue: Custom role privesc #555786 - https://gitlab.com/gitlab-org/gitlab/-/issues/555786
+- Issue: Custom role permission amplification #462665 - https://gitlab.com/gitlab-org/gitlab/-/issues/462665
+- Issue: GAT privesc #439175 - https://gitlab.com/gitlab-org/gitlab/-/issues/439175
+
+Exploits & RCE:
+- Writeup: $12k Git Flag Injection RCE (vakzz) - https://medium.com/h7w/12-000-bounty-git-flag-injection-to-remote-code-execution-in-gitlab-0a442b58c40a
+- H1: CVE-2020-10977 LFI→RCE (vakzz) - https://hackerone.com/reports/827052
+- CVE: CVE-2020-10977 - https://nvd.nist.gov/vuln/detail/CVE-2020-10977
+- Video: SSRF+CRLF→Redis→RCE (LiveOverflow) - https://liveoverflow.com/gitlab-11-4-7-remote-code-execution-real-world-ctf-2018/
+- GitHub: GitLab Redis Deser RCE - https://github.com/CsEnox/Gitlab-Redis-Deserialization-RCE
+
+Auth Bypass:
+- CVE: CVE-2024-45409 (CVSS 10.0) - https://github.com/synacktiv/CVE-2024-45409
+- Writeup: SAML Parser Differential (GitHub Security Lab) - https://securitylab.github.com/advisories/GHSL-2024-329_GHSL-2024-330_ruby-saml
+- Writeup: SAML Auth Bypass (ProjectDiscovery) - https://blog.projectdiscovery.io/ruby-saml-gitlab-auth-bypass/
+- CVE: CVE-2023-7028 - https://nvd.nist.gov/vuln/detail/CVE-2023-7028
+
+GraphQL:
+- Issue: ciConfig GraphQL - https://gitlab.com/gitlab-org/gitlab/-/issues/520373
+- CVE: CVE-2021-4191 - https://www.rapid7.com/blog/post/2022/03/03/cve-2021-4191-gitlab-graphql-api-user-enumeration-fixed/
+
+General / Tooling:
+- Guide: Reproducible Vulnerabilities - https://handbook.gitlab.com/handbook/security/product-security/security-platforms-architecture/application-security/reproducible-vulnerabilities/
+- Year Review: GitLab 2024 BB - https://about.gitlab.com/blog/gitlabs-2024-bug-bounty-year-in-review
+- Tool: Glato Enumeration Toolkit - https://github.com/praetorian-inc/glato
+- Enumeration: Pentest Book GitLab - https://six2dez.gitbook.io/enumeration/webservices/gitlab
+- PoC: CVE-2021-4191 Exploit - https://github.com/K3ysTr0K3R/CVE-2021-4191-EXPLOIT
+- Patch Diff: CVE-2026-28292 - https://www.codeant.ai/blogs/the-security-research-method-re-examining-old-cves-to-discover-new-vulnerabilities
+- Writeup: IDOR Journey $32k - https://infosecwriteups.com/from-failure-to-32-000-my-bug-bounty-journey-84eac429e2d0
+
+**Similar INBOX References:**
+- Entry #011 (Multi-agent orchestration)
+- Entry #077 (Debate/dedup/prove pipeline)
+- Entry #078 (Patch diffing pipeline)
+- Entry #085 (Privesc via role param tampering)
+
+---
+
+### Entry #099 - DarkNavySecurity: 64 DeFi Exploit Analyses (web3-exploit-analysis)
+
+**Source:** GitHub — DarkNavySecurity/web3-exploit-analysis (by @Defi_Nerd_sec / Shuo Yang)
+**Date Added:** 2026-05-14
+**Type:** Exploit Analysis Collection, DeFi Security Research
+**Repo:** https://github.com/DarkNavySecurity/web3-exploit-analysis
+**Content:**
+
+**Overview:**
+The largest public collection of real DeFi exploit analyses — **64 incidents** across Ethereum, BSC, Polygon, Arbitrum, Base, Sui, and Linea. Each report includes Markdown analysis + on-chain data (tx traces, receipts, contract source, transfer logs).
+
+**Complete Exploit Catalog (2026):**
+
+| Date | Chain | Incident | Vuln Type |
+|------|-------|----------|-----------|
+| May 11 | Polygon | Huma Finance V1 | Credit lifecycle drain |
+| May 11 | Polygon | INK Finance | Treasury drain via whitelisted claimer |
+| May 10 | Arbitrum | Renegade Dark Pool | Unprotected initializer drain |
+| May 7 | BSC | White Eagle | Withdraw drain |
+| May 7 | Ethereum | TrustedVolumes RFQ Proxy | Proxy drain |
+| May 5 | Ethereum | WBTC Approval + Ekubo Flash | Flash accounting abuse |
+| Apr 29 | Base | Syndicate Commons Bridge | Upgrade compromise |
+| Apr 29 | Sui | AftermathFi Perpetuals | Negative integrator fee |
+| Apr 28 | Ethereum | YieldCore RWAVault | Unauthorized withdrawal |
+| Apr 28 | Ethereum | yvWETH Approval | Arbitrary command drain |
+| Apr 28 | Ethereum | QNT Pool | EIP-7702 admin EOA delegation |
+| Apr 28 | BSC | JUDAO | Sell-burn reserve manipulation |
+| Apr 27 | Ethereum | Executor | Missing access control |
+| Apr 25 | Base | Singularity_Fi dynBaseUSDCv3 | Oracle share inflation |
+| Apr 23 | Ethereum | GiddyVaultV3 | Signature replay |
+| Apr 18 | Ethereum | KelpDAO rsETH | LayerZero packet drain |
+| Apr 14 | BSC | BurnAddress / MONA | Deferred LP burn |
+| Apr 13 | Ethereum | Hyperbridge ISMP | Forged proof DOT mint |
+| Apr 12 | Base | SubQuery Settings | Access control staking drain |
+| Apr 5 | Linea | Denaria Finance | Virtual AMM manipulation |
+| Mar 31 | Polygon | WhaleBit CES/IGT | Oracle manipulation |
+| Mar 31 | BSC | LML APower | Reward-claim price manipulation |
+| Mar 31 | BSC | InfinitySix | TWAP stale price |
+| Mar 28 | Arbitrum | VTSwapHook | Pricing error |
+| Mar 27 | BSC | EST BNBDeposit | Claim manipulation |
+| Mar 22 | BSC | Cyrus | Price manipulation |
+| Mar 22 | Ethereum | Escrow Overflow | Integer overflow |
+| Mar 18 | Ethereum | dTRINITY dLEND | Index manipulation |
+| Mar 17 | Polygon zkEVM | KToken | Redeem logic flaw |
+| Mar 16 | Ethereum | USDC Permit | Phishing drain |
+| Mar 15 | BSC | Venus Lending | Lending exploit |
+| Mar 12 | BSC | AM Burn Reserve | Reserve manipulation |
+| Mar 12 | Ethereum | CoW Protocol Solver | Solver exploit |
+| Mar 12 | BSC | DBXen | ERC2771 confusion |
+| Mar 11 | BSC | Gamma Lending | Lending exploit |
+| Mar 11 | BSC | Planet Finance | Lending exploit |
+| Mar 11 | BSC | Wukong Staking | Reentrancy |
+| Mar 10 | Ethereum | Alkemi | Self-liquidation |
+| Mar 9 | Ethereum | Gondi PurchaseBundler | Drain |
+| Mar 8 | Base | MOLT EVM Weak Spawner | Access control |
+| Mar 5 | Ethereum | SOLV BRO | Double mint |
+| Mar 4 | Base | Base Multi-Contract | Multi-contract exploit |
+| Mar 3 | BSC | Inugami Staking | Reward debt drain |
+| Mar 3 | Ethereum | Uniswap V4 Hook | Swap drain |
+| Mar 2 | Ethereum | sDOLA LlamaLend | Oracle manipulation |
+| Mar 1 | BSC | BUBU2 Fee Token | Staking drain |
+| Feb 28 | BSC | Movie Token | Burn manipulation |
+| Feb 26 | Ethereum | Aave Fork | Undercollateralized borrow |
+| Feb 25 | BSC | HPay Staking | ForceExit drain |
+| Feb 23 | BSC | STO Deflationary | Burn drain |
+| Feb 22 | Ethereum | TARA DODO CoopPool | Pool exploit |
+| Feb 20 | Base | Veil Cash | Groth16 forgery |
+| Feb 16 | BSC | Fee Token | Skim exploit |
+| Feb 13 | Ethereum | Uniswap Router | Approval abuse |
+| Feb 8 | Ethereum | ERC1155 Bonding Curve | Reentrancy |
+| Feb 7 | Ethereum | USDe Safe Module | Flash loan |
+| Feb 4 | Ethereum | NEUTRL nUSD | Internal balance |
+| Feb 4 | Ethereum | reUSD SingleAdapterRouter | Withdraw |
+| Feb 1 | Ethereum | EYWA PortalV2 | Axelar bridge |
+| Jan 30 | Ethereum | Gyro Finance | CCIP escrow |
+| Jan 28 | BSC | XPL | — |
+| Jan 20 | Ethereum | Makina | Oracle manipulation |
+| Jan 10 | Arbitrum | FutureSwap | — |
+| Jan 5 | Arbitrum | TMX Tribe | — |
+
+**Vulnerability Type Breakdown:**
+- Oracle manipulation — most common across chains
+- Access control failures — unprotected initializers, missing ownership checks
+- Flash loan attacks — accounting abuse, share inflation
+- Reentrancy — staking, bonding curves, lending
+- Cross-chain bridge attacks — LayerZero, Axelar, CCIP
+- Signature replay — across chains and vaults
+- Price manipulation — TWAP staleness, AMM manipulation
+- ERC standards abuse — ERC2771 confusion, EIP-7702 delegation, ERC4626 donation
+
+**Relevance to Framework:**
+- **THE missing Ethereum/DeFi piece** — 64 real exploits, not theory
+- Every major vuln class demonstrated in production
+- On-chain artifacts make each report reproducible
+- Cross-chain coverage (7 chains)
+- Directly feeds into `skills/crypto-defi-auditor.md` and `workflows/04-crypto-hunt.md`
+
+**Similar INBOX References:**
+- Entry #095 (Ethereum/DeFi tooling collection)
+- Entry #016 (Solana router)
+- Entry #027 (dYdX v4 oracle manipulation)
+
+---
+
+### Entry #100 - DarkNavySecurity web3-skills: Claude Code Smart Contract Auditing Kit
+
+**Source:** GitHub — DarkNavySecurity/web3-skills
+**Date Added:** 2026-05-14
+**Type:** Tool, AI Agent Skills, Smart Contract Auditing
+**Repo:** https://github.com/DarkNavySecurity/web3-skills
+**License:** MIT
+**Immunefi Earned:** $22K
+**Content:**
+
+**Overview:**
+Web3 security skills kit for Claude Code with three specialized skills. Created by the same team behind the 64 exploit analyses (Entry #099).
+
+**Three Skills:**
+
+**1. contract-auditor** — Solidity smart contract auditor
+- Parallel hunt agents
+- Adversarial review for high-severity findings
+- Designed for Immunefi bug bounty hunting
+
+**2. client-auditor** — Blockchain node auditor
+- Go, Rust, C/C++ vulnerability patterns
+- 20 vulnerability pattern families
+- Covers: P2P, consensus, RPC, memory safety
+- Track record: $1K on Immunefi + rippled (XRP Ledger) vulnerability acknowledged and patched
+
+**3. exploit-investigator** — On-chain exploit investigator
+- Traces attack transactions
+- Reconstructs exploit logic
+- Optional PoC generation
+- Requires Python env + API keys
+- Powers the 64 analyses in web3-exploit-analysis
+
+**Installation:**
+```
+Claude Code: Install skill https://github.com/DarkNavySecurity/web3-skills/
+```
+Or: `git clone` + `bash install.sh`
+
+**Relevance to Framework:**
+- Directly parallels our own skill structure (skills/ directory with .md files)
+- Proven track record: $22K+ earned on Immunefi
+- contract-auditor skill maps to our `skills/crypto-defi-auditor.md`
+- exploit-investigator skill is the tool behind Entry #099's 64 analyses
+- Can install directly into Claude Code alongside our framework skills
+
+**Similar INBOX References:**
+- Entry #099 (DarkNavy 64 exploit analyses)
+- Entry #095 (Ethereum/DeFi tooling)
+- Entry #080 (Reasonix — agent framework comparison)
+
+---
+
+### Entry #101 - DARKNAVY PoC Collection: iOS/macOS/Chrome/Steam 0-days
+
+**Source:** GitHub — DarkNavySecurity/PoC
+**Date Added:** 2026-05-14
+**Type:** Proof of Concept, Exploit
+**Repo:** https://github.com/DarkNavySecurity/PoC
+**Stars:** 221
+**Content:**
+
+**Collection of 5 PoCs:**
+
+| CVE/ID | Target | Severity | Description |
+|--------|--------|----------|-------------|
+| CVE-2025-43300 | iOS 18.6.2 / macOS 14.7.8 | Critical | Full exploit for Apple OS |
+| CVE-2025-6554 | Chrome < 138.0.7204.96 | Critical | Chrome renderer exploit |
+| CVE-2024-5274 | Chrome < 125.0.6422.112 | Critical | V8 parser vulnerability |
+| steam-2260570 | Steam Client | High | CEF framework exploit |
+| CVE-2023-32434 | iOS 16.5.1 / macOS 13.4.1 | Critical | iOS/macOS kernel exploit |
+
+**Supplementary:**
+- CVE-2023-4863 — Chrome renderer (blog post Parts 1 & 2)
+
+**Relevance to Framework:**
+- Real 0-day exploits from a top APT-level research team
+- Bridges Entry #096 (browser security) with actual working code
+- iOS/macOS kernel exploits fill the iOS gap (Entry #096 was mostly tooling)
+- Chrome V8 exploits complement Entry #042 ($55k V8 RCE)
+
+**Similar INBOX References:**
+- Entry #096 (Browser security collection)
+- Entry #042 (Chrome V8 RCE $55k)
+- Entry #075 (Orange Tsai Edge sandbox escape)
+
+---
+
+### Entry #102 - DARKNAVY Black Hat 2026: Biometric AuthToken Heist — Android CE Bypass via Bio TA
+
+**Source:** Black Hat 2026 — Xuangan Xiao (@xgxiao66) & Zikai Xu (@N7UtbN) @ DARKNAVY
+**Date Added:** 2026-05-14
+**Type:** Vulnerability Research, Android Exploitation, Mobile Forensics
+**Blog:** https://www.darknavy.org/
+**CVEs:** CVE-2025-20987, CVE-2025-20988, CVE-2025-20989
+**Content:**
+
+**THE PROBLEM (Background):**
+- Android's PIN/pattern/password is the master key: unlocks screen, authorizes payments, changes biometrics, **decrypts user data (CE — Credential Encryption)**
+- CE keys are protected by KeyMaster in TrustZone — even with root, data stays encrypted Before-First-Unlock (BFU)
+- PIN verification moved into TrustZone 10 years ago via Gatekeeper TA → returns HMAC-signed **AuthToken**
+- Throttle mechanism is the only thing preventing brute-force (30s, 60s delays after N failures)
+- Past works cracked PIN via TZ memory bugs, fault injection — all device-specific
+
+**THE INSIGHT:**
+- **Biometric Auth TAs (Face, Fingerprint) share the SAME HMAC key with Gatekeeper TA**
+- KeyMint TA, Gatekeeper TA, and Bio Auth TAs all derive from the same HMAC key
+- If you can get Bio TA to sign an AuthToken, you **bypass the Gatekeeper throttle entirely**
+- Bio TA implementations are **CHAOS** — no standard from Google below HAL level, OEMs improvise
+- 8 models from Samsung tested had **4 different fingerprint TAs** in some phones — pick the weakest
+
+**4 PATHS TO FORGE AN AUTHTOKEN:**
+
+| Path | Primitive | Difficulty | BFU/AFU | Affected |
+|------|-----------|------------|---------|----------|
+| **1** — GET_AUTH_OBJ | API directly signs arbitrary AT | EASY | BFU ✅ | Samsung A14, others with Silead SDK |
+| **2** — GET_AUTH_RESULT | API returns validated AT, type forced to 2 | EASY | AFU only | Qualcomm devices |
+| **3** — Log leak | HMAC key in error log on production device | TRIVIAL | BFU ✅ | Samsung A05s (Snapdragon 680) |
+| **4** — TA memory bug | OOB read → ASLR bypass → key leak | MEDIUM | BFU ✅ | Motorola Edge 40 Neo |
+
+**Path 1 — GET_AUTH_OBJ (The Easiest):**
+- Frida-hooked HAL → TA, found `GET_AUTH_OBJ` command
+- TA takes ANY 69 bytes, signs them with the shared HMAC key
+- **No biometric match required, no nonce check, no fingerprint verification**
+- Forge an AuthToken with `authenticatorType = 1 (GATEKEEPER)` → KeyMint accepts it
+- Use forged AT to decrypt CE intermediate key → brute-force PIN offline via AES-GCM tag oracle
+
+**Path 3 — Log Leak (The Trivial One):**
+- On Samsung A05s production device (no debug build needed):
+- Send a bad AuthToken → HMAC verify fails → TA logs `ta->hmac_key[i]` byte by byte in error log
+- Snapdragon 680 encrypts the log but spills into shared memory. On MTK, TZ logs spill into dmesg
+- **32 bytes of HMAC key in plaintext** — now you can sign anything
+
+**Path 4 — TA Memory Bug (Full Pwn):**
+- Motorola Edge 40 Neo (MTK platform):
+  - **Stage 1:** OOB read in cmd 723 — `*a4` unbounded → leaks LR → defeats ASLR
+  - **Stage 2:** Arbitrary read via `patch_ta_info_api` — REE controls bounds → traverse BSS → read HMAC key
+  - **Stage 3:** Arbitrary write — same primitive → function pointer hijack → TA code execution
+  - From S-EL0, attack S-EL1/EL3 — access TEEOS interface, rpmb, TEE key derivation
+
+**RESULTS — 8 phones, 7 vendors, 100% PIN recovery:**
+
+| Device | Platform | Path | BFU | AFU |
+|--------|----------|------|-----|-----|
+| Samsung A14 | MTK | Path 1 | ✅ | ✅ |
+| Samsung A05s | Qualcomm | Path 3 | ✅ | ✅ |
+| REDACTED | MTK | Path 1 | ✅ | ✅ |
+| REDACTED | Qualcomm | Path 2 | — | ✅ |
+| REDACTED | MTK | Path 4 | ✅ | ✅ |
+| REDACTED | Qualcomm | Path 4 | ⚠ | ✅ |
+| REDACTED | MTK | Path 1 | ✅ | ✅ |
+| Motorola Edge 40 Neo | MTK | Path 4 | ✅ | ✅ |
+
+**Threat Model:**
+- Requires root (arbitrary R/W in EL1) — realistic via boot chain exploits (Cellebrite, Quarkslab)
+- libTEEC access to invoke arbitrary TA commands
+- **This work fills the gap between "got root" and "read data" before first unlock**
+
+**Mitigations (from DARKNAVY):**
+- Bio TA must validate biometric match before signing any AuthToken
+- KeyMint needs strict type-validation on `authenticator_type`
+- Industry-wide standard for biometric TA security
+- No plaintext keys resident in TA memory — derive per-session, wipe immediately
+- Long-term: move PIN auth to Weaver / Secure Element
+
+**Relevance to Framework:**
+- **Directly fills the Mobile/Android gap** — from tooling (Entry #096) to actual exploitation
+- Android forensic methodology: root → forge AuthToken → decrypt CE → brute PIN offline
+- Complements Entry #031 (Android Pentesting Skill — Frida scripts, static analysis)
+- The "Bio TA chaos" finding is a methodology for testing any OEM's implementation
+- TA memory bug exploitation (Path 4) is a reusable template
+- CVEs 2025-20987/20988/20989 are recent (2025-2026)
+
+**References:**
+- **Blog:** https://www.darknavy.org/ — DARKNAVY AuthToken Heist
+- **CVE-2025-20987:** https://nvd.nist.gov/vuln/detail/CVE-2025-20987 — Path 1 (GET_AUTH_OBJ)
+- **CVE-2025-20988:** https://nvd.nist.gov/vuln/detail/CVE-2025-20988 — Path 3 (TZ log leak)
+- **CVE-2025-20989:** https://nvd.nist.gov/vuln/detail/CVE-2025-20989 — Path 4 (TA OOB read)
+- **Prior Art — Quarkslab Samsung Boot Chain:** https://blog.quarkslab.com/attacking-samsung-galaxy-a-boot-chain.html
+- **Prior Art — Quarkslab Android Auth Escalation:** https://blog.quarkslab.com/android-authentication-core-escalation.html
+- **Context — Amnesty Cellebrite Report:** https://www.amnesty.org/en/latest/research/2024/12/zero-day-exploit-cellebrite-serious-student/
+- **Android CE Docs:** https://source.android.com/docs/security/features/encryption
+
+**Similar INBOX References:**
+- Entry #031 (Android Pentesting Skill — 188 files, Frida, RASP bypass)
+- Entry #096 (Browser security — iOS partial coverage)
+- Entry #061 (Android RCE via headless browser)
+- Entry #058 (Samsung uXSS)
+
+---
+
+### Entry #104 - LLM Prompt Injection Security Handbook V1.0 (SecureNexusLab)
+
+**Source:** GitHub — zer0ptr/llm-prompt-injection-security-handbook (forked from SecureNexusLab)
+**Date Added:** 2026-05-14
+**Date Published:** 2026-04-11
+**Type:** Technical Research Report, Handbook
+**Repo:** https://github.com/zer0ptr/llm-prompt-injection-security-handbook
+**Author:** Zero (Independent Security Researcher @ SecureNexusLab)
+**Written Using:** KiMi_2.5_Pro
+**OWASP 2025 Rank:** #1 (Prompt Injection)
+**Content:**
+
+**Overview:**
+A comprehensive technical research report on LLM Prompt Injection threats. Covers the full spectrum from mathematical foundations (attention mechanisms) to enterprise-grade defense architectures. Described as "When SQL-injected ghosts resurrect" — systematically analyzing prompt injection security threats, attack methods, and defense architectures for LLMs.
+
+**10-Chapter Structure:**
+
+1. **What is LLM Prompt Injection?** — Concept essence, Transformer differences, fundamental properties
+2. **Direct Prompt Injection** — System prompt extraction, task hijacking, conditional models, social engineering packaging, adversarial optimization
+3. **Indirect Prompt Injection** — RAG trust crisis, knowledge base poisoning, CVE-2025-32711 (EchoLeak) zero-click attack deep analysis, MCP/tool metadata poisoning
+4. **Jailbreak Attacks** — Alignment mechanism analysis, role playing, hypothetical framing, translation attacks (low-resource language bypass), DAN 1.0-12.0 evolution, coding attacks
+5. **Multi-Turn Attacks & Adversarial Suffixes** — Crescendo attack, GCG (Greedy Coordinate Gradient) mathematical mechanism, automation toolchain
+6. **Measuring Attack Success Rate (ASR)** — LLM-as-Judge, standardized measurement protocols
+7. **Guardrail Bypass** — Input/output layer bypass techniques, classifier evasion
+8. **Defense Architecture Deployment** — First principles, Dual-LLM pattern (physically isolated instruction understanding + content generation), context management, LLM-as-Judge defense
+9. **Limitations & Residual Risks** — Long context challenges, multi-agent cascades
+10. **Future Outlook** — TEE, formal verification, regulation
+
+**Core Technical Analysis:**
+- **Mathematical Nature of Attention Mechanisms:** Why prompt injection can't be "patched", only "mitigated"
+- **GCG Algorithm:** Token-level adversarial suffix implementation + cross-model transferability
+- **Automation Toolchain:** garak, PyRIT, HarmBench deep usage, promptfoo CI/CD integration
+
+**Four-Layer Defense Architecture:**
+1. External boundary layer
+2. Input processing layer
+3. Model execution layer
+4. Output review layer
+
+**File Format:** PDF (llm-prompt-injection-security-handbook V1.0.pdf)
+
+**Relevance to Framework:**
+- **Directly extends Entry #044 (Prompt Injection Framework)** with cutting-edge techniques
+- Covers CVE-2025-32711 (EchoLeak) — zero-click attack, our first coverage of this
+- MCP/tool metadata poisoning — directly relevant to Entry #050/#051/#052 (MCP security)
+- DAN 1.0→12.0 evolution catalog — useful for jailbreak testing methodology
+- Defense architecture is useful for the steering documents
+- GCG mathematical analysis is rare in public resources
+
+**References:**
+- **GitHub Repo:** https://github.com/zer0ptr/llm-prompt-injection-security-handbook
+- **Original Repo:** https://github.com/SecureNexusLab/llm-prompt-injection-security-handbook
+- **PDF Direct:** https://github.com/zer0ptr/llm-prompt-injection-security-handbook/blob/main/llm-prompt-injection-security-handbook%20V1.0.pdf
+- **CVE-2025-32711 (EchoLeak):** https://nvd.nist.gov/vuln/detail/CVE-2025-32711
+- **OWASP LLM Top 10 2025:** https://llmtop10.com/
+- **garak Tool:** https://github.com/NVIDIA/garak
+- **PyRIT:** https://github.com/Azure/PyRIT
+- **HarmBench:** https://github.com/centerforaisafety/HarmBench
+- **promptfoo:** https://github.com/promptfoo/promptfoo
+
+**Similar INBOX References:**
+- Entry #044 (Prompt Injection Framework — 3-step methodology)
+- Entry #038/#039 (AI agent self-validation)
+- Entry #050/#051/#052 (MCP security)
+- Entry #070 (Google Tasks + Gemini prompt injection)
+- Entry #087 (Claude Code source leak — undercover mode, anti-distillation)
+
+---
+
+### Entry #105 - GitLab Reproducible Vulnerabilities: Official Hands-On Training
+
+**Source:** GitLab Handbook — Application Security
+**Date Added:** 2026-05-14
+**Type:** Training, Lab, Vulnerability Research
+**URL:** https://handbook.gitlab.com/handbook/security/product-security/security-platforms-architecture/application-security/reproducible-vulnerabilities/
+**Content:**
+
+**Overview:**
+GitLab's official training resource for learning vulnerability research. They provide publicly disclosed security issues with vulnerable Docker images, progressive hints, reproduction steps, patch diffs, and CVSS scores with bounty amounts. This is the single best place to learn GitLab bug hunting methodology.
+
+**Available Labs:**
+
+**1. Stored XSS in 15.0 (CVE-2022-1948)**
+- **Bounty:** $13,950 (CVSS 8.7 High)
+- **Vulnerable Docker:** `gitlab/gitlab-ee:15.0.0-ee.0`
+- **Attack:** Stored XSS via CRM contact fields (first/last name). Injected JS rendered when using `/add_contacts` quick action in issues
+- **Patch:** Escape first/last name in contact previews + SemGrep rules + AppSec required approvers
+- **Link:** https://gitlab.com/gitlab-org/gitlab/-/issues/363293
+
+**2. DoS in 14.3.5 (CVE-2021-39933)**
+- **Bounty:** $610 (CVSS 4.3 Medium)
+- **Vulnerable Docker:** `gitlab/gitlab-ee:14.3.5-ee.0`
+- **Attack:** ReDoS via crafted issues, MRs, or comments
+- **Link:** https://gitlab.com/gitlab-org/gitlab/-/issues/340449
+
+**How to Use:**
+```bash
+# Run the vulnerable version
+docker run --detach \
+  --hostname gitlab.example.com \
+  --publish 8929:80 --publish 8922:22 \
+  --name gitlab15.0.0 \
+  --shm-size 256m \
+  gitlab/gitlab-ee:15.0.0-ee.0
+
+# Get root password
+docker exec gitlab15.0.0 grep 'Password:' /etc/gitlab/initial_root_password
+```
+
+**Training Methodology:**
+1. Deploy vulnerable Docker image
+2. Register attacker user, get admin to approve
+3. Follow hints (4 levels of reveal)
+4. Try to reproduce the bug independently
+5. Read the actual HackerOne report steps
+6. Attempt to write a patch
+7. Compare against GitLab's actual fix commit
+8. Study the SemGrep rules they added to prevent regression
+
+**Why This Matters:**
+- **Real bugs, real payouts** — $13,950 XSS, $610 DoS
+- **Learn GitLab's permission model** by using it
+- **Understand patch culture** — how GitLab fixes and prevents regressions
+- **Practice before hunting live** — essential since GitLab requires reproduction against your own instance
+- **Template for contributing** — they accept community contributions for new labs
+
+**Relevance to Framework:**
+- Direct prerequisite before hunting GitLab bounties
+- Hands-on practice with Docker-based vulnerable instances
+- Learn SemGrep rules for XSS prevention — applicable to any web app testing
+
+**Similar INBOX References:**
+- Entry #097 (GitLab bug bounty research collection)
+- Entry #099 (DarkNavy exploit analyses — similar learn-from-real-exploits approach)
+- Entry #078 (Patch diffing pipeline — similar patch analysis methodology)
+
+---
+
+### Entry #103 - SVEN: Security Hardening & Adversarial Testing for Code LLMs
+
+**Source:** GitHub — eth-sri/sven (forked by zer0ptr)
+**Date Added:** 2026-05-14
+**Type:** Research Tool, LLM Security, AI Testing
+**Repo:** https://github.com/zer0ptr/sven (original: https://github.com/eth-sri/sven)
+**Paper:** https://arxiv.org/abs/2302.05319 — ACM CCS 2023
+**Authors:** Jingxuan He & Martin Vechev (ETH Zurich)
+**License:** MIT
+**Content:**
+
+**Overview:**
+SVEN enables controlling LLMs to generate **secure** or **insecure** code via learned continuous prompts (prefixes), while maintaining functional correctness. Uses specialized loss terms on a curated dataset to steer code generation toward or away from security vulnerabilities.
+
+**Core Capability:**
+- **Security Hardening:** Steer LLMs away from generating vulnerable code
+- **Adversarial Testing:** Steer LLMs toward generating vulnerable code (for testing security tools)
+- Maintains functional correctness in both modes
+- Uses continuous prompt/prefix tuning (not fine-tuning)
+
+**Supported Models:**
+- CodeGen (350m, 2b, 6b)
+- InCoder
+- SantaCoder
+- **Qwen2.5-1.5b** (added by zer0ptr fork)
+
+**Directory Structure:**
+- `sven/` — Source code for prefix tuning
+- `data_train_val/` — Curated training/validation dataset
+- `data_eval/` — Evaluation datasets
+- `scripts/` — Training and evaluation scripts
+- `trained/` — Pre-trained prefixes
+
+**Evaluation:**
+- **Security:** Uses GitHub CodeQL to measure vulnerability rates in generated code
+- **Functional Correctness:** Uses HumanEval (via MultiPL-E framework)
+
+**Citation:**
+```
+@inproceedings{sven-llm,
+  author    = {Jingxuan He and Martin Vechev},
+  title     = {Large Language Models for Code: Security Hardening and Adversarial Testing},
+  booktitle = {ACM CCS},
+  year      = {2023}
+}
+```
+
+**Relevance to Framework:**
+- **LLM-generated code security** is directly relevant to AI-assisted bug hunting
+- The adversarial testing mode can generate vulnerable code patterns for practice/testing
+- The security hardening mode is relevant to understanding how to make AI agents produce secure code
+- Continuous prompt/prefix tuning is a technique applicable to customizing AI agents for security tasks
+- Can be used to evaluate whether our AI-powered workflows produce secure code
+- The zer0ptr fork adding Qwen2.5 support expands model compatibility
+
+**Similar INBOX References:**
+- Entry #080 (Reasonix — DeepSeek-native agent framework, different approach to LLM control)
+- Entry #087 (Claude Code source leak — KAIROS, anti-distillation)
+- Entry #005/#039 (Self-validation methodology)
+- Entry #072 (LLM-powered vulnerability research methodology)
+
+---
+
+### Entry #098 - Atlassian (Jira/Confluence) Bug Bounty Research Collection
+
+**Source:** Aggregated — Bugcrowd, Snapsec, SentinelOne, Atlassian Labs
+**Date Added:** 2026-05-14
+**Type:** Methodology, Vulnerability Research
+**Content:**
+
+**JQL Injection:**
+- Bugcrowd disclosure (s3cur1t3): JQL injection in Jira REST API using `membersOf()` + `now()` — unauthenticated group membership enumeration.
+- Martin Schneider: "Is JQL injection real?" — deep technical analysis proving JQL injection is viable.
+
+**Confluence Stored XSS:**
+- Widget Connector XSS (Bugcrowd): unsanitized `brandingId` parameter → remote JS execution. Full reproduction steps.
+- CVE-2024-21686 (CVSS 8.7): Confluence Data Center stored XSS via insufficient output encoding.
+
+**Jira Stored XSS → Full Org Takeover:**
+- Snapsec blog: Custom Priority Icon URL stored XSS → admin visits config page → XSS fires → attacker invited with full product access. Masterclass in chaining.
+
+**Workflow Permission Abuse:**
+- JRACLOUD-80910: `commenteditall`/`commenteditown` do NOT respect `denied` group restrictions.
+- JRACLOUD-76362: `jira.permission.create` workflow property has no effect.
+
+**Connect App Security:**
+- Atlassian pentesting starter guide for Cloud apps (Forge + Connect frameworks).
+- **Connect-Vulnerability-Scanner** (Atlassian Labs) — DAST tool for Connect app XSS + secret exposure.
+- CVE-2021-26073: Broken authentication in Connect Express — context JWT accepted on lifecycle endpoints.
+
+**Bug Bounty Program:**
+- Bugcrowd: bugcrowd.com/engagements/atlassian — $200-$10k bounties. 30+ products. Confluence DC has 5x reward bonuses.
+
+**Cheat Sheet:**
+- UGF0aWVudF9aZXJv/Atlassian-Jira-pentesting — 20+ CVEs with PoCs, dorks, tools.
+
+**References:**
+- **Atlassian Bug Bounty Program:** https://bugcrowd.com/engagements/atlassian
+- **JQL Injection Disclosure (s3cur1t3):** https://bugcrowd.com/disclosures/2acd4db2-c50e-4b33-8dc2-a18c78b90f9b/jql-injection-in-jira-rest-api-allows-unauthenticated-users-to-access-information-only-admin-and-sysadmins-should-access
+- **Is JQL Injection Real? (Martin Schneider):** https://medium.com/@mart.schneider/is-jql-injection-real-d461a33eec77
+- **Confluence Widget Connector XSS:** https://bugcrowd.com/disclosures/44d90402-9639-4181-9e2a-652521d40148/confluence-stored-xss-via-widget-connector
+- **CVE-2024-21686 Confluence XSS:** https://www.sentinelone.com/vulnerability-database/cve-2024-21686/
+- **Jira XSS to Full Org Takeover (Snapsec):** https://blog.snapsec.co/from-stored-xss-to-full-organization-takeover-in-jira-work-management/
+- **Atlassian Connect Security Guide:** https://developer.atlassian.com/platform/marketplace/pentesting-bugbounty-starter-guide/
+- **Connect Vulnerability Scanner:** https://github.com/atlassian-labs/Connect-Vulnerability-Scanner
+- **CVE-2021-26073 ACE Broken Auth:** https://advisories.gitlab.com/pkg/npm/atlassian-connect-express/CVE-2021-26073
+- **Jira Pentesting Checklist:** https://github.com/UGF0aWVudF9aZXJv/Atlassian-Jira-pentesting
+
+**References:**
+- Disclosure: JQL Injection (Bugcrowd) - https://bugcrowd.com/disclosures/2acd4db2-c50e-4b33-8dc2-a18c78b90f9b/jql-injection-in-jira-rest-api-allows-unauthenticated-users-to-access-information-only-admin-and-sysadmins-should-access
+- Article: Is JQL Injection Real - https://medium.com/@mart.schneider/is-jql-injection-real-d461a33eec77
+- Disclosure: Confluence Widget Connector XSS (Bugcrowd) - https://bugcrowd.com/disclosures/44d90402-9639-4181-9e2a-652521d40148/confluence-stored-xss-via-widget-connector
+- CVE: CVE-2024-21686 (Confluence XSS) - https://www.sentinelone.com/vulnerability-database/cve-2024-21686/
+- Blog: Jira Stored XSS to Org Takeover - https://blog.snapsec.co/from-stored-xss-to-full-organization-takeover-in-jira-work-management/
+- Bug Tracker: JRACLOUD-80910 - https://jira.atlassian.com/browse/JRACLOUD-80910
+- Bug Tracker: JRACLOUD-76362 - https://jira.atlassian.com/browse/JRACLOUD-76362
+- Program: Atlassian Bug Bounty - https://bugcrowd.com/engagements/atlassian
+- Guide: Marketplace Security Testing - https://developer.atlassian.com/platform/marketplace/pentesting-bugbounty-starter-guide/
+- GitHub: Connect Vulnerability Scanner - https://github.com/atlassian-labs/Connect-Vulnerability-Scanner
+- CVE: CVE-2021-26073 - https://advisories.gitlab.com/pkg/npm/atlassian-connect-express/CVE-2021-26073
+- GitHub: Jira Pentesting Checklist - https://github.com/UGF0aWVudF9aZXJv/Atlassian-Jira-pentesting
+
+**Similar INBOX References:**
+- Entry #085 (Privesc via role param — similar to Jira permission model)
+- Entry #089 (Password reset checklist — auth testing)
+
+---
+
+**SUMMARY: Added Entries #093-#105. Total: 105 comprehensive resources in INBOX.**
+
+**Entry #093 - #105 Coverage:**
+- **#093 Cloud IAM** — 21+ AWS privesc paths, GCP service account abuse, Azure RBAC. Fills the cloud gap.
+- **#094 Active Directory** — ADCS ESC1-16, BloodHound, Impacket, Rubeus, real MSRC bounties. Fills the AD gap.
+- **#095 Ethereum/DeFi** — Slither, Echidna, Immunefi ($3M max bounties), 5 DeFi hack postmortems. Fills the EVM gap.
+- **#096 Browser Security** — Firefox IPDL, Safari WebKit exploits, Chromium Mojo ($250k), iOS testing toolchain. Fills Firefox/Safari/iOS gap.
+- **#097 GitLab** — 30+ resources across CI/CD, permission escalation, Rails exploits, SAML auth bypass.
+- **#098 Atlassian** — JQL injection, Confluence XSS, workflow permission abuse, Connect app security.
+- **#099 DarkNavy 64 Exploit Analyses** — 64 real DeFi exploits across 7 chains.
+- **#100 DarkNavy web3-skills** — Claude Code kit for contract/client auditing + exploit investigation. $22K on Immunefi.
+- **#101 DARKNAVY PoCs** — Real 0-days: iOS kernel, Chrome V8, Steam client, macOS.
+- **#102 DARKNAVY BH2026** — Android CE bypass via Bio TA. 4 paths, 8/8 phones cracked. CVEs 2025-20987/20988/20989.
+- **#103 SVEN** — LLM code security hardening + adversarial testing via continuous prompts. ACM CCS 2023.
+- **#104 LLM Prompt Injection Security Handbook** — 10-chapter deep dive. OWASP #1.
+- **#105 GitLab Reproducible Vulnerabilities** — Official training. Stored XSS $13.9k, DoS, Docker labs with hints + patch diffs.
 
 **Updated Collection Stats:**
-- **72 total entries**
-- **$114,700+ in documented bounties**
-- **60+ CVEs referenced** (added 30+ from this entry)
-- **50+ tools listed**
-- **25+ methodologies documented**
+- **105 total entries**
+- **$323,900+ in documented bounties** (added $13,950 + $610)
+- **74+ CVEs referenced** (added CVE-2022-1948, CVE-2021-39933)
+- **66+ tools listed**
+- **36+ methodologies documented**
 
 **Ready for Phase 2: Organization!** 📊

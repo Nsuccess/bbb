@@ -342,28 +342,67 @@ Output: Steering commands + resource allocation
 
 ---
 
-## Future Research Directions
+## Microsoft Multi-Agent Pipeline: Audit → Debate → Dedup → Prove
 
-### 1. Looped LLMs
-- Better multi-hop reasoning
-- Anthropic's Mythos speculation
-- Could discover novel techniques (e.g., JBIG2 virtual CPU)
+**Source:** Entry #077 — Microsoft research on surpassing Mythos
 
-### 2. LLM Brain Surgery
-- David Noel Ng's approach
-- Repeat middle reasoning layers
-- Increase reasoning capacity with minimal VRAM overhead
+### The Pipeline
 
-### 3. Optimal Decomposition & Orchestration
-- RL-training for task decomposition
-- "Mismanaged Geniuses hypothesis"
-- Skill discovery and distillation
-- GEPA (automatic prompt evolution)
-- Dedicated conductor training
+```
+┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐
+│  AUDIT   │ →  │  DEBATE  │ →  │  DEDUP   │ →  │  PROVE   │
+│ (find)   │    │(challenge)│    │(dedupe)  │    │(exploit) │
+└──────────┘    └──────────┘    └──────────┘    └──────────┘
+    20%              50%             15%             15%
+   effort           effort          effort          effort
+```
+
+### Stage 1: Audit (20% effort)
+- Multiple agents independently analyze the same target
+- Each agent focuses on different vulnerability classes
+- No collaboration yet — independent discovery
+
+### Stage 2: Debate (50% effort)
+- **This is where the value is created**
+- Agents challenge each other's findings
+- Devil's Advocate patterns active
+- Cross-validation eliminates false positives
+- Builds consensus on what's real
+
+### Stage 3: Dedup (15% effort)
+- Merge overlapping reports
+- Identify the same root cause across different agents
+- Prioritize unique findings over duplicates
+
+### Stage 4: Prove (15% effort)
+- Build working exploit/PoC
+- Demonstrate real impact
+- Zero false positive target
+
+### Integration with Existing System
+
+| Our Role | Microsoft Equivalent |
+|----------|---------------------|
+| Target Seeder | Pre-Audit (target selection) |
+| Hypothesis Generator | Audit (independent analysis) |
+| Hunter | Audit (focused testing) |
+| External Grader | Debate (challenge findings) |
+| Report Writer | Prove + Dedup (consolidate) |
+| Conductor | Orchestrates all stages |
+
+### Key Insight
+
+> "The watershed isn't whether bugs can be found, but proving bugs with zero false positives — putting 80% of engineering effort into Debate, Dedup, and Prove stages"
+
+**This changes how we think about effort allocation:**
+- Traditional: 80% finding, 20% verifying
+- Microsoft: 20% finding, 80% verifying
+- Our framework: Already aligned (self-validation is the verify step)
+- **Next step:** Formalize Debate and Dedup as explicit agent roles
 
 ---
 
-## Success Metrics
+## Future Research Directions
 
 ### Quantitative
 - **30+ CVEs discovered** autonomously

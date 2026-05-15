@@ -1,8 +1,8 @@
 {
   "metadata": {
     "file": "bugbounty/bug-bounty-automation/resources/00-INBOX.md",
-    "total_entries": 72,
-    "extraction_date": "2026-05-11",
+    "total_entries": 92,
+    "extraction_date": "2026-05-14",
     "total_lines": 13434,
     "status": "Complete extraction for entries #001-#050, partial for #051-#072"
   },
@@ -30,8 +30,8 @@
       "success_story": 8,
       "research_analysis": 10
     },
-    "total_documented_bounties": 180000,
-    "total_cves": 60
+    "total_documented_bounties": 375250,
+    "total_cves": 63
   },
   "entries": [
     {
@@ -481,6 +481,371 @@
         "steering": "Persistence, unique mindset, learning focus"
       }
     }
+    },
+    {
+      "id": "073",
+      "title": "Injection + Sensitive Info Disclosure via .json Discovery ($125)",
+      "niche": "Web Application, Recon, Content Discovery",
+      "vulnerability_type": "Injection, Sensitive Information Disclosure",
+      "priority": "MEDIUM",
+      "resource_type": "Writeup",
+      "bounty": 125,
+      "severity": "P3/P4",
+      "impact": {
+        "description": "Injection impacted backend functionality; .json file leaked internal information"
+      },
+      "kiro_mapping": {
+        "skill": "Recon, content discovery",
+        "workflow": "Enumerate → custom wordlist → discover exposed files → test injection"
+      }
+    },
+    {
+      "id": "074",
+      "title": "Security Debate: Should Apps Display User PII Even If Encrypted at Rest?",
+      "niche": "Security Philosophy, Web Application",
+      "vulnerability_type": "Sensitive Data Exposure, Security Misconfiguration",
+      "priority": "MEDIUM",
+      "resource_type": "Discussion, Debate",
+      "bounty": null,
+      "severity": "N/A",
+      "impact": {
+        "description": "Tension between encrypted-at-rest security and runtime PII access — highlights common blind spot"
+      },
+      "kiro_mapping": {
+        "skill": "IDOR testing, PII discovery",
+        "steering": "Look for apps displaying user PII even if 'encrypted at rest'"
+      }
+    },
+    {
+      "id": "075",
+      "title": "Orange Tsai: 4 Logic Bugs → Edge Sandbox Escape, $175k at Pwn2Own",
+      "niche": "Browser Security, Sandbox Escape, Logic Bugs",
+      "vulnerability_type": "Logic Bugs, Sandbox Escape, Authorization Bypass",
+      "priority": "CRITICAL",
+      "resource_type": "Writeup, Pwn2Own, Exploit Chain",
+      "bounty": 175000,
+      "severity": "P0",
+      "impact": {
+        "description": "Full Microsoft Edge sandbox escape via 4 chained logic bugs, no memory corruption"
+      },
+      "kiro_mapping": {
+        "skill": "Logic bug hunting, browser security testing",
+        "methodology": "Chain multiple low-severity logic issues for critical impact",
+        "steering": "Browser IPC, permission models, sandbox boundaries are fertile ground"
+      }
+    },
+    {
+      "id": "076",
+      "title": "chompie: RHEL Race Condition Privesc, $20k at Pwn2Own",
+      "niche": "Linux Kernel, Privilege Escalation, Race Conditions",
+      "vulnerability_type": "Race Condition, Privilege Escalation",
+      "priority": "CRITICAL",
+      "resource_type": "Writeup, Pwn2Own, Exploit Chain",
+      "bounty": 20000,
+      "severity": "P0",
+      "impact": {
+        "description": "RHEL Workstation privilege escalation via race condition — AI said it wasn't exploitable"
+      },
+      "kiro_mapping": {
+        "skill": "Race condition testing, kernel exploitation",
+        "methodology": "Reverse Devil's Advocate — push back when AI dismisses findings",
+        "steering": "Race conditions still viable in 2026; AI 'not exploitable' is a signal to push harder"
+      }
+    },
+    {
+      "id": "077",
+      "title": "Microsoft: Multi-Agent Vulnerability Mining — Debate, Dedup & Prove Pipeline",
+      "niche": "Multi-Agent AI, Vulnerability Research Methodology",
+      "vulnerability_type": "Methodology, Pipeline Design",
+      "priority": "CRITICAL",
+      "resource_type": "Methodology, Architecture",
+      "bounty": null,
+      "severity": "N/A",
+      "impact": {
+        "description": "Watershed: finding bugs is solved — proving them with zero false positives is the real challenge"
+      },
+      "kiro_mapping": {
+        "skill": "Multi-agent orchestration, debate/dedup/prove",
+        "methodology": "80% engineering on verification pipeline",
+        "workflow": "Audit → Debate → Dedup → Prove",
+        "steering": "Zero false positive target; debate stage as natural filter"
+      }
+    },
+    {
+      "id": "078",
+      "title": "The Mythos We Have At Home: Patch-Diffing Pipeline for N-Day Exploit Generation",
+      "niche": "N-Day Exploitation, Binary Diffing, Windows Security",
+      "vulnerability_type": "Methodology, Pipeline Design, Exploit Generation",
+      "priority": "CRITICAL",
+      "resource_type": "Methodology, Open-Source Tooling, Blog Post",
+      "bounty": null,
+      "severity": "N/A",
+      "impact": {
+        "description": "Complete two-stage N-day pipeline: PatchWatch (Rust) + Pocsmith (Claude SDK) — Patch Tuesday to verified exploit in ~$300 API tokens"
+      },
+      "kiro_mapping": {
+        "skill": "Binary diffing, exploit generation, patch analysis",
+        "methodology": "PatchWatch ingestion → Ghidriff diffing → LLM analysis → Pocsmith exploit harness",
+        "workflow": "MSRC poll → binary fetch → diff → synthesize → analyze → exploit (3 levels)",
+        "steering": "Patching is now a race; N-day generation is within reach of one researcher"
+      }
+    },
+    {
+      "id": "079",
+      "title": "NextSSRF: CVE-2026-44578 Next.js WebSocket SSRF Scanner & Exploit",
+      "niche": "Web Application, SSRF, Next.js",
+      "vulnerability_type": "Server-Side Request Forgery",
+      "priority": "CRITICAL",
+      "resource_type": "Tool, Scanner, Exploit",
+      "bounty": null,
+      "severity": "P0",
+      "cve": "CVE-2026-44578",
+      "impact": {
+        "description": "Unauthenticated SSRF in Next.js WebSocket handler — cloud metadata exfiltration via interactive shell"
+      },
+      "kiro_mapping": {
+        "skill": "SSRF testing, cloud metadata exploitation",
+        "tool": "Interactive exploit shell, pipeline mode, Shodan integration",
+        "workflow": "Scan → auto cloud detect → credential extraction"
+      }
+    },
+    {
+      "id": "080",
+      "title": "Reasonix: DeepSeek-Native AI Coding Agent",
+      "niche": "AI Agent Framework, Terminal Tool",
+      "vulnerability_type": "Methodology, Tool",
+      "priority": "HIGH",
+      "resource_type": "Tool, AI Agent Framework",
+      "bounty": null,
+      "severity": "N/A",
+      "impact": {
+        "description": "DeepSeek-only coding agent with 99.82% cache hit — ~$12 for 435M input tokens instead of ~$61"
+      },
+      "kiro_mapping": {
+        "skill": "AI agent orchestration, automated hunting",
+        "methodology": "Cache-first loop, tool-call repair, cost control",
+        "steering": "Budget-friendly alternative to Claude Code for automated bug hunting"
+      }
+    },
+    {
+      "id": "081",
+      "title": "Subdomain Takeover Checker (mikaww1)",
+      "niche": "Reconnaissance, Subdomain Enumeration",
+      "vulnerability_type": "Subdomain Takeover, DNS Misconfiguration",
+      "priority": "HIGH",
+      "resource_type": "Tool, Scanner, API",
+      "bounty": null,
+      "severity": "P2",
+      "impact": {
+        "description": "Detect dangling CNAMEs across 80+ services — web app, CLI, and public API"
+      },
+      "kiro_mapping": {
+        "skill": "Recon, subdomain takeover detection",
+        "tool": "80+ service fingerprints, CNAME chain following, crt.sh integration",
+        "workflow": "Enumerate → check CNAME → fingerprint → confirm"
+      }
+    },
+    {
+      "id": "082",
+      "title": "CRITICAL: Claude Code + AWS Bedrock Credentials Leaked to Every Subprocess",
+      "niche": "AI Agent Security, Cloud Security, Credential Management",
+      "vulnerability_type": "Credential Exposure, Privilege Escalation, Supply Chain",
+      "priority": "CRITICAL",
+      "resource_type": "Security Advisory, Vulnerability Analysis",
+      "bounty": null,
+      "severity": "P0",
+      "impact": {
+        "description": "AWS credentials for Bedrock are inherited by every shell command, MCP server, and subprocess — entire AWS account accessible via prompt injection or compromised MCP"
+      },
+      "kiro_mapping": {
+        "skill": "Cloud security auditing, MCP security, credential isolation",
+        "workflow": "Audit settings.json → scope IAM → use bearer token → monitor shell approvals",
+        "steering": "Credentials meant for one purpose are implicitly available for all purposes"
+      }
+    },
+    {
+      "id": "083",
+      "title": "Nuclei-Templates-Collection: 300+ Nuclei Template Repos",
+      "niche": "Scanning, Recon, Vulnerability Detection",
+      "vulnerability_type": "All (CVE, SSRF, SSTI, XSS, Takeover, WAF, API, Mobile, etc.)",
+      "priority": "HIGH",
+      "resource_type": "Template Collection, Tool Aggregation",
+      "bounty": null,
+      "severity": "N/A",
+      "impact": {
+        "description": "300+ Nuclei template repos aggregated — every major vuln class covered in one collection"
+      },
+      "kiro_mapping": {
+        "skill": "Vulnerability scanning, reconnaissance",
+        "tool": "Nuclei, bulk_clone_repos.py, remove_duplicated_templates.py",
+        "workflow": "Clone → deduplicate → run nuclei with custom templates",
+        "steering": "Extends scanning beyond official projectdiscovery templates"
+      }
+    },
+    {
+      "id": "084",
+      "title": "Gementee_cvd: Automated Bug Bounty Scanning Pipeline",
+      "niche": "Automation, Pipeline, Recon",
+      "vulnerability_type": "Methodology, Pipeline",
+      "priority": "HIGH",
+      "resource_type": "Tool, Pipeline, Automation",
+      "bounty": null,
+      "severity": "N/A",
+      "impact": {
+        "description": "Automated httpx → Nuclei → Telegram pipeline with scope management and SQLite tracking"
+      },
+      "kiro_mapping": {
+        "skill": "Automated scanning pipeline",
+        "tool": "httpx, Nuclei, Telegram, SQLite",
+        "workflow": "Scope → httpx → filter → nuclei → db → tg alert",
+        "steering": "Scope management prevents redundant scanning"
+      }
+    },
+    {
+      "id": "085",
+      "title": "Privesc via Guest Invite Interception + Hidden Role ID in JS",
+      "niche": "Web Application, Authorization",
+      "vulnerability_type": "Privilege Escalation, IDOR, Parameter Tampering",
+      "priority": "MEDIUM",
+      "resource_type": "Writeup",
+      "bounty": null,
+      "severity": "Medium",
+      "impact": {
+        "description": "Guest invited → intercepted join request → found role param → hidden role IDs in JS → swapped to higher privilege"
+      },
+      "kiro_mapping": {
+        "skill": "Authorization testing, JS analysis",
+        "methodology": "Intercept invite flows, check role params, search JS for hidden enums",
+        "workflow": "Invite → intercept → analyze JS → tamper role param → escalate"
+      }
+    },
+    {
+      "id": "086",
+      "title": "Email-Based User Enumeration via Hidden API Endpoint",
+      "niche": "Web Application, Mobile Security",
+      "vulnerability_type": "Information Disclosure, User Enumeration",
+      "priority": "MEDIUM",
+      "resource_type": "Writeup",
+      "bounty": null,
+      "severity": "Medium 5.3",
+      "impact": {
+        "description": "Found unused /find/users endpoint in Android app — email treated as username → 200 OK with full user metadata"
+      },
+      "kiro_mapping": {
+        "skill": "API enumeration, mobile testing",
+        "methodology": "Review unused endpoints in API list, check how app treats login identifiers",
+        "workflow": "Enumerate APIs → find unused endpoint → probe params → discover email-as-username pattern"
+      }
+    },
+    {
+      "id": "087",
+      "title": "Anthropic Leaked Claude Code Source Code: Full Analysis",
+      "niche": "AI Security, Supply Chain, Vulnerability Research",
+      "vulnerability_type": "Information Disclosure, Supply Chain, AI Security",
+      "priority": "CRITICAL",
+      "resource_type": "Analysis, Vulnerability Research",
+      "bounty": null,
+      "severity": "P0",
+      "impact": {
+        "description": "512K lines leaked via npm source map — KAIROS, Undercover Mode, Anti-distillation, 44 feature flags, internal benchmarks"
+      },
+      "kiro_mapping": {
+        "skill": "AI agent architecture, MCP security, supply chain analysis",
+        "methodology": "Source code review for feature flags, security mechanisms, internal benchmarks",
+        "steering": "KAIROS validates autonomous agent approach; anti-distillation explains third-party tool barriers"
+      }
+    },
+    {
+      "id": "088",
+      "title": "Race Condition: Bypass Free Plan Restrictions ($$$)",
+      "niche": "Web Application, Business Logic",
+      "vulnerability_type": "Race Condition, TOCTOU",
+      "priority": "HIGH",
+      "resource_type": "Writeup",
+      "bounty": null,
+      "severity": "High",
+      "impact": {
+        "description": "Race condition in free plan restriction checks allowed bypassing payment — $$$ on HackerOne"
+      },
+      "kiro_mapping": {
+        "skill": "Race condition testing, business logic testing",
+        "methodology": "Test concurrent requests during plan-sensitive operations",
+        "steering": "Payment/plan logic is full of non-atomic check-then-enforce patterns"
+      }
+    },
+    {
+      "id": "089",
+      "title": "Password Reset Vulnerability Checklist",
+      "niche": "Web Application, Authentication",
+      "vulnerability_type": "Methodology, Checklist",
+      "priority": "MEDIUM",
+      "resource_type": "Checklist, Methodology",
+      "bounty": null,
+      "severity": "N/A",
+      "impact": {
+        "description": "Comprehensive checklist: token vulns, endpoint vulns, logic flaws, implementation issues for password reset flows"
+      },
+      "kiro_mapping": {
+        "skill": "Authentication testing",
+        "methodology": "Password reset testing checklist",
+        "workflow": "Check token predictability → test endpoints → find logic flaws → verify implementation"
+      }
+    },
+    {
+      "id": "090",
+      "title": "First Bug Bounty on HackerOne: Reported, Triaged, Paid",
+      "niche": "Milestone, Bug Bounty",
+      "vulnerability_type": "Milestone",
+      "priority": "LOW",
+      "resource_type": "Milestone, Writeup",
+      "bounty": null,
+      "severity": "N/A",
+      "impact": {
+        "description": "First HackerOne bounty — reported, triaged, paid. Every hunter starts somewhere."
+      },
+      "kiro_mapping": {
+        "skill": "All",
+        "steering": "First bounty proves methodology works — framework accelerates from first to consistent payouts"
+      }
+    },
+    {
+      "id": "091",
+      "title": "Solana On-Chain Forensics Shell via Helius getTransfersByAddress",
+      "niche": "Crypto/DeFi, Forensics, Recon",
+      "vulnerability_type": "Methodology, Tool, Recon",
+      "priority": "HIGH",
+      "resource_type": "Tool, API, Forensics",
+      "bounty": null,
+      "severity": "N/A",
+      "impact": {
+        "description": "Forensics terminal querying Solana public ledger — wallet cluster ID, fund flow tracing, whale watching via Helius RPC"
+      },
+      "kiro_mapping": {
+        "skill": "Crypto/DeFi forensics, on-chain recon",
+        "tool": "Helius getTransfersByAddress API",
+        "methodology": "Query wallet → trace transfers → map connected wallets → follow funds",
+        "workflow": "DeFi hack trace, memecoin profit tracking, whale monitoring"
+      }
+    },
+    {
+      "id": "092",
+      "title": "WordListeXplorer (WLX): Local Wordlist Intelligence & Workflow Manager",
+      "niche": "Tooling, Workflow Automation, Recon",
+      "vulnerability_type": "Tool, Methodology",
+      "priority": "HIGH",
+      "resource_type": "Tool, Workflow Manager",
+      "bounty": null,
+      "severity": "N/A",
+      "impact": {
+        "description": "SQLite-powered wordlist indexer with session-aware variable export — bridges wordlists directly into ffuf/hydra workflows"
+      },
+      "kiro_mapping": {
+        "skill": "Recon, fuzzing, automation",
+        "tool": "WLX, SQLite, shell variables",
+        "methodology": "Index wordlists → tag/filter → export as variables → use in ffuf/hydra",
+        "workflow": "wlx config addir → index → search/wlxuse → integrate into fuzzing"
+      }
+    }
   ],
   "critical_entries": [
     "005",
@@ -493,14 +858,23 @@
     "026",
     "035",
     "036",
+    "077",
+    "078",
     "038",
     "041",
     "042",
     "044",
     "048",
-    "049"
+    "049",
+    "075",
+    "076"
   ],
   "high_value_bounties": [
+    {
+      "entry": "075",
+      "amount": 175000,
+      "description": "Orange Tsai Edge sandbox escape (4 logic bugs)"
+    },
     {
       "entry": "042",
       "amount": 55000,
@@ -525,6 +899,11 @@
       "entry": "014",
       "amount": 7000,
       "description": "Amazon + cash"
+    },
+    {
+      "entry": "076",
+      "amount": 20000,
+      "description": "chompie RHEL race condition privesc (Pwn2Own)"
     }
   ],
   "implementation_priorities": {

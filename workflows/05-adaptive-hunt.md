@@ -193,7 +193,46 @@ file.php%00.jpg (null byte)
 
 ---
 
-## Phase 6: Creative Pivoting (30-45 min)
+## Phase 6: Logic Bug & Supply Chain Analysis (45-60 min)
+
+**Activate:** `methodologies/07-logic-bug-hunting.md`
+
+**Purpose:** Hunt logic bugs — no memory corruption needed, chain multiple low-severity issues for critical impact
+
+### Step 6.1: Map Trust Boundaries
+- Component boundaries (browser/renderer/sandbox, app/API/db, frontend/backend)
+- IPC mechanisms and message passing
+- Permission models and privilege levels
+- State transitions and assumptions
+
+### Step 6.2: Identify Logic Bug Categories
+| Category | Description |
+|----------|-------------|
+| State Confusion | Assumptions about execution state are wrong |
+| TOCTOU | Time-of-check vs time-of-use gaps |
+| Privilege Confusion | Wrong privilege level assumed |
+| Validation Bypass | Incomplete validation chain |
+| Atomicity Violation | Multi-step operation not atomic |
+| Assumption Violation | Code assumes something not guaranteed |
+| Supply Chain Logic | Dependency introduces conflicting logic |
+
+### Step 6.3: Chain Construction
+```
+Bug 1 → Bug 2 → Bug 3 → Bug 4 (Critical)
+Low-sev info leak → boundary bypass → privilege esc → sandbox escape
+```
+
+### Step 6.4: Supply Chain Logic Analysis
+- Dependency behavior changes (patch introduces new assumptions)
+- Configuration drift (new feature defaults override security)
+- Missing update side effects (fix is ineffective)
+- Behavioral regressions (library behavior changes)
+
+**Key Reference:** Entry #075 — Orange Tsai: 4 logic bugs → Edge sandbox escape, $175k, zero memory corruption
+
+---
+
+## Phase 7: Creative Pivoting (30-45 min)
 
 ### Pivot 1: JavaScript Analysis
 ```bash
@@ -242,7 +281,7 @@ curl "https://crt.sh/?q=%.target.com&output=json" \
 
 ---
 
-## Phase 7: Validation (30-45 min)
+## Phase 8: Validation (30-45 min)
 
 **Activate:** `ai-self-validator.md`
 
@@ -413,10 +452,11 @@ echo "Bounty: $3,500" >> hunt-log.txt
 | Parser Differentials | 30-45 min | HIGH |
 | Less Common Techniques | 60-90 min | MEDIUM |
 | Deep Dive | 60-90 min | HIGH (if promising) |
+| Logic Bug & Supply Chain | 45-60 min | HIGH |
 | Creative Pivoting | 30-45 min | MEDIUM |
 | Validation | 30-45 min | CRITICAL |
 
-**Total:** 4-6 hours per target
+**Total:** 5-7.5 hours per target
 
 ---
 
@@ -440,3 +480,6 @@ echo "Bounty: $3,500" >> hunt-log.txt
 - Entry #22: Bug Bounty Methodology 2026 (systematic hunting)
 - Entry #5: AI Self-Validation (challenge findings)
 - Entry #11: Multi-Agent Orchestration (parallel techniques)
+- Entry #075: Orange Tsai Edge sandbox escape (4 logic bugs, $175k)
+- Entry #042: Chrome V8 RCE memory corruption ($55k)
+- Entry #036: Big Sleep AI zero-day discovery

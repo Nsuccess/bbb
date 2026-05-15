@@ -330,7 +330,56 @@ Decision: REJECT
 Decision: REJECT (failed at step 3)
 ```
 
-### Pattern 3: Proof of Exploitability Requirement
+### Pattern 3: Reverse Devil's Advocate — Push Back When AI Says "Not Exploitable"
+
+**Source:** Entry #076 — chompie (@chompie1337) Pwn2Own $20k RHEL race condition
+**Concept:** When your AI agent tells you something isn't exploitable, that can be a signal to push harder — not give up.
+
+**The Trap:**
+> "Claude tried to gaslight me saying it wasn't ~exploitable in practice~ and I got obsessed with proving it wrong." — chompie
+
+**AI Agents Often Say "Not Exploitable" Because:**
+- They lack creative exploitation context
+- They're trained to be conservative/safe
+- They can't visualize multi-step chains
+- They don't understand real-world edge cases
+- They pattern-match to "common exploits" and miss novel approaches
+
+**The Counter-Strategy:**
+
+```
+AI Agent: "This race condition isn't exploitable in practice"
+         ↓
+Hunter Response: "Prove it. Show me exactly why it can't work."
+         ↓
+AI tries to explain → Hunter identifies assumptions in the explanation
+         ↓
+Hunter challenges each assumption:
+  "What if timing is tighter?"
+  "What if we use a different syscall?"
+  "What if the condition is slightly different?"
+         ↓
+Result: Either confirmed unreachable → REJECT
+        OR found a bypass → $20k Pwn2Own win
+```
+
+**When to Use Reverse Devil's Advocate:**
+
+| Signal | Response |
+|--------|----------|
+| AI says "not exploitable in practice" | Challenge — what assumptions is it making? |
+| AI says "low impact" | Test — what if chain with another bug? |
+| AI says "already fixed in newer version" | Verify — is the fix complete? |
+| AI says "requires unrealistic conditions" | Test — are the conditions actually realistic? |
+
+**The Rule:**
+- If AI gives a specific, verifiable reason (e.g., "parameter is sanitized with regex X") → verify it
+- If AI gives a vague, hand-wavy reason (e.g., "not practical", "low likelihood") → push harder
+- Document the AI's objection and your bypass — this is compelling evidence for your report
+
+---
+
+### Pattern 4: Proof of Exploitability Requirement
 
 **Rule:** No report without working PoC
 
