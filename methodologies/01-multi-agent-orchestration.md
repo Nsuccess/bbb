@@ -11,10 +11,19 @@ This methodology describes a proven multi-agent system architecture for autonomo
 - Bounties: Multiple high-value discoveries
 
 **Source:** Entry #011 - Getting LLMs Drunk to Find Linux Kernel Vulns
+**Academic Backing:** Entry #109 — 56 Agent4Cybersecurity papers + 83 LLM Assisted Attack papers
 
 ---
 
 ## Architecture Pattern
+
+### Evolution Path (from Entry #109, Agent4Cyc #3)
+The academic literature describes 3 generations:
+1. **Single LLM Reasoner** — One model + tools (PentestGPT pattern)
+2. **Multi-Agent Systems** — Specialized roles + orchestration (this methodology)
+3. **Autonomous Pipelines** — End-to-end with continuous learning and self-improvement
+
+Our framework targets generation 2, with elements of generation 3 (conductor-driven continuous learning).
 
 ### Core Agent Roles
 
@@ -103,6 +112,23 @@ Output: Professional security report
 - Prevent reward-hacking
 - **Must stay external** - all models eventually inflate findings
 
+**Academic Reference:**
+- Entry #109, Vuln Detection #79 — LLM4Vuln: decouples vulnerability detection from vulnerability reasoning, providing a structured framework for independent grading
+- Entry #109, Vuln Detection #78 — Multi-role Consensus: formalizes multi-agent voting with confidence scores — each agent votes on exploitability
+
+### 5b. Proof-of-Vulnerability Generator (NEW — from academic research)
+**Purpose:** Bridge hunter output and report writer by generating automated PoV code
+
+**Responsibilities:**
+- Take verified hypothesis from hunter
+- Generate minimal reproducible exploit code
+- Test exploit reliability across multiple runs
+- Document preconditions and limitations
+
+**Academic Reference:**
+- Entry #109, Agent4Cyc #12 — FaultLine: automated PoV generation using LLM agents
+- Entry #109, Program Repair #4 — VulnRepairEval: exploit-based evaluation at 3 levels: A (crash), B (controlled primitive), C (full exploit)
+
 **Why Critical:**
 - Prevents hallucinations
 - Stops false positive inflation
@@ -124,8 +150,12 @@ Output: Validated severity + novelty score
 - Review issue logs for systemic blockers
 - Attempt continuous learning
 - Provide real-time feedback
+- Maintain knowledge graph of explored paths and attack techniques
 
 **Key Insight:** "Managing juiced-up golden retrievers"
+
+**Academic Reference:**
+- Entry #109, Agent4Cyc #8 — xOffense: multi-agent system with offensive knowledge-enhanced LLMs. Conductor maintains a knowledge graph of attack techniques and steers agents toward under-explored paths. Implements: 1) shared memory of explored paths, 2) priority queue of un-explored techniques, 3) automated pivot triggers when agents stall.
 
 **Implementation:**
 ```
@@ -163,6 +193,12 @@ Output: Steering commands + resource allocation
 ---
 
 ## Vulnerability Classes Discovered
+
+### 0. Zero-Day & One-Day Exploitation by Agent Teams
+**Academic Reference:**
+- Entry #109, Agent4Cyc #36 — Teams of LLM Agents Can Exploit Zero-Day Vulnerabilities: landmark paper showing agent teams achieve what single agents cannot. Key insight: collaboration across specialized agents (recon agent + exploit agent + payload agent) unlocks 0-day exploitation.
+- Entry #109, Agent4Cyc #40 — LLM Agents Autonomously Exploit One-Day Vulnerabilities: validates the patch-diffing pipeline approach. Agents given CVE descriptions + codebases autonomously develop working exploits.
+- Entry #109, Agent4Cyc #52 — LLM Agents Can Autonomously Hack Websites: 8 real-world websites tested, demonstrated autonomous web exploitation end-to-end. Validates the entire workflow concept.
 
 ### 1. Remote OOB Writes (ksmbd)
 - CVE-2026-31432, CVE-2026-31433
@@ -310,6 +346,10 @@ Output: Steering commands + resource allocation
 - Benefits from diverse perspectives
 - Reduces false positives
 
+**Academic Reference:**
+- Entry #109, Vuln Detection #15 — "Let the Trial Begin": Mock-court approach to vuln detection. Prosecutor agent argues bug exists, defense argues against, judge decides. This formalizes the debate with explicit roles. Integrate as: Hypothesis Generator (prosecution) → Devil's Advocate (defense) → External Grader (judge).
+- Entry #109, Vuln Detection #78 — Multi-role Consensus: assign each agent a different expertise domain (auth, crypto, logic, race). Agents vote with confidence scores. Conductor weights votes by expertise match to target. 
+
 ### Inference-Time Compute
 - Small models + time + iteration = viable alternative
 - Trade VRAM for time
@@ -438,9 +478,11 @@ Output: Steering commands + resource allocation
 
 ## Related Methodologies
 
-- **AI Agent Self-Validation** (Entry #005, #039): Complements with validation principles
+- **AI Agent Self-Validation** (Entry #005, #039, #109): Complements with validation principles — backed by 83 LLM Assisted Attack papers
 - **Prompt Injection Framework** (Entry #044): Similar multi-step approach
 - **Bug Bounty Methodology 2026** (Entry #022): Skill-based hunting aligns with agent roles
+- **Entry #109 Agent4Cyc Papers** (56 papers): Academic foundation for multi-agent security systems
+- **Entry #109 Vuln Detection Papers** (94 papers): LLM-based vulnerability detection techniques
 
 ---
 

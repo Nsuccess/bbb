@@ -1,0 +1,685 @@
+﻿# Awesome-LLM4Cybersecurity — Complete Link Index
+ 
+## Stats
+- Total papers: 634
+- arXiv links: 617
+- Other venues: 17
+ 
+ 
+---
+## Cybersecurity Evaluation Benchmarks
+ 
+- [SecLens: Role-Specific Evaluation of LLMs for Security Vulnerability Detection](https://arxiv.org/abs/2604.01637) | arXiv
+- [CyberThreat-Eval: Can Large Language Models Automate Real-World Threat Research?](https://arxiv.org/abs/2603.09452v1) | TMLR
+- [AthenaBench: A Dynamic Benchmark for Evaluating LLMs in Cyber Threat Intelligence](https://arxiv.org/pdf/2511.01144) | arxiv
+- [PACEbench: A Framework for Evaluating Practical AI Cyber-Exploitation Capabilities](https://arxiv.org/abs/2510.11688) | arxiv
+- [SecureAgentBench: Benchmarking Secure Code Generation under Realistic Vulnerability Scenarios](https://arxiv.org/pdf/2509.22097) | arxiv
+- [CyberSOCEval: Benchmarking LLMs Capabilities for Malware Analysis and Threat Intelligence Reasoning](https://arxiv.org/pdf/2509.20166) | arxiv
+- [AQUA-LLM: Evaluating Accuracy, Quantization, and Adversarial Robustness Trade-offs in LLMs for Cybersecurity Question Answering](https://arxiv.org/pdf/2509.13514) | arxiv
+- [AICrypto: A Comprehensive Benchmark For Evaluating Cryptography Capabilities of Large Language Models](https://arxiv.org/pdf/2507.09580) | arxiv
+- [ExCyTIn-Bench: Evaluating LLM agents on Cyber Threat Investigation](https://arxiv.org/pdf/2507.14201) | arxiv
+- [DefenderBench: A Toolkit for Evaluating Language Agents in Cybersecurity Environments](https://arxiv.org/pdf/2506.00739) | arxiv
+- [CyberGym: Evaluating AI Agents Cybersecurity Capabilities with Real-World Vulnerabilities at Scale](https://arxiv.org/pdf/2506.02548) | arxiv
+- [DFIR-Metric: A Benchmark Dataset for Evaluating Large Language Models in Digital Forensics and Incident Response](https://arxiv.org/pdf/2505.19973) | arxiv
+- [VADER: A Human-Evaluated Benchmark for Vulnerability Assessment, Detection, Explanation, and Remediation](https://arxiv.org/pdf/2505.19395) | arxiv
+- [BinMetric: A Comprehensive Binary Analysis Benchmark for Large Language Models](https://arxiv.org/pdf/2505.07360) | arxiv
+- [The Digital Cybersecurity Expert: How Far Have We Come?](https://arxiv.org/pdf/2504.11783) | arxiv
+- [On Benchmarking Code LLMs for Android Malware Analysis](https://arxiv.org/pdf/2504.00694) | arxiv
+- [CVE-Bench: A Benchmark for AI Agents Ability to Exploit Real-World Web Application Vulnerabilities](https://arxiv.org/pdf/2503.17332) | arxiv
+- [Benchmarking LLMs and LLM-based Agents in Practical Vulnerability Detection for Code Repositories](https://arxiv.org/pdf/2503.03586) | arxiv
+- [AttackSeqBench: Benchmarking Large Language Models Understanding of Sequential Patterns in Cyber Attacks](https://arxiv.org/pdf/2503.03170) | arxiv
+- [CyberLLMInstruct: A New Dataset for Analysing Safety of Fine-Tuned LLMs Using Cyber Security Data](https://arxiv.org/pdf/2503.09334) | arxiv
+- [Primus: A Pioneering Collection of Open-Source Datasets for Cybersecurity LLM Training](https://arxiv.org/pdf/2502.11191) | arXiv
+- [ITBench: Evaluating AI Agents across Diverse Real-World IT Automation Tasks](https://arxiv.org/pdf/2502.05352) | arXiv
+- [SecBench: A Comprehensive Multi-Dimensional Benchmarking Dataset for LLMs in Cybersecurity](https://arxiv.org/pdf/2412.20787) | arXiv
+- [AI Cyber Risk Benchmark: Automated Exploitation Capabilities](https://arxiv.org/pdf/2410.21939) | arXiv
+- [CS-Eval: A Comprehensive Large Language Model Benchmark for CyberSecurity](https://arxiv.org/pdf/2411.16239) | arXiv
+- [AttackER: Towards Enhancing Cyber-Attack Attribution with a Named Entity Recognition Dataset](https://arxiv.org/pdf/2408.05149) | arXiv
+- [CYBERSECEVAL 3: Advancing the Evaluation of Cybersecurity Risks and Capabilities in Large Language Models](https://arxiv.org/pdf/2408.01605) | arXiv
+- [eyeballvul: a future-proof benchmark for vulnerability detection in the wild](https://arxiv.org/pdf/2407.08708) | arXiv
+- [NYU CTF Dataset: A Scalable Open-Source Benchmark Dataset for Evaluating LLMs in Offensive Security](https://arxiv.org/pdf/2406.05590) | arXiv
+- [SECURE: Benchmarking Generative Large Language Models for Cybersecurity Advisory](https://arxiv.org/pdf/2405.20441) | arXiv
+- [Assessing Cybersecurity Vulnerabilities in Code Large Language Models](https://arxiv.org/pdf/2404.18567) | arXiv
+- [Can LLMs Understand Computer Networks? Towards a Virtual System Administrator](https://arxiv.org/pdf/2404.12689) | arXiv
+- [LLMSecEval: A Dataset of Natural Language Prompts for Security Evaluations](https://arxiv.org/abs/2303.09384) | IEEE/ACM International Conference on Mining Software Repositories
+- [OpsEval: A Comprehensive IT Operations Benchmark Suite for Large Language Models](https://arxiv.org/abs/2310.07637) | arXiv
+- [Can llms patch security issues?](https://arxiv.org/abs/2312.00024) | arXiv
+- [CyberMetric: A Benchmark Dataset for Evaluating Large Language Models Knowledge in Cybersecurity](https://arxiv.org/abs/2402.07688) | arXiv
+- [DebugBench: Evaluating Debugging Capability of Large Language Models](https://arxiv.org/abs/2401.04621) | ACL Findings
+- [Securityeval dataset: mining vulnerability examples to evaluate machine learning-based code generation techniques.](https://dl.acm.org/doi/10.1145/3549035.3561184) | Proceedings of the 1st International Workshop on Mining Software Repositories Applications for Privacy and Security
+- [SecQA: A Concise Question-Answering Dataset for Evaluating Large Language Models in Computer Security](https://arxiv.org/abs/2312.15838v1) | arXiv
+- [Purple Llama CyberSecEval: A Secure Coding Benchmark for Language Models](https://arxiv.org/abs/2312.04724) | arXiv
+- [An empirical study of netops capability of pre-trained large language models.](https://arxiv.org/abs/2309.05557) | arXiv
+ 
+---
+## Fine-tuned Domain LLMs for Cybersecurity
+ 
+- [RedSage: A Cybersecurity Generalist LLM](https://arxiv.org/pdf/2601.22159) | arxiv
+- [Llama-3.1-FoundationAI-SecurityLLM-Reasoning-8B Technical Report](https://arxiv.org/pdf/2601.21051) | arxiv
+- [Large Language Models for Cyber Security](https://arxiv.org/pdf/2511.04508) | arxiv
+- [Toward Cybersecurity-Expert Small Language Models](https://arxiv.org/pdf/2510.14113) | arxiv
+- [Llama-3.1-FoundationAI-SecurityLLM-8B-Instruct Technical Report](https://arxiv.org/pdf/2508.01059) | arxiv
+- [Cyber-Zero: Training Cybersecurity Agents without Runtime](https://arxiv.org/pdf/2508.00910) | arxiv
+- [PhishIntentionLLM: Uncovering Phishing Website Intentions through Multi-Agent Retrieval-Augmented Generation](https://arxiv.org/pdf/2507.15419) | arxiv
+- [Less Data, More Security: Advancing Cybersecurity LLMs Specialization via Resource-Efficient Domain-Adaptive Continuous Pre-training with Minimal Tokens](https://arxiv.org/pdf/2507.02964) | arxiv
+- [Large Language Model-driven Security Assistant for Internet of Things via Chain-of-Thought](https://arxiv.org/pdf/2505.06307) | arxiv
+- [Llama-3.1-FoundationAI-SecurityLLM-Base-8B Technical Report](https://arxiv.org/pdf/2504.21039) | arxiv
+- [TrafficLLM: Enhancing Large Language Models for Network Traffic Analysis with Generic Traffic Representation](https://arxiv.org/abs/2504.04222) | arxiv
+- [CyberBOT: Towards Reliable Cybersecurity Education via Ontology-Grounded Retrieval Augmented Generation](https://arxiv.org/pdf/2504.00389) | arxiv
+- [Phishsense-1B: A Technical Perspective on an AI-Powered Phishing Detection Model](https://arxiv.org/pdf/2503.10944) | arxiv
+- [ELTEX: A Framework for Domain-Driven Synthetic Data Generation](https://arxiv.org/abs/2503.15055) | arXiv
+- [Fine-tuning Large Language Models for DGA and DNS Exfiltration Detection](https://arxiv.org/pdf/2410.21723) | arXiv
+- [AttackQA: Development and Adoption of a Dataset for Assisting Cybersecurity Operations using Fine-tuned and Open-Source LLMs](https://arxiv.org/pdf/2411.01073) | arXiv
+- [Hackphyr: A Local Fine-Tuned LLM Agent for Network Security Environments](https://arxiv.org/pdf/2409.11276) | arXiv
+- [CyberPal.AI: Empowering LLMs with Expert-Driven Cybersecurity Instructions](https://arxiv.org/pdf/2408.09304) | arXiv
+- [IoT-LM: Large Multisensory Language Models for the Internet of Things](https://arxiv.org/pdf/2407.09801) | arXiv
+- [A Comprehensive Evaluation of Parameter-Efficient Fine-Tuning on Automated Program Repair](https://arxiv.org/pdf/2406.05639) | arXiv
+- [Security Vulnerability Detection with Multitask Self-Instructed Fine-Tuning of Large Language Models](https://arxiv.org/pdf/2406.05892) | arXiv
+- [Transforming Computer Security and Public Trust Through the Exploration of Fine-Tuning Large Language Models](https://arxiv.org/pdf/2406.00628) | arXiv
+- [Assessing LLMs in Malicious Code Deobfuscation of Real-world Malware Campaigns](https://arxiv.org/pdf/2404.19715) | arXiv
+- [Nova+: Generative Language Models for Binaries](https://arxiv.org/abs/2311.13721) | arXiv
+- [Instruction Tuning for Secure Code Generation](https://arxiv.org/abs/2402.09497) | ICML
+- [Efficient Avoidance of Vulnerabilities in Auto-completed Smart Contract Code Using Vulnerability-constrained Decoding](https://arxiv.org/abs/2309.09826) | ISSRE
+- [RepairLLaMA: Efficient Representations and Fine-Tuned Adapters for Program Repair](https://arxiv.org/abs/2312.15698) | arXiv
+- [Finetuning Large Language Models for Vulnerability Detection](https://arxiv.org/abs/2401.17010) | arXiv
+- [Large Language Models for Test-Free Fault Localization](https://arxiv.org/abs/2310.01726) | ICSE
+- [Owl: A Large Language Model for IT Operations](https://arxiv.org/abs/2309.09298) | ICLR
+- [SecureFalcon: The Next Cyber Reasoning System for Cyber Security](https://arxiv.org/abs/2307.06616) | arXiv
+ 
+---
+## Threat Intelligence
+ 
+- [Minerva: Reinforcement Learning with Verifiable Rewards for Cyber Threat Intelligence LLMs](https://arxiv.org/pdf/2602.00513) | arxiv
+- [Large Language Models for Explainable Threat Intelligence](https://arxiv.org/pdf/2511.05406) | arxiv
+- [Security Logs to ATT&CK Insights: Leveraging LLMs for High-Level Threat Understanding and Cognitive Trait Inference](https://arxiv.org/pdf/2510.20930) | arxiv
+- [CTIArena: Benchmarking LLM Knowledge and Reasoning Across Heterogeneous Cyber Threat Intelligence](https://arxiv.org/pdf/2510.11974) | arxiv
+- [POLAR: Automating Cyber Threat Prioritization through LLM-Powered Assessment](https://arxiv.org/pdf/2510.01552) | arxiv
+- [OntoLogX: Ontology-Guided Knowledge Graph Extraction from Cybersecurity Logs with Large Language Models](https://arxiv.org/pdf/2510.01409) | arxiv
+- [Uncovering Vulnerabilities of LLM-Assisted Cyber Threat Intelligence](https://arxiv.org/pdf/2509.23573) | arxiv
+- [DroidTTP: Mapping Android Applications with TTP for Cyber Threat Intelligence](https://arxiv.org/pdf/2503.15866) | arxiv
+- [A Systematic Approach to Predict the Impact of Cybersecurity Vulnerabilities Using LLMs](https://arxiv.org/pdf/2508.18439) | arxiv
+- [Enabling Transparent Cyber Threat Intelligence Combining Large Language Models and Domain Ontologies](https://arxiv.org/pdf/2509.00081) | arxiv
+- [False Alarms, Real Damage: Adversarial Attacks Using LLM-based Models on Text-based Cyber Threat Intelligence Systems](https://arxiv.org/pdf/2507.06252) | arxiv
+- [LRCTI: A Large Language Model-Based Framework for Multi-Step Evidence Retrieval and Reasoning in Cyber Threat Intelligence Credibility Verification](https://arxiv.org/pdf/2507.11310) | arxiv
+- [Towards Effective Identification of Attack Techniques in Cyber Threat Intelligence Reports using Large Language Models](https://arxiv.org/pdf/2505.03147) | arxiv
+- [Can We Enhance Bug Report Quality Using LLMs?: An Empirical Study of LLM-Based Bug Report Generation](https://arxiv.org/pdf/2504.18804) | arxiv
+- [MaLAware: Automating the Comprehension of Malicious Software Behaviours using Large Language Models (LLMs)](https://arxiv.org/pdf/2504.01145) | arxiv
+- [LLM-Assisted Proactive Threat Intelligence for Automated Reasoning](https://arxiv.org/pdf/2504.00428) | arxiv
+- [Large Language Models are Unreliable for Cyber Threat Intelligence](https://arxiv.org/pdf/2503.23175) | arxiv
+- [Cyber Defense Reinvented: Large Language Models as Threat Intelligence Copilots](https://arxiv.org/abs/2502.20791) | arXiv
+- [Labeling NIDS Rules with MITRE ATT&CK Techniques: Machine Learning vs. Large Language Models](https://arxiv.org/pdf/2412.10978) | arXiv
+- [CTINEXUS: Leveraging Optimized LLM In-Context Learning for Constructing Cybersecurity Knowledge Graphs Under Data Scarcity](https://arxiv.org/pdf/2410.21060) | arXiv
+- [AI-Driven Cyber Threat Intelligence Automation](https://arxiv.org/pdf/2410.20287) | arXiv
+- [Cyber Knowledge Completion Using Large Language Models](https://arxiv.org/pdf/2409.16176) | arXiv
+- [Evaluating the Usability of LLMs in Threat Intelligence Enrichment](https://arxiv.org/pdf/2409.15072) | arXiv
+- [KGV: Integrating Large Language Models with Knowledge Graphs for Cyber Threat Intelligence Credibility Assessment](https://arxiv.org/pdf/2408.08088) | arXiv
+- [Usefulness of data flow diagrams and large language models for security threat validation: a registered report](https://arxiv.org/pdf/2408.07537) | arXiv
+- [A RAG-Based Question-Answering Solution for Cyber-Attack Investigation and Attribution](https://arxiv.org/pdf/2408.06272) | arXiv
+- [The Use of Large Language Models (LLM) for Cyber Threat Intelligence (CTI) in Cybercrime Forums](https://arxiv.org/pdf/2408.03354) | arXiv
+- [Psychological Profiling in Cybersecurity: A Look at LLMs and Psycholinguistic Features](https://arxiv.org/pdf/2406.18783) | arXiv
+- [Using LLMs to Automate Threat Intelligence Analysis Workflows in Security Operation Centers](https://arxiv.org/pdf/2407.13093) | arXiv
+- [LLMCloudHunter: Harnessing LLMs for Automated Extraction of Detection Rules from Cloud-Based CTI](https://arxiv.org/pdf/2407.05194) | arXiv
+- [Actionable Cyber Threat Intelligence using Knowledge Graphs and Large Language Models](https://arxiv.org/pdf/2407.02528) | arXiv
+- [AttacKG+:Boosting Attack Knowledge Graph Construction with Large Language Models](https://arxiv.org/pdf/2405.04753) | EuroS&P Workshop
+- [SEvenLLM: Benchmarking, Eliciting, and Enhancing Abilities of Large Language Models in Cyber Threat Intelligence](https://arxiv.org/pdf/2405.03446) | arXiv
+- [Crimson: Empowering Strategic Reasoning in Cybersecurity through Large Language Models](https://arxiv.org/abs/2403.00878) | arXiv
+- [Evaluation of LLM Chatbots for OSINT-based Cyber Threat Awareness](https://arxiv.org/abs/2401.15127) | Expert Syst. Appl.
+- [LOCALINTEL: Generating Organizational Threat Intelligence from Global and Local Cyber Knowledge](https://arxiv.org/abs/2401.10036) | arXiv
+- [Advancing TTP Analysis: Harnessing the Power of Encoder-Only and Decoder-Only Language Models with Retrieval Augmented Generation](https://arxiv.org/abs/2401.00280) | arXiv
+- [ChatGPT, Llama, can you write my report? An experiment on assisted digital forensics reports written using (Local) Large Language Models](https://arxiv.org/abs/2312.14607) | Forensic Sci. Int. Digit. Investig.
+- [HW-V2W-Map: Hardware Vulnerability to Weakness Mapping Framework for Root Cause Analysis with GPT-assisted Mitigation Suggestion](https://arxiv.org/abs/2312.13530) | arXiv
+- [AGIR: Automating Cyber Threat Intelligence Reporting with Natural Language Generation](https://ieeexplore.ieee.org/abstract/document/10386116) | BigData
+- [Cyber Sentinel: Exploring Conversational Agents in Streamlining Security Tasks with GPT-4](https://arxiv.org/abs/2309.16422) | arXiv
+- [Cupid: Leveraging ChatGPT for More Accurate Duplicate Bug Report Detection](https://arxiv.org/abs/2308.10022) | arXiv
+- [On the Uses of Large Language Models to Interpret Ambiguous Cyberattack Descriptions](https://arxiv.org/abs/2306.14062) | arXiv
+- [An Empirical Study on Using Large Language Models to Analyze Software Supply Chain Security Failures](https://arxiv.org/abs/2308.04898) | Proceedings of the 2023 Workshop on Software Supply Chain Offensive Research and Ecosystem Defenses
+- [Time for aCTIon: Automated Analysis of Cyber Threat Intelligence in the Wild](https://arxiv.org/abs/2307.10214) | arXiv
+ 
+---
+## FUZZ
+ 
+- [LLMs are All You Need? Improving Fuzz Testing for MOJO with Large Language Models](https://arxiv.org/pdf/2510.10179) | arxiv
+- [All You Need Is A Fuzzing Brain: An LLM-Powered System for Automated Vulnerability Detection and Patching](https://arxiv.org/pdf/2509.07225) | arxiv
+- [LLM-Assisted Model-Based Fuzzing of Protocol Implementations](https://arxiv.org/pdf/2508.01750) | arxiv
+- [Fuzzing: Randomness? Reasoning! Efficient Directed Fuzzing via Large Language Models](https://arxiv.org/pdf/2507.22065) | arxiv
+- [Directed Greybox Fuzzing via Large Language Model](https://arxiv.org/pdf/2505.03425) | arxiv
+- [ToolFuzz -- Automated Agent Tool Testing](https://arxiv.org/pdf/2503.04479) | arxiv
+- [Towards Reliable LLM-Driven Fuzz Testing: Vision and Road Ahead](https://arxiv.org/pdf/2503.00795) | arxiv
+- [Your Fix Is My Exploit: Enabling Comprehensive DL Library API Fuzzing with Large Language Models](https://arxiv.org/pdf/2501.04312) | arXiv
+- [Large Language Model assisted Hybrid Fuzzing](https://arxiv.org/pdf/2412.15931) | arXiv
+- [Harnessing Large Language Models for Seed Generation in Greybox Fuzzing](https://arxiv.org/pdf/2411.18143) | arXiv
+- [ChatHTTPFuzz: Large Language Model-Assisted IoT HTTP Fuzzing](https://arxiv.org/pdf/2411.11929) | arXiv
+- [AutoSafeCoder: A Multi-Agent Framework for Securing LLM Code Generation through Static Analysis and Fuzz Testing](https://arxiv.org/pdf/2409.10737) | arXiv
+- [FuzzCoder: Byte-level Fuzzing Test via Large Language Model](https://arxiv.org/pdf/2409.01944) | arXiv
+- [An Exploratory Study on Using Large Language Models for Mutation Testing](https://arxiv.org/pdf/2406.09843) | arXiv
+- [When Fuzzing Meets LLMs: Challenges and Opportunities](https://arxiv.org/pdf/2404.16297) | ACM International Conference on the Foundations of Software Engineering
+- [Fuzzing BusyBox: Leveraging LLM and Crash Reuse for Embedded Bug Unearthing](https://arxiv.org/abs/2403.03897) | USENIX
+- [Large language model guided protocol fuzzing](https://www.ndss-symposium.org/wp-content/uploads/2024-556-paper.pdf?ref=blog.exploits.club) | NDSS
+- [Fuzz4All: Universal Fuzzing with Large Language Models](https://arxiv.org/abs/2308.04748) | ICSE
+- [How well does LLM generate security tests?](https://arxiv.org/abs/2310.00710) | arXiv
+- [CODAMOSA: Escaping Coverage Plateaus in Test Generation with Pre-trained Large Language Models](https://ieeexplore.ieee.org/document/10172800/) | ICSE
+- [Understanding Large Language Model Based Fuzz Driver Generation](https://arxiv.org/abs/2307.12469) | arXiv
+- [Large Language Models Are Zero-Shot Fuzzers: Fuzzing Deep-Learning Libraries via Large Language Models](https://arxiv.org/abs/2212.14834) | ISSTA
+- [Augmenting Greybox Fuzzing with Generative AI](https://arxiv.org/abs/2306.06782) | arXiv
+- [Large Language Models are Edge-Case Fuzzers: Testing Deep Learning Libraries via FuzzGPT](https://arxiv.org/abs/2304.02014) | arXiv
+ 
+---
+## Vulnerability Detection
+ 
+- [An Outside-In Replication of Project Glasswing: Mythos Research Edition â€” a sink-guided, agentic pipeline for defensive vulnerability discovery with a general-purpose frontier model](https://doi.org/10.5281/zenodo.19727857) | Research Report
+- [LLM Agents for Automated Web Vulnerability Reproduction: Are We There Yet?](https://arxiv.org/pdf/2510.14700) | arxiv
+- [Synergizing Static Analysis with Large Language Models for Vulnerability Discovery and beyond](https://arxiv.org/pdf/2509.15433) | arxiv
+- [SEC-bench: Automated Benchmarking of LLM Agents on Real-World Software Security Tasks](https://arxiv.org/pdf/2506.11791) | arxiv
+- [Large Language Models Versus Static Code Analysis Tools: A Systematic Benchmark for Vulnerability Detection](https://arxiv.org/pdf/2508.04448) | arxiv
+- [A Systematic Literature Review on Detecting Software Vulnerabilities with Large Language Models](https://arxiv.org/pdf/2507.22659) | arxiv
+- [Out of Distribution, Out of Luck: How Well Can LLMs Trained on Vulnerability Datasets Detect Top 25 CWE Weaknesses?](https://arxiv.org/pdf/2507.21817) | arxiv
+- [LLMxCPG: Context-Aware Vulnerability Detection Through Code Property Graph-Guided Large Language Models](https://arxiv.org/abs/2507.16585) | USENIX
+- [Revisiting Pre-trained Language Models for Vulnerability Detection](https://arxiv.org/pdf/2507.16887) | arxiv
+- [MalCodeAI: Autonomous Vulnerability Detection and Remediation via Language Agnostic Code Reasoning](https://arxiv.org/pdf/2507.10898) | arxiv
+- [Identifying Helpful Context for LLM-based Vulnerability Repair: A Preliminary Study](https://arxiv.org/pdf/2506.11561) | arxiv
+- [VulStamp: Vulnerability Assessment using Large Language Model](https://arxiv.org/pdf/2506.11484) | arxiv
+- [Large Language Models for Multilingual Vulnerability Detection: How Far Are We?](https://arxiv.org/pdf/2506.07503) | arxiv
+- [Boosting Vulnerability Detection of LLMs via Curriculum Preference Optimization with Synthetic Reasoning Data](https://arxiv.org/pdf/2506.07390) | arxiv
+- [Let the Trial Begin: A Mock-Court Approach to Vulnerability Detection using LLM-Based Agents](https://arxiv.org/pdf/2505.10961) | arxiv
+- [A Preliminary Study of Large Language Models for Multilingual Vulnerability Detection](https://arxiv.org/pdf/2505.07376) | arxiv
+- [Enhancing Large Language Models with Faster Code Preprocessing for Vulnerability Detection](https://arxiv.org/pdf/2505.05600) | arxiv
+- [LASHED: LLMs And Static Hardware Analysis for Early Detection of RTL Bugs](https://arxiv.org/pdf/2504.21770) | arxiv
+- [LLMpatronous: Harnessing the Power of LLMs For Vulnerability Detection](https://arxiv.org/pdf/2504.18423) | arxiv
+- [Context-Enhanced Vulnerability Detection Based on Large Language Model](https://arxiv.org/pdf/2504.16877) | arxiv
+- [Automated Static Vulnerability Detection via a Holistic Neuro-symbolic Approach](https://arxiv.org/pdf/2504.16057) | arxiv
+- [Everything You Wanted to Know About LLM-based Vulnerability Detection But Were Afraid to Ask](https://arxiv.org/pdf/2504.13474) | arxiv
+- [MOS: Towards Effective Smart Contract Vulnerability Detection through Mixture-of-Experts Tuning of Large Language Models](https://arxiv.org/pdf/2504.12234) | arxiv
+- [Malware analysis assisted by AI with R2AI](https://arxiv.org/pdf/2504.07574) | arxiv
+- [Large Language Model (LLM) for Software Security: Code Analysis, Malware Analysis, Reverse Engineering](https://arxiv.org/pdf/2504.07137) | arxiv
+- [Reasoning with LLMs for Zero-Shot Vulnerability Detection](https://arxiv.org/pdf/2503.17885) | arxiv
+- [Vulnerability Detection: From Formal Verification to Large Language Models and Hybrid Approaches: A Comprehensive Overview](https://arxiv.org/pdf/2503.10784) | arxiv
+- [CASTLE: Benchmarking Dataset for Static Code Analyzers and LLMs towards CWE Detection](https://arxiv.org/pdf/2503.09433) | arxiv
+- [Benchmarking Large Language Models for Multi-Language Software Vulnerability Detection](https://arxiv.org/pdf/2503.01449) | arxiv
+- [CVE-LLM : Ontology-Assisted Automatic Vulnerability Evaluation Using Large Language Models](https://arxiv.org/pdf/2502.15932) | arXiv
+- [Large Language Models in Software Security: A Survey of Vulnerability Detection Techniques and Insights](https://arxiv.org/pdf/2502.07049) | arXiv
+- [Large Language Models for In-File Vulnerability Localization Can Be "Lost in the End"](https://arxiv.org/pdf/2502.06898) | arXiv
+- [Streamlining Security Vulnerability Triage with Large Language Models](https://arxiv.org/pdf/2501.18908) | arXiv
+- [Evaluating Large Language Models in Vulnerability Detection Under Variable Context Windows](https://arxiv.org/pdf/2502.00064) | arXiv
+- [Helping LLMs Improve Code Generation Using Feedback from Testing and Static Analysis](https://arxiv.org/pdf/2412.14841) | arXiv
+- [CGP-Tuning: Structure-Aware Soft Prompt Tuning for Code Vulnerability Detection](https://arxiv.org/pdf/2501.04510) | arXiv
+- [Leveraging Large Language Models and Machine Learning for Smart Contract Vulnerability Detection](https://arxiv.org/pdf/2501.02229) | arXiv
+- [Investigating Large Language Models for Code Vulnerability Detection: An Experimental Study](https://arxiv.org/pdf/2412.18260) | arXiv
+- [Can LLM Prompting Serve as a Proxy for Static Analysis in Vulnerability Detection](https://arxiv.org/pdf/2412.12039) | arXiv
+- [ChatNVD: Advancing Cybersecurity Vulnerability Assessment with Large Language Models](https://arxiv.org/pdf/2412.04756) | arXiv
+- [CleanVul: Automatic Function-Level Vulnerability Detection in Code Commits Using LLM Heuristics](https://arxiv.org/pdf/2411.17274) | arXiv
+- [EnStack: An Ensemble Stacking Framework of Large Language Models for Enhanced Vulnerability Detection in Source Code](https://arxiv.org/pdf/2411.16561) | arXiv
+- [CryptoFormalEval: Integrating LLMs and Formal Verification for Automated Cryptographic Protocol Vulnerability Detection](https://arxiv.org/pdf/2411.13627) | arXiv
+- [Beyond Static Tools: Evaluating Large Language Models for Cryptographic Misuse Detection](https://arxiv.org/pdf/2411.09772) | arXiv
+- [LProtector: An LLM-driven Vulnerability Detection System](https://arxiv.org/pdf/2411.06493) | arXiv
+- [Enhancing Reverse Engineering: Investigating and Benchmarking Large Language Models for Vulnerability Analysis in Decompiled Binaries](https://arxiv.org/pdf/2411.04981) | arXiv
+- [ProveRAG: Provenance-Driven Vulnerability Analysis with Automated Retrieval-Augmented LLMs](https://arxiv.org/pdf/2410.17406) | arXiv
+- [RealVul: Can We Detect Vulnerabilities in Web Applications with LLM?](https://arxiv.org/pdf/2410.07573) | arXiv
+- [Code Vulnerability Repair with Large Language Model using Context-Aware Prompt Tuning](https://arxiv.org/pdf/2409.18395) | arXiv
+- [Boosting Cybersecurity Vulnerability Scanning based on LLM-supported Static Application Security Testing](https://arxiv.org/pdf/2409.15735) | arXiv
+- [VulnLLMEval: A Framework for Evaluating Large Language Models in Software Vulnerability Detection and Patching](https://arxiv.org/pdf/2409.10756) | arXiv
+- [Code Vulnerability Detection: A Comparative Analysis of Emerging Large Language Models](https://arxiv.org/pdf/2409.10490) | arXiv
+- [Exploring LLMs for Malware Detection: Review, Framework Design, and Countermeasure Approaches](https://arxiv.org/pdf/2409.07587) | arXiv
+- [SAFE: Advancing Large Language Models in Leveraging Semantic and Syntactic Relationships for Software Vulnerability Detection](https://arxiv.org/pdf/2409.00882) | arXiv
+- [Outside the Comfort Zone: Analysing LLM Capabilities in Software Vulnerability Detection](https://arxiv.org/pdf/2408.16400) | European symposium on research in computer security
+- [ANVIL: Anomaly-based Vulnerability Identification without Labelled Training Data](https://arxiv.org/pdf/2408.16028) | arXiv
+- [LLM-Enhanced Static Analysis for Precise Identification of Vulnerable OSS Versions](https://arxiv.org/pdf/2408.07321) | arXiv
+- [Exploring RAG-based Vulnerability Augmentation with LLMs](https://arxiv.org/pdf/2408.04125) | arXiv
+- [Harnessing the Power of LLMs in Source Code Vulnerability Detection](https://arxiv.org/pdf/2408.03489) | arXiv
+- [Towards Effectively Detecting and Explaining Vulnerabilities Using Large Language Models](https://arxiv.org/pdf/2406.09701) | arXiv
+- [Comparison of Static Application Security Testing Tools and Large Language Models for Repo-level Vulnerability Detection](https://arxiv.org/pdf/2407.16235) | arXiv
+- [SCoPE: Evaluating LLMs for Software Vulnerability Detection](https://arxiv.org/pdf/2407.14372) | arXiv
+- [Static Detection of Filesystem Vulnerabilities in Android Systems](https://arxiv.org/pdf/2407.11279) | arXiv
+- [Detect Llama -- Finding Vulnerabilities in Smart Contracts using Large Language Models](https://arxiv.org/pdf/2407.08969) | Information Security and Privacy
+- [Assessing the Effectiveness of LLMs in Android Application Vulnerability Analysis](https://arxiv.org/pdf/2406.18894) | arXiv
+- [MALSIGHT: Exploring Malicious Source Code and Benign Pseudocode for Iterative Binary Malware Summarization](https://arxiv.org/pdf/2406.18379) | arXiv
+- [Vul-RAG: Enhancing LLM-based Vulnerability Detection via Knowledge-level RAG](https://arxiv.org/pdf/2406.11147) | arXiv
+- [Generalization-Enhanced Code Vulnerability Detection via Multi-Task Instruction Fine-Tuning](https://arxiv.org/pdf/2406.03718) | ACL Findings
+- [LLM-Assisted Static Analysis for Detecting Security Vulnerabilities](https://arxiv.org/pdf/2405.17238) | arXiv
+- [Harnessing Large Language Models for Software Vulnerability Detection: A Comprehensive Benchmarking Study](https://arxiv.org/pdf/2405.15614) | arXiv
+- [DLAP: A Deep Learning Augmented Large Language Model Prompting Framework for Software Vulnerability Detection](https://arxiv.org/pdf/2405.01202) | Journal of Systems and Software
+- [Large Language Model for Vulnerability Detection and Repair: Literature Review and Roadmap](https://arxiv.org/pdf/2404.02525) | arXiv
+- [How Far Have We Gone in Vulnerability Detection Using Large Language Models](https://arxiv.org/abs/2311.12420) | arXiv
+- [The FormAI Dataset: Generative AI in Software Security through the Lens of Formal Verification](https://arxiv.org/abs/2307.02192) | International Conference on Predictive Models and Data Analytics in Software Engineering
+- [DiverseVul: A New Vulnerable Source Code Dataset for Deep Learning Based Vulnerability Detection](https://arxiv.org/abs/2304.00409) | International Symposium on Research in Attacks, Intrusions and Defenses
+- [How ChatGPT is Solving Vulnerability Management Problem](https://arxiv.org/abs/2311.06530) | arXiv
+- [Multi-role Consensus through LLMs Discussions for Vulnerability Detection](https://arxiv.org/abs/2403.14274) | arXiv
+- [LLM4Vuln: A Unified Evaluation Framework for Decoupling and Enhancing LLMs' Vulnerability Reasoning](https://arxiv.org/abs/2401.16185) | arXiv
+- [LLbezpeky: Leveraging Large Language Models for Vulnerability Detection](https://arxiv.org/abs/2401.01269) | arXiv
+- [Software Vulnerability Detection with GPT and In-Context Learning](https://ieeexplore.ieee.org/abstract/document/10381286) | DSC
+- [GPTScan: Detecting Logic Vulnerabilities in Smart Contracts by Combining GPT with Program Analysis](https://arxiv.org/abs/2308.03314) | ICSE
+- [Understanding the Effectiveness of Large Language Models in Detecting Security Vulnerabilities](https://arxiv.org/abs/2311.16169) | arXiv
+- [The Hitchhiker's Guide to Program Analysis: A Journey with Large Language Models](https://arxiv.org/abs/2308.00245) | arXiv
+- [Large Language Model-Powered Smart Contract Vulnerability Detection: New Perspectives](https://arxiv.org/abs/2310.01152) | TPS-ISA
+- [Large Language Models for Test-Free Fault Localization](https://arxiv.org/abs/2310.01726) | ICSE
+- [DefectHunter: A Novel LLM-Driven Boosted-Conformer-based Code Vulnerability Detection Mechanism](https://arxiv.org/abs/2309.15324) | arXiv
+- [Software Vulnerability Detection using Large Language Models](https://ieeexplore.ieee.org/document/10301302/) | ISSRE Workshop
+- [Using ChatGPT as a Static Application Security Testing Tool](https://arxiv.org/abs/2308.14434) | arXiv
+- [Prompt-Enhanced Software Vulnerability Detection Using ChatGPT](https://arxiv.org/abs/2308.12697) | ICSE
+- [VulLibGen: Identifying Vulnerable Third-Party Libraries via Generative Pre-Trained Model](https://arxiv.org/abs/2308.04662) | arXiv
+- [Evaluation of ChatGPT Model for Vulnerability Detection](https://arxiv.org/abs/2304.07232) | arXiv
+- [Software Vulnerability and Functionality Assessment using LLMs](https://arxiv.org/abs/2403.08429) | arXiv
+- [Finetuning Large Language Models for Vulnerability Detection](https://arxiv.org/abs/2401.17010) | arXiv
+- [Detecting software vulnerabilities using Language Models](https://arxiv.org/abs/2302.11773) | CSR
+ 
+---
+## Program or Vulnerability Repair
+ 
+- [Vul-R2: A Reasoning LLM for Automated Vulnerability Repair](https://arxiv.org/pdf/2510.05480) | arxiv
+- [BloomAPR: A Blooms Taxonomy-based Framework for Assessing the Capabilities of LLM-Powered APR Solutions](https://arxiv.org/pdf/2509.25465) | arxiv
+- [SecureFixAgent: A Hybrid LLM Agent for Automated Python Static Vulnerability Repair](https://arxiv.org/pdf/2509.16275) | arxiv
+- [VulnRepairEval: An Exploit-Based Evaluation Framework for Assessing Large Language Model Vulnerability Repair Capabilities](https://arxiv.org/pdf/2509.03331) | arxiv
+- [Automated Repair of C Programs Using Large Language Models](https://arxiv.org/pdf/2509.01947) | arxiv
+- [VulnRepairEval: An Exploit-Based Evaluation Framework for Assessing Large Language Model Vulnerability Repair Capabilities](https://arxiv.org/pdf/2509.03331) | arXiv
+- [Automated Repair of C Programs Using Large Language Models](https://arxiv.org/pdf/2509.01947) | arXiv
+- [On the Evaluation of Large Language Models in Multilingual Vulnerability Repair](https://arxiv.org/pdf/2508.03470) | arXiv
+- [Repair-R1: Better Test Before Repair](https://arxiv.org/pdf/2507.22853) | arXiv
+- [Repairing vulnerabilities without invisible hands. A differentiated replication study on LLMs](https://arxiv.org/pdf/2507.20977) | arXiv
+- [The Impact of Fine-tuning Large Language Models on Automated Program Repair](https://arxiv.org/pdf/2507.19909) | arXiv
+- [Bug Fixing with Broader Context: Enhancing LLM-Based Program Repair via Layered Knowledge Injection](https://arxiv.org/pdf/2506.24015) | arXiv
+- [Repair Ingredients Are All You Need: Improving Large Language Model-Based Program Repair via Repair Ingredients Search](https://arxiv.org/pdf/2506.23100) | arXiv
+- [A Survey of LLM-based Automated Program Repair: Taxonomies, Design Paradigms, and Applications](https://arxiv.org/pdf/2506.23749) | arXiv
+- [Empirical Evaluation of Generalizable Automated Program Repair with Large Language Models](https://arxiv.org/pdf/2506.03283) | arXiv
+- [Boosting Open-Source LLMs for Program Repair via Reasoning Transfer and LLM-Guided Reinforcement Learning](https://arxiv.org/pdf/2506.03921) | arXiv
+- [Fixing 7,400 Bugs for 1$: Cheap Crash-Site Program Repair](https://arxiv.org/pdf/2505.13103) | arXiv
+- [Adversarial Reasoning for Repair Based on Inferred Program Intent](https://arxiv.org/pdf/2505.13008) | arXiv
+- [Synthetic Code Surgery: Repairing Bugs and Vulnerabilities with LLMs and Synthetic Data](https://arxiv.org/pdf/2505.07372) | arXiv
+- [Automated Repair of Ambiguous Natural Language Requirements](https://arxiv.org/pdf/2505.07270) | arXiv
+- [Towards Effectively Leveraging Execution Traces for Program Repair with Code LLMs](https://arxiv.org/pdf/2505.04441) | arXiv
+- [The Art of Repair: Optimizing Iterative Program Repair with Instruction-Tuned Models](https://arxiv.org/pdf/2505.02931) | arXiv
+- [Adapting Knowledge Prompt Tuning for Enhanced Automated Program Repair](https://arxiv.org/pdf/2504.01523) | arXiv
+- [LLM4CVE: Enabling Iterative Automated Vulnerability Repair with Large Language Models](https://arxiv.org/pdf/2501.03446) | arXiv
+- [From Defects to Demands: A Unified, Iterative, and Heuristically Guided LLM-Based Framework for Automated Software Repair and Requirement Realization](https://arxiv.org/pdf/2412.05098) | arXiv
+- [Integrating Various Software Artifacts for Better LLM-based Bug Localization and Program Repair](https://arxiv.org/pdf/2412.03905) | arXiv
+- [Fixing Security Vulnerabilities with AI in OSS-Fuzz](https://arxiv.org/pdf/2411.03346) | arXiv
+- [A Comprehensive Survey of AI-Driven Advancements and Techniques in Automated Program Repair and Code Generation](https://arxiv.org/pdf/2411.07586) | arXiv
+- [The Best Defense is a Good Offense: Countering LLM-Powered Cyberattacks](https://arxiv.org/pdf/2410.15396) | arXiv
+- [APOLLO: A GPT-based tool to detect phishing emails and generate explanations that warn users](https://arxiv.org/pdf/2410.07997) | arXiv
+- [Fixing Code Generation Errors for Large Language Models](https://arxiv.org/pdf/2409.00676) | arXiv
+- [MergeRepair: An Exploratory Study on Merging Task-Specific Adapters in Code LLMs for Automated Program Repair](https://arxiv.org/pdf/2408.09568) | arXiv
+- [Automated Software Vulnerability Patching using Large Language Models](https://arxiv.org/pdf/2408.13597) | arXiv
+- [Enhancing LLM-Based Automated Program Repair with Design Rationales](https://arxiv.org/pdf/2408.12056) | ASE
+- [RePair: Automated Program Repair with Process-based Feedback](https://arxiv.org/pdf/2408.11296) | ACL Findings
+- [Revisiting Evolutionary Program Repair via Code Language Model](https://arxiv.org/pdf/2408.10486) | arXiv
+- [ThinkRepair: Self-Directed Automated Program Repair](https://arxiv.org/pdf/2407.20898) | ACM SIGSOFT International Symposium on Software Testing and Analysis
+- [Automated C/C++ Program Repair for High-Level Synthesis via Large Language Models](https://arxiv.org/pdf/2407.03889) | ACM/IEEE International Symposium on Machine Learning for CAD
+- [Hybrid Automated Program Repair by Combining Large Language Models and Program Analysis](https://arxiv.org/pdf/2406.00992) | arXiv
+- [A Case Study of LLM for Automated Vulnerability Repair: Assessing Impact of Reasoning and Patch Validation Feedback](https://arxiv.org/pdf/2405.15690) | Proceedings of the 1st ACM International Conference on AI-Powered Software
+- [Automated Repair of AI Code with Large Language Models and Formal Verification](https://arxiv.org/pdf/2405.08848) | arXiv
+- [A Systematic Literature Review on Large Language Models for Automated Program Repair](https://arxiv.org/pdf/2405.01466) | arXiv
+- [Revisiting Unnaturalness for Automated Program Repair in the Era of Large Language Models](https://arxiv.org/pdf/2404.15236) | arXiv
+- [How Far Can We Go with Practical Function-Level Program Repair?](https://arxiv.org/pdf/2404.12833) | arXiv
+- [Multi-Objective Fine-Tuning for Enhanced Program Repair with LLMs](https://arxiv.org/pdf/2404.12636) | arXiv
+- [Aligning LLMs for FL-free Program Repair](https://arxiv.org/pdf/2404.08877) | arXiv
+- [When Large Language Models Confront Repository-Level Automatic Program Repair: How Well They Done?](https://arxiv.org/abs/2403.00448) | ICSE
+- [ContrastRepair: Enhancing Conversation-Based Automated Program Repair via Contrastive Test Case Pairs](https://arxiv.org/abs/2403.01971) | arXiv
+- [LLM-Powered Code Vulnerability Repair with Reinforcement Learning and Semantic Reward](https://arxiv.org/abs/2401.03374) | arXiv
+- [Copiloting the Copilots: Fusing Large Language Models with Completion Engines for Automated Program Repair](https://arxiv.org/abs/2309.00608) | ACM Joint European Software Engineering Conference and Symposium on the Foundations of Software Engineering
+- [Better Patching Using LLM Prompting, via Self-Consistency](https://arxiv.org/abs/2306.00108) | ASE
+- [Teaching Large Language Models to Self-Debug](https://arxiv.org/abs/2304.05128) | ICLR
+- [Enhanced Automated Code Vulnerability Repair using Large Language Models](https://arxiv.org/abs/2401.03741) | Eng. Appl. Artif. Intell.
+- [A Study of Vulnerability Repair in JavaScript Programs with Large Language Models](https://arxiv.org/abs/2403.13193) | WWW
+- [Fixing Hardware Security Bugs with Large Language Models](https://arxiv.org/abs/2302.01215) | arXiv
+- [DIVAS: An LLM-based End-to-End Framework for SoC Security Analysis and Policy-based Protection](https://arxiv.org/abs/2308.06932) | arXiv
+- [ZeroLeak: Using LLMs for Scalable and Cost Effective Side-Channel Patching](https://arxiv.org/abs/2308.13062) | arXiv
+- [InferFix: End-to-End Program Repair with LLMs](https://arxiv.org/abs/2303.07263) | ESEC/FSE
+- [Can LLMs Patch Security Issues?](https://arxiv.org/abs/2312.00024) | arXiv
+- [How Effective Are Neural Networks for Fixing Security Vulnerabilities](https://arxiv.org/abs/2305.18607) | ISSTA
+- [Examining Zero-Shot Vulnerability Repair with Large Language Models](https://arxiv.org/abs/2112.02125) | SP
+- [Security Code Review by LLMs: A Deep Dive into Responses](https://arxiv.org/abs/2401.16310) | arXiv
+- [Practical Program Repair in the Era of Large Pre-trained Language Models](https://arxiv.org/abs/2210.14179) | arXiv
+- [AI-powered patching: the future of automated vulnerability fixes](https://research.google/pubs/ai-powered-patching-the-future-of-automated-vulnerability-fixes/) | google
+- [An Analysis of the Automatic Bug Fixing Performance of ChatGPT](https://arxiv.org/abs/2301.08653) | APR@ICSE
+- [Automatic Program Repair with OpenAI's Codex: Evaluating QuixBugs](https://arxiv.org/abs/2111.03922) | arXiv
+ 
+---
+## Insecure code Generation
+ 
+- [Benchmarking Prompt Engineering Techniques for Secure Code Generation with GPT Models](https://arxiv.org/pdf/2502.06039) | arXiv
+- [ContractTinker: LLM-Empowered Vulnerability Repair for Real-World Smart Contracts](https://arxiv.org/pdf/2409.09661) | arXiv
+- [An Exploratory Study on Fine-Tuning Large Language Models for Secure Code Generation](https://arxiv.org/pdf/2408.09078) | arXiv
+- [Is Your AI-Generated Code Really Safe? Evaluating Large Language Models on Secure Code Generation with CodeSecEval](https://arxiv.org/pdf/2407.02395) | arXiv
+- [DistiLRR: Transferring Code Repair for Low-Resource Programming Languages](https://arxiv.org/pdf/2406.14867) | arXiv
+- [Code Repair with LLMs gives an Exploration-Exploitation Tradeoff](https://arxiv.org/pdf/2405.17503) | arXiv
+- [LLM Security Guard for Code](https://arxiv.org/pdf/2405.01103) | International Conference on Evaluation and Assessment in Software Engineering
+- [Do Neutral Prompts Produce Insecure Code? FormAI-v2 Dataset: Labelling Vulnerabilities in Code Generated by Large Language Models](https://arxiv.org/pdf/2404.18353) | arXiv
+- [Evolutionary Large Language Models for Hardware Security: A Comparative Survey](https://arxiv.org/abs/2404.16651) | arXiv
+- [FLAG: Finding Line Anomalies (in code) with Generative AI](https://arxiv.org/abs/2306.12643) | arXiv
+- [Make LLM a Testing Expert: Bringing Human-like Interaction to Mobile GUI Testing via Functionality-aware Decisions](https://arxiv.org/abs/2310.15780) | ICSE
+- [DebugBench: Evaluating Debugging Capability of Large Language Models](https://arxiv.org/abs/2401.04621) | ACL Findings
+- [Shifting the Lens: Detecting Malware in npm Ecosystem with Large Language Models](https://arxiv.org/abs/2403.12196) | arXiv
+- [Using ChatGPT to Analyze Ransomware Messages and to Predict Ransomware Threats](https://assets.researchsquare.com/files/rs-3645967/v1_covered_a2d4c021-581c-44a3-ba60-058002d65bf9.pdf) | Research Square
+- [Prompt Engineering-assisted Malware Dynamic Analysis Using GPT-4](https://arxiv.org/abs/2312.08317) | arXiv
+- [Evaluating and Explaining Large Language Models for Code Using Syntactic Structures](https://arxiv.org/abs/2308.03873) | arXiv
+- [Understanding Programs by Exploiting (Fuzzing) Test Cases](https://arxiv.org/abs/2305.13592) | ACL Findings
+- [Large Language Models for Code Analysis: Do LLMs Really Do Their Job?](https://arxiv.org/abs/2310.12357) | USENIX
+- [LLM4Decompile: Decompiling Binary Code with Large Language Models](https://arxiv.org/abs/2403.05286) | EMNLP
+- [Pop Quiz! Can a Large Language Model Help With Reverse Engineering?](https://arxiv.org/abs/2202.01142) | arXiv
+- [Large Language Models for Code: Security Hardening and Adversarial Testing](https://arxiv.org/abs/2302.05319) | ACM SIGSAC Conference on Computer and Communications Security
+- [How Secure is Code Generated by ChatGPT?](https://arxiv.org/abs/2304.09655) | SMC
+- [A Comparative Study of Code Generation using ChatGPT 3.5 across 10 Programming Languages](https://arxiv.org/abs/2308.04477) | arXiv
+- [Can Large Language Models Identify And Reason About Security Vulnerabilities? Not Yet](https://arxiv.org/abs/2312.12575) | arXiv
+- [Is your code generated by chatgpt really correct? rigorous evaluation of large language models for code generation](https://arxiv.org/abs/2305.01210) | NeurIPS
+- [Generate and Pray: Using SALLMS to Evaluate the Security of LLM Generated Code](https://arxiv.org/abs/2311.00889) | arXiv
+- [No Need to Lift a Finger Anymore? Assessing the Quality of Code Generation by ChatGPT](https://arxiv.org/abs/2308.04838) | IEEE Trans. Software Eng.
+- [The Effectiveness of Large Language Models (ChatGPT and CodeBERT) for Security-Oriented Code Analysis](https://arxiv.org/abs/2307.12488) | arXiv
+- [Asleep at the Keyboard? Assessing the Security of GitHub Copilotâ€™s Code Contributions](https://arxiv.org/abs/2108.09293) | S&P
+- [Bugs in Large Language Models Generated Code](https://arxiv.org/abs/2403.08937) | arXiv
+- [Lost at C: A User Study on the Security Implications of Large Language Model Code Assistants](https://arxiv.org/abs/2208.09727) | USENIX
+ 
+---
+## LLM Assisted Defense
+ 
+- [Towards a Cognitive-Support Tool for Threat Hunters](https://arxiv.org/pdf/2602.00432) | arxiv
+- [AEGIS: White-Box Attack Path Generation using LLMs and Training Effectiveness Evaluation for Large-Scale Cyber Defence Exercises](https://arxiv.org/pdf/2601.22720) | arxiv
+- [User-Centric Phishing Detection: A RAG and LLM-Based Approach](https://arxiv.org/pdf/2601.21261) | arxiv
+- [Proactively Detecting Threats: A Novel Approach Using LLMs](https://arxiv.org/pdf/2601.09029) | arxiv
+- [A Decompilation-Driven Framework for Malware Detection with Large Language Models](https://arxiv.org/pdf/2601.09035) | arxiv
+- [SecureCAI: Injection-Resilient LLM Assistants for Cybersecurity Operations](https://arxiv.org/pdf/2601.07835) | arxiv
+- [LLM-PEA: Leveraging Large Language Models Against Phishing Email Attacks](https://arxiv.org/pdf/2512.10104) | arxiv
+- [Improving Phishing Resilience with AI-Generated Training: Evidence on Prompting, Personalization, and Duration](https://arxiv.org/pdf/2512.01893) | arxiv
+- [Can MLLMs Detect Phishing? A Comprehensive Security Benchmark Suite Focusing on Dynamic Threats and Multimodal Evaluation in Academic Environments](https://arxiv.org/pdf/2511.15165) | arxiv
+- [Large Language Model-Based Reward Design for Deep Reinforcement Learning-Driven Autonomous Cyber Defense](https://arxiv.org/pdf/2511.16483) | arxiv
+- [How Can We Effectively Use LLMs for Phishing Detection?: Evaluating the Effectiveness of Large Language Model-based Phishing Detection Models](https://arxiv.org/pdf/2511.09606) | arxiv
+- [MalCVE: Malware Detection and CVE Association Using Large Language Models](https://arxiv.org/pdf/2510.15567) | arxiv
+- [RHINO: Guided Reasoning for Mapping Network Logs to Adversarial Tactics and Techniques with Large Language Models](https://arxiv.org/pdf/2510.14233) | arxiv
+- [A Systematic Study on Generating Web Vulnerability Proof-of-Concepts Using Large Language Models](https://arxiv.org/pdf/2510.10148) | arxiv
+- [VelLMes: A high-interaction AI-based deception framework](https://arxiv.org/pdf/2510.06975) | arxiv
+- ["](https://arxiv.org/pdf/2510.06343) | arxiv
+- [Memory-Augmented Log Analysis with Phi-4-mini: Enhancing Threat Detection in Structured Security Logs](https://arxiv.org/pdf/2510.00529) | arxiv
+- [Benchmarking LLM-Assisted Blue Teaming via Standardized Threat Hunting](https://arxiv.org/pdf/2509.23571) | arxiv
+- [Evaluating LLM Generated Detection Rules in Cybersecurity](https://arxiv.org/pdf/2509.16749) | arxiv
+- [ATLANTIS: AI-driven Threat Localization, Analysis, and Triage Intelligence System](https://arxiv.org/pdf/2509.14589) | arxiv
+- [BEACON: Behavioral Malware Classification with Large Language Model Embeddings and Deep Learning](https://arxiv.org/pdf/2509.14519) | arxiv
+- [RationAnomaly: Log Anomaly Detection with Rationality via Chain-of-Thought and Reinforcement Learning](https://arxiv.org/pdf/2509.14693) | arxiv
+- [Beyond Classification: Evaluating LLMs for Fine-Grained Automatic Malware Behavior Auditin](https://arxiv.org/pdf/2509.14335) | arxiv
+- [TraceRAG: A LLM-Based Framework for Explainable Android Malware Detection and Behavior Analysis](https://arxiv.org/pdf/2509.08865) | arxiv
+- [AgentSentinel: An End-to-End and Real-Time Security Defense Framework for Computer-Use Agents](https://arxiv.org/pdf/2509.07764) | arxiv
+- [LLM-driven Provenance Forensics for Threat Investigation and Detection](https://arxiv.org/pdf/2508.21323) | arxiv
+- [FALCON: Autonomous Cyber Threat Intelligence Mining with LLMs for IDS Rule Generation](https://arxiv.org/pdf/2508.18684) | arxiv
+- [Chimera: Harnessing Multi-Agent LLMs for Automatic Insider Threat Simulation](https://arxiv.org/pdf/2508.07745) | arxiv
+- [Think Broad, Act Narrow: CWE Identification with Multi-Agent Large Language Models](https://arxiv.org/pdf/2508.01451) | arxiv
+- [OFCnetLLM: Large Language Model for Network Monitoring and Alertness](https://arxiv.org/pdf/2507.22711) | arxiv
+- [Large Language Model-Based Framework for Explainable Cyberattack Detection in Automatic Generation Control Systems](https://arxiv.org/pdf/2507.22239) | arxiv
+- [From Alerts to Intelligence: A Novel LLM-Aided Framework for Host-based Intrusion Detection](https://arxiv.org/pdf/2507.10873) | arxiv
+- [Can Large Language Models Improve Phishing Defense? A Large-Scale Controlled Experiment on Warning Dialogue Explanations](https://arxiv.org/pdf/2507.07916) | arxiv
+- [Large Language Models for Network Intrusion Detection Systems: Foundations, Implementations, and Future Directions](https://arxiv.org/pdf/2507.04752) | arxiv
+- [Adaptive Linguistic Prompting (ALP) Enhances Phishing Webpage Detection in Multimodal Large Language Models](https://arxiv.org/pdf/2507.13357) | arxiv
+- [Leveraging Large Language Model for Intelligent Log Processing and Autonomous Debugging in Cloud AI Platforms](https://arxiv.org/pdf/2506.17900) | arxiv
+- [SmartGuard: Leveraging Large Language Models for Network Attack Detection through Audit Log Analysis and Summarization](https://arxiv.org/pdf/2506.16981) | arxiv
+- [PhishDebate: An LLM-Based Multi-Agent Framework for Phishing Website Detection](https://arxiv.org/pdf/2506.15656) | arxiv
+- [LLM-Powered Intent-Based Categorization of Phishing Emails](https://arxiv.org/pdf/2506.14337) | arxiv
+- [Evaluating Large Language Models for Phishing Detection, Self-Consistency, Faithfulness, and Explainability](https://arxiv.org/pdf/2506.13746) | arxiv
+- [Training RL Agents for Multi-Objective Network Defense Tasks](https://arxiv.org/pdf/2505.22531) | arxiv
+- [A Unified Framework for Human AI Collaboration in Security Operations Centers with Trusted Autonomy](https://arxiv.org/pdf/2505.23397) | arxiv
+- [MultiPhishGuard: An LLM-based Multi-Agent System for Phishing Email Detection](https://arxiv.org/pdf/2505.23803) | arxiv
+- [IRCopilot: Automated Incident Response with Large Language Models](https://arxiv.org/pdf/2505.20945) | arxiv
+- [LLM-Driven APT Detection for 6G Wireless Networks: A Systematic Review and Taxonomy](https://arxiv.org/pdf/2505.18846) | arxiv
+- [Benchmarking LLMs in an Embodied Environment for Blue Team Threat Hlunting](https://arxiv.org/pdf/2505.11901) | arxiv
+- [Automating Security Audit Using Large Language Model based Agent: An Exploration Experiment](https://arxiv.org/pdf/2505.10732) | arxiv
+- [On Technique Identification and Threat-Actor Attribution using LLMs and Embedding Models](https://arxiv.org/pdf/2505.11547) | arxiv
+- [Towards AI-Driven Human-Machine Co-Teaming for Adaptive and Agile Cyber Security Operation Centers](https://arxiv.org/pdf/2505.06394) | arxiv
+- [Large Language Models are Autonomous Cyber Defenders](https://arxiv.org/pdf/2505.04843) | arxiv
+- [Bridging Expertise Gaps: The Role of LLMs in Human-AI Collaboration for Cybersecurity](https://arxiv.org/pdf/2505.03179) | arxiv
+- [LLM-Based Threat Detection and Prevention Framework for IoT Ecosystems](https://arxiv.org/pdf/2505.00240) | arxiv
+- [Improving Phishing Email Detection Performance of Small Large Language Models](https://arxiv.org/pdf/2505.00034) | arxiv
+- [AnomalyGen: An Automated Semantic Log Sequence Generation Framework with LLM for Anomaly Detection](https://arxiv.org/pdf/2504.12250) | arxiv
+- [Investigating cybersecurity incidents using large language models in latest-generation wireless networks](https://arxiv.org/pdf/2504.13196) | arxiv
+- [SoK: LLM-based Log Parsing](https://arxiv.org/pdf/2504.04877) | arxiv
+- [Knowledge Transfer from LLMs to Provenance Analysis: A Semantic-Augmented Method for APT Detection](https://arxiv.org/pdf/2503.18316) | arxiv
+- [Large Language Models powered Network Attack Detection: Architecture, Opportunities and Case Study](https://arxiv.org/pdf/2503.18487) | arxiv
+- [Payload-Aware Intrusion Detection with CMAE and Large Language Models](https://arxiv.org/pdf/2503.20798) | arxiv
+- [RedChronos: A Large Language Model-Based Log Analysis System for Insider Threat Detection in Enterprises](https://arxiv.org/pdf/2503.02702) | arxiv
+- [Enhancing Cybersecurity in Critical Infrastructure with LLM-Assisted Explainable IoT Systems](https://arxiv.org/pdf/2503.03180) | arxiv
+- [Transforming Cyber Defense: Harnessing Agentic and Frontier AI for Proactive, Ethical Threat Intelligence](https://arxiv.org/pdf/2503.00164) | arxiv
+- [Cyber Defense Reinvented: Large Language Models as Threat Intelligence Copilots](https://arxiv.org/pdf/2502.20791) | arXiv
+- [Design and implementation of a distributed security threat detection system integrating federated learning and multimodal LLM](https://arxiv.org/pdf/2502.17763) | arXiv
+- [LAMD: Context-driven Android Malware Detection and Classification with LLMs](https://arxiv.org/pdf/2502.13055) | arXiv
+- [APT-LLM: Embedding-Based Anomaly Detection of Cyber Advanced Persistent Threats Using Large Language Models](https://arxiv.org/pdf/2502.09385) | arXiv
+- [AdaPhish: AI-Powered Adaptive Defense and Education Resource Against Deceptive Emails](https://arxiv.org/pdf/2502.03622) | arXiv
+- [SHIELD: APT Detection and Intelligent Explanation Using LLM](https://arxiv.org/pdf/2502.02342) | arXiv
+- [LLM-based event log analysis techniques: A survey](https://arxiv.org/pdf/2502.00677) | arXiv
+- [TORCHLIGHT: Shedding LIGHT on Real-World Attacks on Cloudless IoT Devices Concealed within the Tor Network](https://arxiv.org/pdf/2501.16784) | arXiv
+- [Exploring Large Language Models for Semantic Analysis and Categorization of Android Malware](https://arxiv.org/pdf/2501.04848) | arXiv
+- [Large Multimodal Agents for Accurate Phishing Detection with Enhanced Token Optimization and Cost Reduction](https://arxiv.org/pdf/2412.02301) | arXiv
+- [LogLM: From Task-based to Instruction-based Automated Log Analysis](https://arxiv.org/pdf/2410.09352) | arXiv
+- [LogLLM: Log-based Anomaly Detection Using Large Language Models](https://arxiv.org/pdf/2411.08561) | arXiv
+- [Using Large Language Models for Template Detection from Security Event Logs](https://arxiv.org/pdf/2409.05045) | arXiv
+- [A Comparative Study on Large Language Models for Log Parsing](https://arxiv.org/pdf/2409.02474) | arXiv
+- [LUK: Empowering Log Understanding with Expert Knowledge from Large Language Models](https://arxiv.org/pdf/2409.01909) | arXiv
+- [XG-NID: Dual-Modality Network Intrusion Detection using a Heterogeneous Graph Neural Network and Large Language Model](https://arxiv.org/pdf/2408.16021) | arXiv
+- [LogParser-LLM: Advancing Efficient Log Parsing with Large Language Models](https://arxiv.org/pdf/2408.13727) | arXiv
+- [Automated Phishing Detection Using URLs and Webpages](https://arxiv.org/pdf/2408.01667) | arXiv
+- [Transformers and Large Language Models for Efficient Intrusion Detection Systems: A Comprehensive Survey](https://arxiv.org/pdf/2408.07583) | arXiv
+- [Multimodal Large Language Models for Phishing Webpage Detection and Identification](https://arxiv.org/pdf/2408.05941) | arXiv
+- [Utilizing Large Language Models to Optimize the Detection and Explainability of Phishing Websites](https://arxiv.org/pdf/2408.05667) | arXiv
+- [Towards Explainable Network Intrusion Detection using Large Language Models](https://arxiv.org/pdf/2408.04342) | arXiv
+- [Audit-LLM: Multi-Agent Collaboration for Log-based Insider Threat Detection](https://arxiv.org/pdf/2408.08902) | arXiv
+- [LogEval: A Comprehensive Benchmark Suite for Large Language Models In Log Analysis](https://arxiv.org/pdf/2407.01896) | arXiv
+- [Defending Against Social Engineering Attacks in the Age of LLMs](https://arxiv.org/pdf/2406.12263) | EMNLP
+- [Anomaly Detection on Unstable Logs with GPT Models](https://arxiv.org/pdf/2406.07467) | arXiv
+- [ULog: Unsupervised Log Parsing with Large Language Models through Log Contrastive Units](https://arxiv.org/pdf/2406.07174) | arXiv
+- [Generative AI-in-the-loop: Integrating LLMs and GPTs into the Next Generation Networks](https://arxiv.org/pdf/2406.04276) | arXiv
+- [Log Parsing with Self-Generated In-Context Learning and Self-Correction](https://arxiv.org/pdf/2406.03376) | arXiv
+- [Large Language Models in Wireless Application Design: In-Context Learning-enhanced Automatic Network Intrusion Detection](https://arxiv.org/pdf/2405.11002) | arXiv
+- [DoLLM: How Large Language Models Understanding Network Flow Data to Detect Carpet Bombing DDoS](https://arxiv.org/pdf/2405.07638) | arXiv
+- [LLMParser: An Exploratory Study on Using Large Language Models for Log Parsing](https://arxiv.org/pdf/2404.18001) | ICSE
+- [Large Language Models Spot Phishing Emails with Surprising Accuracy: A Comparative Analysis of Performance](http://arxiv.org/abs/2404.15485) | arXiv
+- [ChatGPT for digital forensic investigation: The good, the bad, and the unknown](https://arxiv.org/abs/2307.10195) | Forensic Science International: Digital Investigation
+- [HuntGPT: Integrating Machine Learning-Based Anomaly Detection and Explainable AI with Large Language Models (LLMs)](https://arxiv.org/abs/2309.16021) | arXiv
+- [Revolutionizing Cyber Threat Detection with Large Language Models: A privacy-preserving BERT-based Lightweight Model for IoT/IIoT Devices](https://ieeexplore.ieee.org/document/10423646) | IEEE Access
+- [Explaining Tree Model Decisions in Natural Language for Network Intrusion Detection](https://arxiv.org/abs/2310.19658) | arXiv
+- [Devising and Detecting Phishing: Large Language Models vs. Smaller Human Models](https://arxiv.org/abs/2308.12287) | arXiv
+- [Prompted Contextual Vectors for Spear-Phishing Detection](https://arxiv.org/abs/2402.08309) | arXiv
+- [Evaluating the Performance of ChatGPT for Spam Email Detection](https://arxiv.org/abs/2402.15537) | arXiv
+- [An Improved Transformer-based Model for Detecting Phishing, Spam, and Ham: A Large Language Model Approach](https://arxiv.org/abs/2311.04913) | arXiv
+- [Application of Large Language Models to DDoS Attack Detection](https://link.springer.com/chapter/10.1007/978-3-031-51630-6_6) | International Conference on Security and Privacy in Cyber-Physical Systems and Smart Vehicles
+- [Web Content Filtering through knowledge distillation of Large Language Models](https://arxiv.org/abs/2305.05027) | WI-IAT
+- [Lemur: Log Parsing with Entropy Sampling and Chain-of-Thought Merging](https://arxiv.org/abs/2402.18205) | arXiv
+- [Interpretable Online Log Analysis Using Large Language Models with Prompt Strategies](https://arxiv.org/abs/2308.07610) | ICPC
+- [LogGPT: Log Anomaly Detection via GPT](https://arxiv.org/abs/2309.14482) | BigData
+- [LogGPT: Exploring ChatGPT for Log-Based Anomaly Detection](https://arxiv.org/abs/2309.01189) | HPCC/DSS/SmartCity/DependSys
+- [Log-based Anomaly Detection based on EVT Theory with feedback](https://arxiv.org/abs/2306.05032) | arXiv
+- [Benchmarking Large Language Models for Log Analysis, Security, and Interpretation](https://arxiv.org/abs/2311.14519) | J. Netw. Syst. Manag.
+ 
+---
+## LLM Assisted Attack
+ 
+- [Lightweight LLMs for Network Attack Detection in IoT Networks](https://arxiv.org/pdf/2601.15269) | arxiv
+- [When Bots Take the Bait: Exposing and Mitigating the Emerging Social Engineering Attack in Web Automation Agent](https://arxiv.org/pdf/2601.07263) | arxiv
+- [PenForge: On-the-Fly Expert Agent Construction for Automated Penetration Testing](https://arxiv.org/pdf/2601.06910) | arxiv
+- [Cybersecurity AI: A Game-Theoretic AI for Guiding Attack and Defense](https://arxiv.org/pdf/2601.05887) | arxiv
+- [PentestEval: Benchmarking LLM-based Penetration Testing with Modular and Stage-Level Design](https://arxiv.org/pdf/2512.14233) | arxiv
+- [The Role of AI in Modern Penetration Testing](https://arxiv.org/pdf/2512.12326) | arxiv
+- [Automated Penetration Testing with LLM Agents and Classical Planning](https://arxiv.org/pdf/2512.11143) | arxiv
+- [Comparing AI Agents to Cybersecurity Professionals in Real-World Penetration Testing](https://arxiv.org/pdf/2512.09882) | arxiv
+- [Comparing AI Agents to Cybersecurity Professionals in Real-World Penetration Testing](https://arxiv.org/abs/2512.09882) | arxiv
+- [Genesis: Evolving Attack Strategies for LLM Web Agent Red-Teaming](https://arxiv.org/pdf/2510.18314) | arxiv
+- [AutoPentester: An LLM Agent-based Framework for Automated Pentesting](https://arxiv.org/pdf/2510.05605) | arxiv
+- [SoK: Potentials and Challenges of Large Language Models for Reverse Engineering](https://arxiv.org/pdf/2509.21821) | arxiv
+- [From Capabilities to Performance: Evaluating Key Functional Properties of LLM Architectures in Penetration Testing](https://arxiv.org/pdf/2509.14289) | arxiv
+- [From Firewalls to Frontiers: AI Red-Teaming is a Domain-Specific Evolution of Cyber Red-Teaming](https://arxiv.org/pdf/2509.11398) | arxiv
+- [Guided Reasoning in LLM-Driven Penetration Testing Using Structured Attack Trees](https://arxiv.org/pdf/2509.07939) | arxiv
+- [Cybersecurity AI: Hacking the AI Hackers via Prompt Injection](https://arxiv.org/pdf/2508.21669) | arxiv
+- [An Automated Attack Investigation Approach Leveraging Threat-Knowledge-Augmented Large Language Models](https://arxiv.org/pdf/2509.01271) | arxiv
+- [An Automated Attack Investigation Approach Leveraging Threat-Knowledge-Augmented Large Language Models](https://arxiv.org/pdf/2509.01271) | arxiv
+- [Cybersecurity AI: Hacking the AI Hackers via Prompt Injection](https://arxiv.org/pdf/2508.21669) | arxiv
+- [SoK: Large Language Model-Generated Textual Phishing Campaigns End-to-End Analysis of Generation, Characteristics, and Detection](https://arxiv.org/pdf/2508.21457) | arxiv
+- [Pentest-R1: Towards Autonomous Penetration Testing Reasoning Optimized via Two-Stage Reinforcement Learning](https://arxiv.org/pdf/2508.07382) | arxiv
+- [PenTest2.0: Towards Autonomous Privilege Escalation Using GenAI](https://arxiv.org/pdf/2507.06742) | arxiv
+- [Prompt to Pwn: Automated Exploit Generation for Smart Contracts](https://arxiv.org/pdf/2508.01371) | arxiv
+- [Can We End the Cat-and-Mouse Game? Simulating Self-Evolving Phishing Attacks with LLMs and Genetic Algorithms](https://arxiv.org/pdf/2507.21538) | arxiv
+- [Exploiting Jailbreaking Vulnerabilities in Generative AI to Bypass Ethical Safeguards for Facilitating Phishing Attacks](https://arxiv.org/pdf/2507.12185) | arxiv
+- [LLMalMorph: On The Feasibility of Generating Variant Malware using Large-Language-Models](https://arxiv.org/pdf/2507.09411) | arxiv
+- [On the Surprising Efficacy of LLMs for Penetration-Testing](https://arxiv.org/pdf/2507.00829) | arxiv
+- [From Promise to Peril: Rethinking Cybersecurity Red and Blue Teaming in the Age of LLMs](https://arxiv.org/pdf/2506.13434) | arxiv
+- [On the Ethics of Using LLMs for Offensive Security](https://arxiv.org/pdf/2506.08693) | arxiv
+- [ReCopilot: Reverse Engineering Copilot in Binary Analysis](https://arxiv.org/pdf/2505.16366) | arxiv
+- [LLMs unlock new paths to monetizing exploits](https://arxiv.org/pdf/2505.11449) | arxiv
+- [AutoPentest: Enhancing Vulnerability Management With Autonomous LLM Agents](https://arxiv.org/pdf/2505.10321) | arxiv
+- [Offensive Security for AI Systems: Concepts, Practices, and Applications](https://arxiv.org/pdf/2505.06380) | arxiv
+- [Weaponizing Language Models for Cybersecurity Offensive Operations: Automating Vulnerability Assessment Report Validation; A Review Paper](https://arxiv.org/pdf/2505.04265) | arxiv
+- [On the Feasibility of Using MultiModal LLMs to Execute AR Social Engineering Attacks](https://arxiv.org/pdf/2504.13209) | arxiv
+- [Benchmarking Practices in LLM-driven Offensive Security: Testbeds, Metrics, and Experiment Design](https://arxiv.org/pdf/2504.10112) | arxiv
+- [Red Teaming with Artificial Intelligence-Driven Cyberattacks: A Scoping Review](https://arxiv.org/pdf/2503.19626) | arxiv
+- [A Framework for Evaluating Emerging Cyberattack Capabilities of AI](https://arxiv.org/pdf/2503.11917) | arxiv
+- [Jailbreaking Generative AI: Empowering Novices to Conduct Phishing Attacks](https://arxiv.org/pdf/2503.01395) | arxiv
+- [CAI: An Open, Bug Bounty-Ready Cybersecurity AI](https://arxiv.org/abs/2504.06017) | arXiv
+- [RapidPen: Fully Automated IP-to-Shell Penetration Testing with LLM-based Agents](https://arxiv.org/pdf/2502.16730) | arXiv
+- [Construction and Evaluation of LLM-based agents for Semi-Autonomous penetration testing](https://arxiv.org/pdf/2502.15506) | arXiv
+- [OCCULT: Evaluating Large Language Models for Offensive Cyber Operation Capabilities](https://arxiv.org/pdf/2502.15797) | arXiv
+- [PenTest++: Elevating Ethical Hacking with AI and Automation](https://arxiv.org/pdf/2502.09484) | arXiv
+- [Can LLMs Hack Enterprise Networks? Autonomous Assumed Breach Penetration-Testing Active Directory Networks](https://arxiv.org/pdf/2502.04227) | arXiv
+- [On the Feasibility of Using LLMs to Execute Multistage Network Attacks](https://arxiv.org/pdf/2501.16466) | arXiv
+- [HackSynth: LLM Agent and Evaluation Framework for Autonomous Penetration Testing](https://arxiv.org/pdf/2412.01778) | arXiv
+- [Hacking CTFs with Plain Agents](https://arxiv.org/pdf/2412.02776) | arXiv
+- [Evaluating and Improving the Robustness of Security Attack Detectors Generated by LLMs](https://arxiv.org/pdf/2411.18216) | arXiv
+- [AI-Augmented Ethical Hacking: A Practical Examination of Manual Exploitation and Privilege Escalation in Linux Environments](https://arxiv.org/pdf/2411.17539) | arXiv
+- [Next-Generation Phishing: How LLM Agents Empower Cyber Attackers](https://arxiv.org/pdf/2411.13874) | arXiv
+- [Adapting to Cyber Threats: A Phishing Evolution Network (PEN) Framework for Phishing Generation and Analyzing Evolution Patterns using Large Language Models](https://arxiv.org/pdf/2411.11389) | arXiv
+- [Hacking Back the AI-Hacker: Prompt Injection as a Defense Against LLM-driven Cyberattacks](https://arxiv.org/pdf/2410.20911) | arXiv
+- [PentestAgent: Incorporating LLM Agents to Automated Penetration Testing](https://arxiv.org/pdf/2411.05185) | arXiv
+- [AutoPT: How Far Are We from the End2End Automated Web Penetration Testing?](https://arxiv.org/pdf/2411.01236) | arXiv
+- [AutoPenBench: Benchmarking Generative Agents for Penetration Testing](https://arxiv.org/pdf/2410.03225) | arXiv
+- [Towards Automated Penetration Testing: Introducing LLM Benchmark, Analysis, and Improvements](https://arxiv.org/pdf/2410.17141) | arXiv
+- [On the Feasibility of Fully AI-automated Vishing Attacks](https://arxiv.org/pdf/2409.13793) | arXiv
+- [Hacking, The Lazy Way: LLM Augmented Pentesting](https://arxiv.org/pdf/2409.09493) | arXiv
+- [Is Generative AI the Next Tactical Cyber Weapon For Threat Actors? Unforeseen Implications of AI Generated Cyber Attacks](https://arxiv.org/pdf/2408.12806) | arXiv
+- [CIPHER: Cybersecurity Intelligent Penetration-testing Helper for Ethical Researcher](https://arxiv.org/pdf/2408.11650) | Sensors
+- [Using Retriever Augmented Large Language Models for Attack Graph Generation](https://arxiv.org/pdf/2408.05855) | arXiv
+- [Practical Attacks against Black-box Code Completion Engines](https://arxiv.org/pdf/2408.02509) | arXiv
+- [PenHeal: A Two-Stage LLM Framework for Automated Pentesting and Optimal Remediation](https://arxiv.org/pdf/2407.17788) | Proceedings of the Workshop on Autonomous Cybersecurity
+- [From Sands to Mansions: Enabling Automatic Full-Life-Cycle Cyberattack Construction with LLM](https://arxiv.org/pdf/2407.16928) | arXiv
+- [The Shadow of Fraud: The Emerging Danger of AI-powered Social Engineering and its Possible Cure](https://arxiv.org/pdf/2407.15912) | arXiv
+- [Tactics, Techniques, and Procedures (TTPs) in Interpreted Malware: A Zero-Shot Generation with Large Language Models](https://arxiv.org/pdf/2407.08532) | arXiv
+- [Assessing AI vs Human-Authored Spear Phishing SMS Attacks: An Empirical Study Using the TRAPD Method](https://arxiv.org/pdf/2406.13049) | arXiv
+- [Getting pwnâ€™d by AI: Penetration Testing with Large Language Models](https://arxiv.org/abs/2308.00121) | ACM Joint European Software Engineering Conference and Symposium on the Foundations of Software Engineering
+- [RatGPT: Turning online LLMs into Proxies for Malware Attacks](https://arxiv.org/abs/2308.09183) | arXiv
+- [AutoAttacker: A Large Language Model Guided System to Implement Automatic Cyber-attacks](https://arxiv.org/abs/2403.01038) | arXiv
+- [PentestGPT: An LLM-empowered Automatic Penetration Testing Tool](https://arxiv.org/abs/2308.06782) | USENIX
+- [From Text to MITRE Techniques: Exploring the Malicious Use of Large Language Models for Generating Cyber Attack Payloads](https://arxiv.org/abs/2305.15336) | arXiv
+- [From Chatbots to PhishBots? - Preventing Phishing scams created using ChatGPT, Google Bard and Claude](https://arxiv.org/abs/2310.19181) | arXiv
+- [Exploring the Dark Side of AI: Advanced Phishing Attack Design and Deployment Using ChatGPT](https://arxiv.org/abs/2309.10463) | CNS
+- [Using Large Language Models for Cybersecurity Capture-The-Flag Challenges and Certification Questions](https://arxiv.org/abs/2308.10443) | arXiv
+- [Evaluating LLMs for Privilege-Escalation Scenarios](https://arxiv.org/abs/2310.11409) | arXiv
+- [Malla: Demystifying Real-world Large Language Model Integrated Malicious Services](https://arxiv.org/abs/2401.03315) | USENIX
+- [LLMs Killed the Script Kiddie: How Agents Supported by Large Language Models Change the Landscape of Network Threat Testing](https://arxiv.org/abs/2310.06936) | arXiv
+- [From ChatGPT to ThreatGPT: Impact of Generative AI in Cybersecurity and Privacy](https://arxiv.org/abs/2307.00691) | IEEE Access
+- [Impact of Big Data Analytics and ChatGPT on Cybersecurity](https://ieeexplore.ieee.org/document/10127411) | I3CS
+- [Identifying and mitigating the security risks of generative ai](https://arxiv.org/abs/2308.14840) | Foundations and Trends in Privacy and Security
+ 
+---
+## Others
+ 
+- [Towards Cybersecurity Superintelligence: from AI-guided humans to human-guided AI](https://arxiv.org/pdf/2601.14614) | arxiv
+- [A cybersecurity AI agent selection and decision support framework](https://arxiv.org/pdf/2510.01751) | arxiv
+- [Large Language Models for Security Operations Centers: A Comprehensive Survey](https://arxiv.org/pdf/2509.10858) | arxiv
+- [From Legacy to Standard: LLM-Assisted Transformation of Cybersecurity Playbooks into CACAO Format](https://arxiv.org/pdf/2508.03342) | arxiv
+- [Information Security Based on LLM Approaches: A Review](https://arxiv.org/pdf/2507.18215) | arxiv
+- [Large Language Models in Cybersecurity: Applications, Vulnerabilities, and Defense Techniques](https://arxiv.org/pdf/2507.13629) | arxiv
+- [Cybersecurity AI: The Dangerous Gap Between Automation and Autonomy](https://arxiv.org/pdf/2506.23592) | arxiv
+- [Using LLMs for Security Advisory Investigations: How Far Are We?](https://arxiv.org/pdf/2506.13161) | arxiv
+- [Exposing the Impact of GenAI for Cybercrime: An Investigation into the Dark Side](https://arxiv.org/pdf/2505.23733) | arxiv
+- [Large Language Models for IT Automation Tasks: Are We There Yet?](https://arxiv.org/pdf/2505.20505) | arxiv
+- [Mitigating Cyber Risk in the Age of Open-Weight LLMs: Policy Gaps and Technical Realities](https://arxiv.org/pdf/2505.17109) | arxiv
+- [ACSE-Eval: Can LLMs threat model real-world cloud infrastructure?](https://arxiv.org/pdf/2505.11565) | arxiv
+- [LLMs Suitability for Network Security: A Case Study of STRIDE Threat Modeling](https://arxiv.org/pdf/2505.04101) | arxiv
+- [From Texts to Shields: Convergence of Large Language Models and Cybersecurity](https://arxiv.org/pdf/2505.00841) | arxiv
+- [Automatically Generating Rules of Malicious Software Packages via Large Language Model](https://arxiv.org/pdf/2504.17198) | arxiv
+- [Exploring the Role of Large Language Models in Cybersecurity: A Systematic Survey](https://arxiv.org/pdf/2504.15622) | arxiv
+- [SoK: Frontier AIs Impact on the Cybersecurity Landscape](https://arxiv.org/pdf/2504.05408) | arxiv
+- [Emerging Cyber Attack Risks of Medical AI Agents](https://arxiv.org/pdf/2504.03759) | arxiv
+- [Inducing Personality in LLM-Based Honeypot Agents: Measuring the Effect on Human-Like Agenda Generation](https://arxiv.org/pdf/2503.19752) | arxiv
+- [ChatIoT: Large Language Model-based Security Assistant for Internet of Things with Retrieval-Augmented Generation](https://arxiv.org/pdf/2502.09896) | arXiv
+- [Empowering AIOps: Leveraging Large Language Models for IT Operations Management](https://arxiv.org/pdf/2501.12461) | arXiv
+- [BARTPredict: Empowering IoT Security with LLM-Driven Cyber Threat Prediction](https://arxiv.org/pdf/2501.01664) | arXiv
+- [Toward Intelligent and Secure Cloud: Large Language Model Empowered Proactive Defense](https://arxiv.org/pdf/2412.21051) | arXiv
+- [Emerging Security Challenges of Large Language Models](https://arxiv.org/pdf/2412.17614) | arXiv
+- [Ontology-Aware RAG for Improved Question-Answering in Cybersecurity Education](https://arxiv.org/pdf/2412.14191) | arXiv
+- [Integrating Large Language Models with Internet of Things Applications](https://arxiv.org/pdf/2410.19223) | arXiv
+- [CmdCaliper: A Semantic-Aware Command-Line Embedding Model and Dataset for Security Research]([link](https://aclanthology.org/2024.emnlp-main.1126.pdf) | EMNLP
+- [Advancing Cyber Incident Timeline Analysis Through Rule Based AI and Large Language Models](https://arxiv.org/pdf/2409.02572) | arXiv
+- [Contextualized AI for Cyber Defense: An Automated Survey using LLMs](https://arxiv.org/pdf/2409.13524) | arXiv
+- [LLM Honeypot: Leveraging Large Language Models as Advanced Interactive Honeypot Systems](https://arxiv.org/pdf/2409.08234) | arXiv
+- [ScriptSmith: A Unified LLM Framework for Enhancing IT Operations via Automated Bash Script Generation, Assessment, and Refinement](https://arxiv.org/pdf/2409.17166) | arXiv
+- [Beyond Detection: Leveraging Large Language Models for Cyber Attack Prediction in IoT Networks](https://arxiv.org/pdf/2408.14045) | arXiv
+- [MistralBSM: Leveraging Mistral-7B for Vehicular Networks Misbehavior Detection](https://arxiv.org/pdf/2407.18462) | arXiv
+- [MoRSE: Bridging the Gap in Cybersecurity Expertise with Retrieval Augmented Generation](https://arxiv.org/pdf/2407.15748) | arXiv
+- [Disassembling Obfuscated Executables with LLM](https://arxiv.org/pdf/2407.08924) | arXiv
+- [On Large Language Models in National Security Applications](https://arxiv.org/pdf/2407.03453) | arXiv
+- [Threat Modelling and Risk Analysis for Large Language Model (LLM)-Powered Applications](https://arxiv.org/pdf/2406.11007) | arXiv
+- [Exploring the Efficacy of Large Language Models (GPT-4) in Binary Reverse Engineering](https://arxiv.org/pdf/2406.06637) | arXiv
+- [A Comprehensive Overview of Large Language Models (LLMs) for Cyber Defences: Opportunities and Directions](https://arxiv.org/pdf/2405.14487) | arXiv
+- [LLMPot: Automated LLM-based Industrial Protocol and Physical Process Emulation for ICS Honeypots](https://arxiv.org/pdf/2405.05999) | arXiv
+- [Critical Infrastructure Protection: Generative AI, Challenges, and Opportunities](https://arxiv.org/pdf/2405.04874) | arXiv
+- [Large Language Models for Cyber Security: A Systematic Literature Review](https://arxiv.org/pdf/2405.04760) | arXiv
+- [AppPoet: Large Language Model based Android malware detection via multi-view prompt engineering](https://arxiv.org/pdf/2404.18816) | arXiv
+- [Act as a Honeytoken Generator! An Investigation into Honeytoken Generation with Large Language Models](https://arxiv.org/pdf/2404.16118) | arXiv
+- [How Far Have We Gone in Stripped Binary Code Understanding Using Large Language Models](https://arxiv.org/pdf/2404.09836) | arXiv
+- [Is Stack Overflow Obsolete? An Empirical Study of the Characteristics of ChatGPT Answers to Stack Overflow Questions](https://arxiv.org/abs/2308.02312) | CHI
+- [Prompting Is All You Need: Automated Android Bug Replay with Large Language Models](https://arxiv.org/abs/2306.01987) | ICSE
+- [Employing LLMs for Incident Response Planning and Review](https://arxiv.org/abs/2403.01271) | arXiv
+- [LLM in the Shell: Generative Honeypots](https://arxiv.org/abs/2309.00155) | EuroS&P Workshop
+- [Llama Guard: LLM-based Input-Output Safeguard for Human-AI Conversations](https://arxiv.org/abs/2312.06674) | arXiv
+- [Harnessing the Power of LLM to Support Binary Taint Analysis](https://arxiv.org/abs/2310.08275) | arXiv
+- [LLM for SoC Security: A Paradigm Shift](https://arxiv.org/abs/2310.06046) | IEEE Access
+- [Just-in-Time Security Patch Detection -- LLM At the Rescue for Data Augmentation](https://arxiv.org/abs/2312.01241) | arXiv
+- [Anatomy of an AI-powered malicious social botnet](https://arxiv.org/abs/2307.16336) | arXiv
+- [An LLM-based Framework for Fingerprinting Internet-connected Devices](https://dl.acm.org/doi/pdf/10.1145/3618257.3624845) | ACM on Internet Measurement Conference
+ 
+---
+## Further Research: Agent4Cybersecurity
+ 
+- [A Survey of Agentic AI and Cybersecurity: Challenges, Opportunities and Use-case Prototypes](https://arxiv.org/pdf/2601.05293) | arxiv
+- [A Network Arena for Benchmarking AI Agents on Network Troubleshooting](https://arxiv.org/pdf/2512.16381) | arxiv
+- [The Evolution of Agentic AI in Cybersecurity: From Single LLM Reasoners to Multi-Agent Systems and Autonomous Pipelines](https://arxiv.org/pdf/2512.06659) | arxiv
+- [AgentCyTE: Leveraging Agentic AI to Generate Cybersecurity Training & Experimentation Scenarios](https://arxiv.org/pdf/2510.25189) | arxiv
+- [Cybersecurity AI: Evaluating Agentic Cybersecurity in Attack/Defense CTFs](https://arxiv.org/pdf/2510.17521) | arxiv
+- [Synthesizing Agentic Data for Web Agents with Progressive Difficulty Enhancement Mechanisms](https://arxiv.org/pdf/2510.13913) | arxiv
+- [A Survey on Agentic Security: Applications, Threats and Defenses](https://arxiv.org/pdf/2510.06445) | arxiv
+- [xOffense: An AI-driven autonomous penetration testing framework with offensive knowledge-enhanced LLMs and multi agent systems](https://arxiv.org/pdf/2509.13021) | arxiv
+- [Shell or Nothing: Real-World Benchmarks and Memory-Activated Agents for Automated Penetration Testing](https://arxiv.org/pdf/2509.09207) | arxiv
+- [From CVE Entries to Verifiable Exploits: An Automated Multi-Agent Framework for Reproducing CVEs](https://arxiv.org/pdf/2509.01835) | arxiv
+- [Training Language Model Agents to Find Vulnerabilities with CTF-Dojo](https://arxiv.org/pdf/2508.18370) | arxiv
+- [FaultLine: Automated Proof-of-Vulnerability Generation Using LLM Agents](https://arxiv.org/pdf/2507.15241) | arxiv
+- [From CVE Entries to Verifiable Exploits: An Automated Multi-Agent Framework for Reproducing CVEs](https://arxiv.org/pdf/2509.01835) | arxiv
+- [Multi-Agent Penetration Testing AI for the Web](https://arxiv.org/pdf/2508.20816) | arxiv
+- [CyberSleuth: Autonomous Blue-Team LLM Agent for Web Attack Forensics](https://arxiv.org/pdf/2508.20643) | arxiv
+- [BountyBench: Dollar Impact of AI Agent Attackers and Defenders on Real-World Cybersecurity Systems](https://arxiv.org/pdf/2505.15216) | arxiv
+- [AIRTBench: Measuring Autonomous AI Red Teaming Capabilities in Language Models](https://arxiv.org/pdf/2506.14682) | arxiv
+- [Measuring and Augmenting Large Language Models for Solving Capture-the-Flag Challenges](https://arxiv.org/pdf/2506.17644) | arxiv
+- [Towards Effective Offensive Security LLM Agents: Hyperparameter Tuning, LLM as a Judge, and a Lightweight CTF Benchmark](https://arxiv.org/pdf/2508.05674) | arxiv
+- [Autonomous Penetration Testing: Solving Capture-the-Flag Challenges with LLMs](https://arxiv.org/pdf/2508.01054) | arxiv
+- [AURA: A Multi-Agent Intelligence Framework for Knowledge-Enhanced Cyber Threat Attribution](https://arxiv.org/pdf/2506.10175) | arxiv
+- [Improving LLM Agents with Reinforcement Learning on Cryptographic CTF Challenges](https://arxiv.org/pdf/2506.02048) | arxiv
+- [RedTeamLLM: an Agentic AI framework for offensive security](https://arxiv.org/pdf/2505.06913) | arxiv
+- [AutoPatch: Multi-Agent Framework for Patching Real-World CVE Vulnerabilities](https://arxiv.org/pdf/2505.04195) | arxiv
+- [Agent That Debugs: Dynamic State-Guided Vulnerability Repair](https://arxiv.org/pdf/2504.07634) | arxiv
+- [CAI: An Open, Bug Bounty-Ready Cybersecurity AI](https://arxiv.org/pdf/2504.06017) | arxiv
+- [Agentic AI and the Cyber Arms Race](https://arxiv.org/pdf/2503.04760) | arxiv
+- [VulnBot: Autonomous Penetration Testing for A Multi-Agent Collaborative Framework](https://arxiv.org/pdf/2501.13411) | arXiv
+- [Multi-Agent Collaboration in Incident Response with Large Language Models](https://arxiv.org/pdf/2412.00652) | arXiv
+- [LLM Agent Honeypot: Monitoring AI Hacking Agents in the Wild](https://arxiv.org/pdf/2410.13919) | arXiv
+- [MarsCode Agent: AI-native Automated Bug Fixing](https://arxiv.org/pdf/2409.00899) | arXiv
+- [BreachSeek: A Multi-Agent Automated Penetration Tester](https://arxiv.org/pdf/2409.03789) | arXiv
+- [PhishAgent: A Robust Multimodal Agent for Phishing Webpage Detection](https://arxiv.org/pdf/2408.10738) | arXiv
+- [Using LLMs to Automate Threat Intelligence Analysis Workflows in Security Operation Centers](https://arxiv.org/pdf/2407.13093) | arXiv
+- [Teams of LLM Agents can Exploit Zero-Day Vulnerabilities](https://arxiv.org/pdf/2406.01637) | arXiv
+- [Generative AI and Large Language Models for Cyber Security: All Insights You Need](https://arxiv.org/pdf/2405.12750) | arXiv
+- [Generative AI in Cybersecurity](https://arxiv.org/pdf/2405.01674) | arXiv
+- [Large Language Models for Networking: Workflow, Advances and Challenges](https://arxiv.org/pdf/2404.12901) | arXiv
+- [LLM Agents can Autonomously Exploit One-day Vulnerabilities](https://arxiv.org/pdf/2404.08144) | arXiv
+- [InjecAgent: Benchmarking Indirect Prompt Injections in Tool-Integrated Large Language Model Agents](https://arxiv.org/abs/2403.02691) | ACL Findings
+- [WIPI: A New Web Threat for LLM-Driven Web Agents](https://arxiv.org/abs/2402.16965) | arXiv
+- [R-Judge: Benchmarking Safety Risk Awareness for LLM Agents](https://web3.arxiv.org/abs/2401.10019) | EMNLP Findings
+- [Large Language Models for Networking: Applications, Enabling Techniques, and Challenges](https://arxiv.org/abs/2311.17474) | arXiv
+- [TaskWeaver: A Code-First Agent Framework](https://arxiv.org/abs/2311.17541) | arXiv
+- [If llm is the wizard, then code is the wand: A survey on how code empowers large language models to serve as intelligent agents.](https://arxiv.org/abs/2401.00812) | arXiv
+- [From Summary to Action: Enhancing Large Language Models for Complex Tasks with Open World APIs](https://arxiv.org/abs/2402.18157) | arXiv
+- [ToolLLM: Facilitating Large Language Models to Master 16000+ Real-world APIs](https://arxiv.org/abs/2307.16789) | ICLR
+- [The Rise and Potential of Large Language Model Based Agents: A Survey](https://arxiv.org/abs/2309.07864) | arXiv
+- [TPTU: Large Language Model-based AI Agents for Task Planning and Tool Usage](https://arxiv.org/abs/2308.03427) | arXiv
+- [Nissist: An Incident Mitigation Copilot based on Troubleshooting Guides](https://arxiv.org/abs/2402.17531v1) | ECAI
+- [Llm agents can autonomously hack websites.](https://arxiv.org/abs/2402.06664v1) | arXiv
+- [Out of the Cage: How Stochastic Parrots Win in Cyber Security Environments](https://arxiv.org/abs/2308.12086) | ICAART
+- [LLMind: Orchestrating AI and IoT with LLM for Complex Task Execution](https://arxiv.org/abs/2312.09007) | arXiv
+- [A unified cybersecurity framework for complex environments](https://dl.acm.org/doi/10.1145/3278681.3278682) | Proceedings of the Annual Conference of the South African Institute of Computer Scientists and Information Technologists

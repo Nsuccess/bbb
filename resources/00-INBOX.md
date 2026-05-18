@@ -14990,7 +14990,9 @@ AWS S3, Azure, Cloudfront, Elastic Beanstalk, GitHub Pages, Heroku, Vercel, Netl
 
 ---
 
-### Entry #097 - GitLab Bug Bounty Attack Research Collection
+### ~~Entry #097 - GitLab Bug Bounty Attack Research Collection~~ **[DEFERRED — next PC]**
+
+> GitLab requires 4GB+ RAM to run locally. Deferred until workstation upgrade (next year). All associated PoCs in `pocs/gitlab/` and `workflows/06-gitlab-hunt.md` have been removed.
 
 **Source:** Aggregated — HackerOne, GitLab Security, joaxcar, ahacker1, vakzz
 **Date Added:** 2026-05-14
@@ -15455,7 +15457,9 @@ A comprehensive technical research report on LLM Prompt Injection threats. Cover
 
 ---
 
-### Entry #105 - GitLab Reproducible Vulnerabilities: Official Hands-On Training
+### ~~Entry #105 - GitLab Reproducible Vulnerabilities: Official Hands-On Training~~ **[DEFERRED — next PC]**
+
+> Deferred until workstation upgrade. Will use GitLab.com free tier for PoC testing when resumed.
 
 **Source:** GitLab Handbook — Application Security
 **Date Added:** 2026-05-14
@@ -15652,14 +15656,111 @@ SVEN enables controlling LLMs to generate **secure** or **insecure** code via le
 
 ---
 
-**SUMMARY: Added Entries #093-#105. Total: 105 comprehensive resources in INBOX.**
+### Entry #106 - showAllAccounts.json: Mass Production Data Exposure (VAG33K)
 
-**Entry #093 - #105 Coverage:**
+**Source:** @VAG33K on X (twitter.com/VAG33K)
+**Date Added:** 2026-05-16
+**Type:** Writeup, Tweet
+**Priority:** High
+**Content:**
+
+Two-tweet thread detailing massive PII exposure via a single endpoint:
+
+> "LOL, massive exposure of production data, PII for internal accounts and billing records for high-level executives(CFO), 3055 Phone Numbers for users, Cost Centre Names and Live Billing Charges. Get Triaged from BC then the Customer close it as P5 and Resolve it"
+> "this was just one endpoint from over +16 endpoints. 'showAllAccounts.json' was return all the internal user data (CFO, IT, Admins, And Third Party user Accounts ...etc)."
+
+**Key Takeaways:**
+- Single endpoint `/showAllAccounts.json` exposed CFO billing records, 3055 phone numbers, cost centre names, live billing charges, all internal user accounts
+- Over 16 similar vulnerable endpoints existed
+- Bugcrowd triaged it → customer closed as P5 / resolved without bounty
+- Classic example of finding critical endpoints via endpoint enumeration / JS analysis
+
+**Relevance:** Shows the importance of endpoint enumeration and JS analysis for finding mass-assignment-style PII leaks. Also a cautionary tale about program behavior on sensitive data.
+
+**References:**
+- Tweet: https://x.com/VAG33K/status/1923445213025558754
+
+---
+
+### Entry #107 - ATO/Business Logic Dork (wadgamaraldeen)
+
+**Source:** @wadgamaraldeen on X (twitter.com/wadgamaraldeen)
+**Date Added:** 2026-05-16
+**Type:** Dork, Methodology
+**Priority:** Medium
+**Content:**
+
+> "My main dork for (The Manual Testing) of the target's subs functionalities for ATO, Business logic, BAC, IDORs and Auth vulnerabilities"
+> ```
+> ("login"|"signup"|"signin"|"register"|"create"|"portal"|"registeration"|"join"|"internal"|"logon") site:*.target.com -www
+> ```
+
+**Key Takeaways:**
+- Targets authentication/registration endpoints — the highest-value surface for ATO, BAC, IDOR, and auth bypass testing
+- Excludes `www` subdomain to focus on less-audited subdomains
+- Easy to substitute `target.com` with any in-scope domain
+- Pairs well with Entry #025 (export IDOR), Entry #040/$9k BAC, Entry #050 business logic
+
+**Relevance:** Practical, immediately actionable recon dork for finding auth-related subdomains that often have weaker security than main www.
+
+**References:**
+- Tweet: https://x.com/wadgamaraldeen/status/1923446129353031878
+
+---
+
+### Entry #108 - Ultimate IDOR Testing Checklist (Comprehensive 12-Phase)
+
+**Source:** Aggregated (anon/job-market-post)
+**Date Added:** 2026-05-16
+**Type:** Checklist, Methodology
+**Priority:** High
+**Content:**
+
+A comprehensive 12-phase IDOR testing checklist covering the full attack chain from setup to automation:
+
+**Phase 1: Setup & Target Identification** — Create test accounts, identify JSON endpoints, sensitivity analysis, ID audit, ID leakage mapping, client decompilation.
+
+**Phase 2: Direct ID Substitution & Enumeration** — Basic ID flip, numeric brute force, non-numeric ID substitution, complex/combined IDs, predictable/hashed IDs.
+
+**Phase 3: Path & URL Manipulation Bypasses** — Trailing slash, double slashes, case variation, path traversal, wildcard substitution, fuzz keywords, SQLi quick check.
+
+**Phase 4: Logic & Endpoint Bypasses** — Version downgrading, sub-endpoint variant, missing function-level access, owner flag/role field toggling, token/authorization swap, cached role check/session race, token binding flaws, frontend-backend desync.
+
+**Phase 5: Parameter & Body Abuse** — Add parameter bypass, multi-ID/comma separation, HPP, JSON array/object wrap, JSON param pollution, null termination, control chars, parameter name replacement, batch IDs, deserialization/object injection.
+
+**Phase 6: Encoding, Hashing & Obfuscation** — Leading zeros, %20, type confusion, Base64 re-encode, hashed ID analysis, hex/MD5/SHA.
+
+**Phase 7: Protocol & Data Format Change** — HTTP method swapping, file type changes, Content-Type switching, X-HTTP-Method-Override, gRPC/protobuf.
+
+**Phase 8: Injection Bypass Payloads** — CRLF, null byte, semicolon, comma, pipe, ampersand, hash separators — 10+ payload variants.
+
+**Phase 9: Advanced Techniques & Monitoring** — Header/proxy bypass, X-Forwarded-For, blind IDOR monitoring, GraphQL IDOR, combination tests, owner/role enumeration, weak UUID patterns, WebSocket channel subscription, TOCTOU/race conditions, deserialization edge cases.
+
+**Phase 10: Automation Recipes** — ffuf sequential ID fuzzing, Turbo Intruder, Arjun/ParamMiner for hidden params.
+
+**Phase 11: False Negative Detection** — Content-length comparison, re-test after login changes, multi-method testing, web+mobile+API, role checks in frontend only, batch endpoint leakage, real-time channels.
+
+**Phase 12: Quick Prioritization** — PII/financial > export/download > write operations > batch endpoints > GraphQL/mobile/gRPC > predictable IDs.
+
+**Relevance:** The most comprehensive single IDOR checklist in the INBOX. Covers modern attack surface (gRPC, WebSocket, protobuf deserialization, TOCTOU, batch endpoints) that most checklists miss. Pairs with Entry #022 (Cassim's methodology) and Entry #040/$9k BAC IDOR.
+
+**Similar INBOX References:**
+- Entry #007 (Mass assignment privilege escalation)
+- Entry #025 (Export functionality IDOR goldmine)
+- Entry #041 ($9k BAC IDOR writeup)
+- Entry #050 (Business logic flaws)
+- Entry #022 (Complete methodology 2026)
+
+---
+
+**SUMMARY: Added Entries #093-#114. Total: 114 comprehensive resources in INBOX.**
+
+**Entry #093 - #114 Coverage:**
 - **#093 Cloud IAM** — 21+ AWS privesc paths, GCP service account abuse, Azure RBAC. Fills the cloud gap.
 - **#094 Active Directory** — ADCS ESC1-16, BloodHound, Impacket, Rubeus, real MSRC bounties. Fills the AD gap.
 - **#095 Ethereum/DeFi** — Slither, Echidna, Immunefi ($3M max bounties), 5 DeFi hack postmortems. Fills the EVM gap.
 - **#096 Browser Security** — Firefox IPDL, Safari WebKit exploits, Chromium Mojo ($250k), iOS testing toolchain. Fills Firefox/Safari/iOS gap.
-- **#097 GitLab** — 30+ resources across CI/CD, permission escalation, Rails exploits, SAML auth bypass.
+- **~~#097 GitLab~~** **[DEFERRED]** — CI/CD, permission escalation, Rails exploits, SAML auth bypass. Needs 4GB+ RAM.
 - **#098 Atlassian** — JQL injection, Confluence XSS, workflow permission abuse, Connect app security.
 - **#099 DarkNavy 64 Exploit Analyses** — 64 real DeFi exploits across 7 chains.
 - **#100 DarkNavy web3-skills** — Claude Code kit for contract/client auditing + exploit investigation. $22K on Immunefi.
@@ -15667,13 +15768,854 @@ SVEN enables controlling LLMs to generate **secure** or **insecure** code via le
 - **#102 DARKNAVY BH2026** — Android CE bypass via Bio TA. 4 paths, 8/8 phones cracked. CVEs 2025-20987/20988/20989.
 - **#103 SVEN** — LLM code security hardening + adversarial testing via continuous prompts. ACM CCS 2023.
 - **#104 LLM Prompt Injection Security Handbook** — 10-chapter deep dive. OWASP #1.
-- **#105 GitLab Reproducible Vulnerabilities** — Official training. Stored XSS $13.9k, DoS, Docker labs with hints + patch diffs.
+- **~~#105 GitLab Reproducible Vulnerabilities~~** **[DEFERRED]** — Official training. Needs workstation upgrade.
+- **#106 showAllAccounts.json Exposure** — Mass PII leak via single endpoint (CFO billing, 3055 phone numbers). Bugcrowd triaged → closed P5.
+- **#107 ATO/BAC Dork** — `(login|signup|register|...) site:*.target.com -www` — recon dork for auth endpoint discovery.
+- **#108 Ultimate IDOR Checklist** — 12-phase comprehensive checklist covering gRPC, WebSocket, protobuf, TOCTOU, batch endpoints, and automation.
+- **#109 Awesome-LLM4Cybersecurity** — 612+ academic papers for bug bounty, 7-tier upgrade map across all methodologies.
+- **#110 MoonPay Campaign** — Active HackerOne program, crypto on/off-ramp, $93k paid, $20k max, 14 assets in scope.
+- **#111 Commented-Out Registration** — Always read page source. Hidden != Deleted. Commented endpoints are often live.
+- **#112 Subdomain Enumeration Toolchain** — waybackurls, gau, katana, hakrawler, gospider, paramspider + httpx flags that earn.
+- **#113 Sign-Up Bypass → PII Disclosure** — Validate authorization not just authentication. Stored XSS WAF bypass payload.
+- **#114 PuppetDB Dashboard Exposure** — Exposed puppetdb dashboards leak infra config, SSL certs, internal IPs.
 
 **Updated Collection Stats:**
-- **105 total entries**
-- **$323,900+ in documented bounties** (added $13,950 + $610)
-- **74+ CVEs referenced** (added CVE-2022-1948, CVE-2021-39933)
+- **114 total entries** (2 deferred: #097 GitLab, #105 GitLab Reproducible Vulns)
+- **$323,900+ in documented bounties**
+- **74+ CVEs referenced**
 - **66+ tools listed**
 - **36+ methodologies documented**
+- **612+ academic papers integrated** (from Entry #109)
+- **90+ papers mapped** to existing methodologies (see UPGRADE-MAP-109.md)
+
+**Entry #109 integrated into all 4 methodologies (01, 03, 07, 08) — 90+ papers mapped.** See `UPGRADE-MAP-109.md` for the complete mapping.
+
+---
+
+### Entry #110 - MoonPay Bug Bounty Campaign
+
+**Source:** https://hackerone.com/moonpay
+**Date Added:** 2026-05-16
+**Type:** Active Campaign, Target
+**Priority:** High
+**Local Path:** `E:\cantin MEZO\moonpay\`
+
+**Overview:** Crypto on/off-ramp platform. Buy/sell crypto with fiat. Strong fit for our logic bug + payment manipulation methodology.
+
+**Program Metrics:**
+- $93,620 total paid, $20k max bounty
+- 91% response efficiency, 171 reports/90 days
+- 14 assets in scope, actively triaging
+- ~$6,262 paid in last 90 days
+
+**Key Attack Vectors:**
+- Quote manipulation (lock → execute window)
+- Order lifecycle race conditions
+- API IDOR between users (transactions, KYC, wallets)
+- Webhook replay / payment confirmation bypass
+- Mass assignment on order creation
+- Referral/reward abuse
+
+**INBOX Resources to Apply:**
+- #040 (BAC in payment flow), #050 ($20k methodology), #075 (logic chaining)
+- #025 (export IDOR), #088 (race conditions), #108 (IDOR checklist)
+- #099 (64 DeFi exploit patterns), #007 (mass assignment)
+
+**BBB Methodologies to Use:**
+- `methodologies/07` — logic bug hunting (PRIMARY)
+- `methodologies/03` — self-validation
+- `methodologies/01` — multi-agent orchestration
 
 **Ready for Phase 2: Organization!** 📊
+
+---
+
+### Entry #109 - Awesome-LLM4Cybersecurity (tmylla): 612+ Academic Papers for Bug Bounty
+
+**Source:** https://github.com/tmylla/Awesome-LLM4Cybersecurity
+**Date Added:** 2026-05-16
+**Type:** Literature Review, Dataset, Meta-Resource
+**Priority:** High
+**Local Path:** `E:\cantin MEZO\cloned-repos\Awesome-LLM4Cybersecurity\`
+
+**Content:**
+
+A systematic literature review of 612+ academic papers (updated through 2026-01-31) organized across 11 categories with direct bug bounty relevance:
+
+- **RQ2: LLM Assisted Attack (83 papers)** — Adversarial prompt engineering, jailbreaking, automated exploit generation, social engineering automation
+- **RQ2: Vulnerability Detection (94 papers)** — LLM-based static analysis, contract auditing, fuzzing integration — feeds directly into PoC development
+- **RQ2: Fuzz (25 papers)** — LLM-guided fuzzing strategies, input generation for bug discovery
+- **RQ2: LLM Assisted Defense (113 papers)** — Understanding defender tooling to bypass it
+- **RQ3: Agent4Cybersecurity (56 papers)** — Multi-agent frameworks, autonomous pentesting agents — directly relevant to our multi-agent orchestration methodologies
+- **RQ1: Evaluation Benchmarks (42 papers)** — Security benchmarks to validate PoCs against
+- **RQ1: Fine-tuned LLMs (32 papers)** — Domain-specific models (SecBERT, CyberSecGPT, etc.)
+- **RQ2: Threat Intelligence (46 papers)** — Automated threat intel gathering for recon
+
+**Key Takeaways for Bug Bounty:**
+- 94 papers on vulnerability detection = research-backed approaches to finding bugs with LLMs
+- 83 papers on LLM-assisted attack = state-of-the-art adversarial techniques
+- 56 papers on Agent4Cybersecurity = directly informs our multi-agent debate/dedup pipeline (methodologies/01)
+- 25 fuzzing papers = LLM-driven fuzzing strategies applicable to API/fuzz workflows
+- Every entry in LITERATURES.md links to the paper (searchable for specific techniques)
+- 1.4k GitHub stars, actively maintained (last update Feb 2026)
+
+**How to Use:**
+- Search LITERATURES.md (612 papers) for: "vulnerability detection", "LLM agent", "fuzzing", "prompt injection", "penetration testing", "automated exploit"
+- Cross-reference specific papers when building new PoCs or methodologies
+- Use Agent4Cybersecurity papers to refine our multi-agent pipeline
+- Check the "LLM Assisted Attack" section for novel attack vectors to test against targets
+
+**Correlated INBOX References:**
+- Entry #012 (Agent behaviors/personas — paper-backed methodology)
+- Entry #016 (Multiple agents debate — 56 Agent4Cybersecurity papers context)
+- Entry #022 (Complete methodology 2026 — academic grounding)
+- Entry #024 (AutoPenBench — LLM pentest benchmarking)
+- Entry #028 (Automated pentest with LLM agents)
+- Entry #029 (CAT+ — agent + RAG for pentesting)
+- Entry #030 (PentestGPT)
+- Entry #031 (Penetration testing framework)
+- Entry #032 (Hackenvault — academic surveys)
+- Entry #034 (LLM agents CTF paper)
+- Entry #089 (Insecure code generation — LLM security risks)
+- Entry #092 (Prompt injection mindmap)
+- Entry #103 (SVEN — LLM code security hardening)
+- Entry #104 (LLM Prompt Injection Security Handbook)
+- Methodologies/01 (Multi-agent orchestration — 56 papers of academic backing)
+- Methodologies/03 (AI self-validation — adversarial prompt patterns)
+
+**Full Deep-Dive Analysis & Upgrade Map:**
+See `E:\cantin MEZO\bbb\UPGRADE-MAP-109.md` — complete 90+ paper-to-framework mapping across 7 tiers:
+- **Tier 1:** Upgrade existing methodologies 01, 03, 07, 08 (30+ papers mapped to specific sections)
+- **Tier 2:** 3 new methodologies (LLM pentest agent design, smart contract audit, LLM-guided fuzzing)
+- **Tier 3:** 2 new workflows (binary analysis, cloud IAM)
+- **Tier 4:** Upgrade router + GitLab workflow
+- **Tier 5:** INBOX sub-entries and cross-references
+- **Tier 6:** MASTER-OPERATIONS.md updates
+- **Tier 7:** Top 10 papers to read first, quick wins, direct integration points
+- **Total:** 14 files to change/create, ~27 hours work
+
+**Top 5 Papers to Read First for Bug Bounty:**
+1. **BountyBench** (Agent4Cyc #16) — $ impact measurement of AI agents
+2. **CAI: Bug Bounty-Ready AI** (Agent4Cyc #27) — Open-source bounty hunting AI
+3. **Teams of LLM Agents Exploit 0-Day** (Agent4Cyc #36) — Zero-day exploitation
+4. **LLM Agents Autonomously Exploit 1-Day** (Agent4Cyc #40) — For patch-diffing
+5. **LLM Agents Can Autonomously Hack Websites** (Agent4Cyc #52) — Landmark
+
+**References:**
+- GitHub: https://github.com/tmylla/Awesome-LLM4Cybersecurity
+- Paper: https://arxiv.org/abs/2405.03644
+- LITERATURES.md: 612 papers in local clone
+
+---
+
+### Entry #111 - Commented-Out Registration = Hidden Attack Surface
+
+**Source:** @_justYnot on X (aggregated tip)
+**Date Added:** 2026-05-16
+**Type:** Methodology, Recon
+**Priority:** High
+
+**Content:**
+
+Always read the login page HTML source before moving on. Found in a company's login page:
+
+```html
+<!--
+<a href="/register/">Sign up!</a>
+-->
+```
+
+The link was commented out but the endpoint was still live. The registration form had a role dropdown: Admin, Champion, Lead Coordinator. Any stranger could register as Admin with no invite restriction.
+
+**Key Lesson:** Hidden != Deleted. Commented-out code in HTML often reveals live endpoints the dev team forgot to remove.
+
+**Relevance:** Always view page source on login/signup pages. Look for commented links, hidden forms, disabled inputs that might reveal registration flows with weak auth.
+
+**References:**
+- Tweet: @_justYnot
+
+---
+
+### Entry #112 - Subdomain Enumeration & httpx Toolchain
+
+**Source:** Aggregated (multiple sources)
+**Date Added:** 2026-05-16
+**Type:** Toolchain, Recon, Methodology
+**Priority:** High
+
+**Content:**
+
+Collect every URL ever associated with a target domain. The gold is in historical endpoints.
+
+**Toolchain:**
+
+1. **waybackurls** (TomNomNom) — `github.com/tomnomnom/waybackurls` — Wayback Machine URLs
+2. **gau** (lc) — `github.com/lc/gau` — URL gathering from multiple sources
+3. **katana** (projectdiscovery) — `github.com/projectdiscovery/katana` — Fast crawler
+4. **hakrawler** (hakluke) — `github.com/hakluke/hakrawler` — Simple crawler
+5. **gospider** (jaeles-project) — `github.com/jaeles-project/gospider` — Spider
+6. **paramspider** (devanshbatham) — `github.com/devanshbatham/ParamSpider` — Parameter discovery
+
+**After gathering subdomains, find what's alive with httpx:**
+
+Tool: `github.com/projectdiscovery/httpx`
+
+**Flags that earn bounties:**
+- `-mc 200,301,302,401,403` — match status codes
+- `-tech-detect` — fingerprint the stack
+- `-title` — page titles surface dev/admin pages
+- `-sc -cl` — status code + content length
+- `-favicon` — favicon hash (use with Shodan)
+- `-screenshot` — visual recon
+- `-threads 200` — speed
+
+**Relevance:** Standard recon pipeline. Way more powerful than manual browsing. gau/hakrawler often find hidden endpoints, old API versions, debug pages.
+
+---
+
+### Entry #113 - Sign-Up Bypass → PII Disclosure + Validate Authorization Not Authentication
+
+**Source:** Aggregated (multiple sources)
+**Date Added:** 2026-05-16
+**Type:** Methodology, ATO, IDOR
+**Priority:** High
+
+**Content:**
+
+Two critical principles combined:
+
+**1. Sign-Up Bypass Leading to PII Disclosure:**
+Finding registration endpoints with weak or no access control. The dork (Entry #107):
+```
+("login"|"signup"|"signin"|"register"|"create"|"portal"|"registeration"|"join"|"internal"|"logon") site:*.target.com -www
+```
+Once a vulnerable registration endpoint is found, test if it leaks PII (other users' data, internal accounts, billing records).
+
+**2. Validate Authorization, Not Just Authentication:**
+> "Knowing who a user is means nothing if your backend doesn't strictly restrict what they are allowed to see."
+
+Authentication proves identity. Authorization restricts actions. Most bugs come from:
+- No authorization check (any authenticated user can do anything)
+- Horizontal auth (User A can see User B's data)
+- Vertical auth (User can perform admin actions)
+- Missing function-level access control
+
+**Relevance:** Pairs with Entry #107 (ATO dork), Entry #007 (mass assignment), Entry #108 (IDOR checklist). Always test both auth AND authz separately.
+
+**Stored XSS Payload (WAF bypass):**
+```
+<img/src='x'/onwheel=self[`al`+`ert`](1)>
+```
+
+**References:**
+- Various tweets (aggregated wisdom from @_justYnot, @wadgamaraldeen, etc.)
+
+---
+
+### Entry #114 - PuppetDB Dashboard Exposure
+
+**Source:** @_justYnot on X (aggregated tip)
+**Date Added:** 2026-05-16
+**Type:** Recon, Infrastructure, Data Leak
+**Priority:** Medium
+
+**Content:**
+
+Found huge internal infrastructural data leak through exposed PuppetDB dashboards.
+
+**Attack Pattern:**
+- Look for exposed PuppetDB dashboards on mainstream ports
+- Fuzz them properly for additional endpoints
+- PuppetDB can leak: node configs, SSL certs, infrastructure topology, internal IPs, service credentials
+
+**Common Ports:** 8080 (HTTP), 8081 (HTTPS)
+
+**Relevance:** Infrastructure-as-code tools (Puppet, Chef, Ansible) dashboards often expose sensitive configuration data. Combine with subdomain enumeration (Entry #112) to find these. Pairs well with Entry #093 (Cloud IAM — AWS/Azure/GCP credential exposure via config management).
+
+**References:**
+- Tweet: @_justYnot
+
+---
+
+### Entry #115 — Recon: Hidden Subdomains via TLS Certs + Wayback + Google Dorking
+
+**Source:** Aggregated recon wisdom
+**Date Added:** 2026-05-17
+**Type:** Recon, Methodology
+**Priority:** High
+
+**Content:**
+
+- **TLS certificates reveal more hidden subdomains than brute-force.** Use `crt.sh`, Certificate Transparency logs, and tools like `certspotter` to find subdomains that wordlists miss.
+- **Wayback Machine URL hunting** — search for keywords: `download`, `export`, `backup`, `private`, `dev`. These often reveal endpoints not linked from the main app.
+- **Google Dorking for exposed admin panels:**
+  - Dork: `intitle:"admin login" site:target.com`
+  - Can reveal indexed admin portals that should be restricted
+  - Exposed login pages may leak app details, help attackers target admin interfaces
+
+**Takeaways:**
+- Restrict indexing of sensitive pages via `robots.txt` and `X-Robots-Tag` headers
+- Don't rely solely on subdomain brute-force — TLS cert enumeration is often more complete
+- Wayback URLs are gold for finding hidden API endpoints, debug pages, and deprecated functionality
+
+**Relevance:** Pairs with Entry #112 (subdomain enumeration), Entry #089 (password reset dork). Always run this recon before engaging a target — finds low-hanging fruit that brute-force misses.
+
+---
+
+### Entry #116 — DeFi Bridge Exploit: Fake Mint via Signed Wrapping (AdShares ~$628K)
+
+**Source:** @adsharesNet incident
+**Date Added:** 2026-05-17
+**Type:** DeFi Exploit, Smart Contract, Bridge Attack
+**Priority:** High
+
+**Content:**
+
+AdShares exploited for ~$628K. Root cause: fake bridge mint validation.
+
+**Attack Flow:**
+1. Bridge-minter EOA (Externally Owned Account) signed 3 `wrapTo()` calls
+2. Calls used **non-existent native-chain transaction IDs** (txids that never happened on the source chain)
+3. Bridge accepted the signed wrappings without verifying the txids actually existed on the native chain
+4. Minted fake wADS tokens to the attacker
+5. Attacker dumped wADS for ~148.5 ETH + ~$305K USDC on Ethereum
+
+**Root Cause:**
+- Bridge trusted EOA signatures without cross-referencing on-chain state
+- No validation that the claimed native-chain txid actually occurred
+- No proof-of-inclusion check against the source chain
+
+**Takeaways for Web3 auditing:**
+- Signed messages from EOAs should NOT be treated as truth for cross-chain state
+- Always verify the claimed source-chain transaction actually exists before minting
+- Bridge mint functions should require proof-of-inclusion (Merkle proof, block header, oracle confirmation)
+- EOA-based bridge validators = single point of failure
+
+**Relevance:** Classic "trust the signature" mistake. Analogous to JWT `alg=none` or SAML signature stripping — the system trusts a cryptographic artifact without verifying the underlying data.
+
+---
+
+### Entry #117 — 1-Click OAuth Client Takeover via Henhouse UI ($13,337 Google Bounty)
+
+**Source:** @rand0m_unk0n
+**Date Added:** 2026-05-17
+**Type:** OAuth, Account Takeover, Bug Bounty
+**Priority:** Critical
+
+**Content:**
+
+$13,337 Google Bug Bounty — 1-click OAuth client takeover through "henhouse" UI by rand0m_unk0n.
+
+**Attack Pattern:**
+- OAuth client takeover via a misconfigured "henhouse" (internal OAuth management UI)
+- One-click attack — victim interaction minimal
+- Full OAuth client compromise leads to token interception and account takeover
+
+**Takeaways:**
+- OAuth management UIs ("henhouse", developer consoles, app dashboards) are high-value targets
+- Test for: improper client secret handling, redirect URI manipulation, client metadata modification, authorization code interception
+- One-click OAuth compromises are among the highest-value bug bounty findings
+
+**Relevance:** Pairs with Entry #018 (OAuth popup hijacking), Entry #048 (OAuth redirect_uri bypass), Entry #053 (OAuth non-happy path), Entry #054 (drilling redirect_uri). The OAuth attack surface is consistently high-value across all programs.
+
+---
+
+### Entry #118 — skraft9/vulnerability-research: Complete Bug Bounty Methodology Repository
+
+**Source:** https://github.com/skraft9/vulnerability-research (Seth Kraft)
+**Date Added:** 2026-05-17
+**Type:** Methodology, Cheatsheets, Tooling, Write-ups
+**Priority:** High
+
+**Content:**
+
+Comprehensive vulnerability research repository by Seth Kraft (@skraft9). Contains cheatsheets, methodology, custom scripts, write-ups, templates, and n-day analysis.
+
+**Repository Structure:**
+
+```
+vulnerability-research/
+├── README.md
+├── cheatsheets/
+│   ├── authentication_bypass.md     # JWT, OAuth, SAML, MFA bypasses
+│   ├── dangerous_functions.md       # Code review patterns by language
+│   ├── linux_commands.md            # Quick CLI reference
+│   ├── patch_diffing.md             # N-day hunting workflow
+│   ├── rce.md                       # Command injection evasion
+│   ├── reverse_engineering.md       # GDB + Ghidra
+│   ├── sqli.md                      # Detection to exfiltration
+│   ├── ssrf.md                      # Cloud metadata to RCE
+│   └── xss.md                       # Context-aware to CSTI
+├── custom_scripts/
+│   ├── recon.sh                     # subfinder + httpx
+│   ├── ffuf_recon.sh                # Dir fuzzing wrapper
+│   └── victim_monitor.py            # DoS impact measurement
+├── methodology/
+│   └── mindset_and_tips.md          # Blue team → VR transition
+├── n-day/
+│   └── CVE-2026-0532.md             # Kibana SSRF → Arbitrary File Read
+├── templates/
+│   └── vulnerability_report_template.md
+└── write-ups/
+    └── api_key_leak.md              # Front-end key exposure + IDOR
+```
+
+**Key Takeaways from Each Section:**
+
+**Authentication Bypass Cheatsheet (most relevant to MoonPay work):**
+- JWT: test `alg=none`, RS256→HS256 key confusion, JWK injection, crack weak secrets with hashcat
+- OAuth: redirect_uri manipulation, missing `state` param = CSRF, pre-account takeover
+- SAML: XML signature wrapping, signature stripping, XML comment injection
+- MFA: response manipulation, password reset host header poisoning
+- **Relevance to MoonPay:** Directly applicable — our findings violated every single one of these principles (no auth on email change, no auth on 2FA reset)
+
+**SSRF Cheatsheet (applies to MoonPay SSRF findings):**
+- Cloud metadata endpoints: AWS `169.254.169.254`, GCP `metadata.google.internal`, Azure `168.63.129.16`
+- Protocol wrappers: `file://`, `gopher://`, `dict://`, `sftp://`, `ldap://`
+- Filter bypasses: IP encoding (decimal/octal/hex/IPv6), DNS rebinding, redirect chaining
+- Blind SSRF→RCE via gopher to Redis
+
+**XSS Cheatsheet:**
+- Context-aware payloads for HTML body, attributes, JS (incl. template literals `${...}`)
+- WAF evasion: whitespace bypasses, the "0xSobky" polyglot
+- CSTI: Angular `{{constructor.constructor('alert(1)')()}}`, Vue 2/3, React `dangerouslySetInnerHTML`
+
+**N-Day Analysis — CVE-2026-0532 (Kibana SSRF → File Read):**
+- Kibana 9.2.3 Gemini Connector SSRF arbitrary file read
+- Found via patch diffing v9.2.2 vs v9.2.3 — spotted `validateGeminiSecrets()` addition
+- Exploit: inject `external_account` type with `credential_source.file` set to `/etc/passwd`
+- Google auth library reads the file and POSTs it to attacker's webhook
+- **Key lesson:** Third-party dependency docs are gold — read them to find unexpected parameter combinations
+
+**Write-up: API Key Leak ($Bounty + IDOR):**
+- Found API keys leaked in `env.js` front-end source (same pattern as MoonPay bundle analysis)
+- Keys had a 6-digit numeric Policy ID → brute-forceable (300+ valid policies found)
+- Root cause: exposed secrets + BOLA/IDOR + low entropy IDs + no rate limiting
+- **Key lesson:** Always trace front-end build artifacts — secrets often survive minification
+
+**Mindset & Methodology:**
+- Transition from blue team to VR: search for things that aren't supposed to be there
+- Play to strengths — focus on software you already understand
+- Master code flow, follow the "weird", time is your greatest weapon
+- Practice with PortSwigger labs for specific vulnerability classes
+
+**Relevance to Our Work:**
+- The repo validates our MoonPay approach: bundle analysis → mutation discovery → auth bypass chaining
+- SSRF cheatsheet directly applies to MoonPay webhook testing (gopher:// blocked but IP encoding may work)
+- OAuth cheatsheet applies to MoonPay's Okta integration probe
+- The API key leak write-up mirrors our MoonPay discovery of `rollApiKey` without re-auth
+- The repo's template can standardize our future HackerOne submissions
+
+**Reference:** Full repo at https://github.com/skraft9/vulnerability-research — cheatsheets are continually updated.
+
+---
+
+### Entry #119 — Elastic Bug Bounty Payouts March 2026: $8,340
+
+**Source:** @skraft9 on X
+**Date Added:** 2026-05-17
+**Type:** Bug Bounty, Payout Data
+**Priority:** Info
+
+**Content:**
+
+Elastic awarded $8,340 in bug bounties March 2026 to @skraft9.
+
+**Significance:**
+- Elasticsearch/Kibana have an active and well-paying bug bounty program
+- Kibana was the subject of CVE-2026-0532 (SSRF file read via Gemini Connector) — covered in Entry #118
+- Elastic stack is a high-value target: widespread deployment, handles sensitive data, complex plugin architecture
+- Payouts in the $5k–$10k range achievable for SSRF, auth bypass, and RCE
+
+**Relevance:** If we pivot to enterprise/infrastructure targets, Elastic is worth considering. Their bug bounty is public and pays well. The CVE-2026-0532 analysis gives us a methodology (patch diffing) for finding similar bugs.
+
+---
+
+### Entry #120 — Former H1 Triager AMA: Submission Optimization Playbook
+
+**Source:** r/bugbounty AMA by overpaidtriage (former H1 triager)
+**Date Added:** 2026-05-17
+**Type:** Methodology, Submission Process
+**Priority:** Critical — must apply to every submission going forward
+
+**Content:**
+
+Former HackerOne triager (left very recently) did an AMA on r/bugbounty. Revealed internal triage processes, what makes reports succeed/fail, and how the system works behind the scenes.
+
+**CRITICAL TAKEAWAYS FOR SUBMISSIONS:**
+
+### 1. Lead with POC, Not Theory
+
+> "Start with the poc and impact evidence. If any triager sees impact at the beginning of the report, on H1 — they have to forward that to program team."
+
+**Action:** Reports should open with the POC response (the `200 {"data":...}`), NOT with explanation. Put summary AFTER the evidence.
+
+### 2. Raw HTTP Request/Response > Tool Output
+
+> "We are required to paste in actual burp request / response — so use whatever tool you use, but there would be minimum 2 requests: one for finding the bug, one for proving impact."
+
+**Action:** Our XHR console output works but raw HTTP format is preferred. Convert to:
+```
+POST /graphql HTTP/1.1
+Host: partner-dashboard-api.moonpay.com
+Content-Type: application/json
+X-CSRF-TOKEN: <token>
+Cookie: userToken=<jwt>
+
+{"query":"mutation{...}"}
+```
+Then the response.
+
+### 3. CVSS Vector String
+
+> "CVSS dictates severity above anything else."
+
+**Action:** Always include the full CVSS vector in every submission.
+- MoonPay email change: `CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H`
+- DeleteMembership ATO: `CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H`
+
+### 4. No Bounty Claims / Dollar Amounts
+
+Triagers explicitly dislike when researchers say "this should be worth $X." It comes across as unprofessional.
+
+**Action:** Remove "Bounty Range", "avg payouts", and all dollar estimates from our findings and submissions. Let the triager/program decide.
+
+### 5. Map the Entire Application Before Hunting
+
+> "Map the entire application, check every request. Mapping the entire application is where you lose most of the hunters because it's a lot of threat modelling work."
+
+**Action:** Before engaging a new target, map every single endpoint, every GraphQL mutation/query, every response field. Do not skip this step — it separates manual hunters from script kiddies.
+
+### 6. Video POC Requirements Increasing
+
+Some programs now require video PoCs due to AI slop. Be prepared to screen-record demonstrations.
+
+### 7. 3 Valid Reports = Private Invite Pipeline
+
+> "As soon as you are done with 3 valid triaged reports, you will get initiated into private invites pipeline."
+
+**Action:** We are at 2 (deleteMembership + emailChange on MoonPay). One more valid report on any H1 program opens the private invite pipeline.
+
+### 8. "Make it Right" Fund Exists
+
+If a program rejects a valid critical finding, escalation to H1 mediation can result in payout from H1's own budget. Use this only when the program is clearly wrong.
+
+### 9. Researcher Signal Matters
+
+Higher reputation = more lenient triage. Triagers give second chances to established researchers. Lower reputation reports get less benefit of the doubt.
+
+### 10. AI Slop Hurts: 50%+ of Reports Are Slop
+
+Triagers see >50% AI-generated garbage. Avoid AI fluff in reports. Be concise, technical, and provide real POC. AI for research is fine; AI for writing = bad.
+
+### 11. How to Get Triaged Fast
+
+> "Clear impact poc with evidence — request and response — a CVSS breakdown — no more than 3-5 lines total for impact — don't bluff, we know — be polite."
+
+**Optimal report structure:**
+1. POC evidence (screenshot or raw HTTP)
+2. CVSS vector string
+3. Brief summary (2-3 lines)
+4. Reproduction steps with request/response pairs
+5. Impact (3-5 lines max)
+6. Remediation suggestions
+
+### 12. Triage Queue Reality
+
+- 20 reports/day expected per triager
+- Complex reports get pushed to end of queue
+- Reports sit in queue until surfaced (first-come mostly)
+- Once picked: triaged same day in most cases
+- NMI = back to bottom of triager's queue
+
+**Relevance:** Every principle here applies directly to our MoonPay submissions and all future reports. The deleteMembership and emailChange submissions should have had raw HTTP format + CVSS vector. Apply to next submissions.
+
+**Reference:** r/bugbounty AMA by u/overpaidtriage — 1 day ago (May 16, 2026)
+
+---
+
+### Entry #121 — rand0m_unk0n: 15-Year-Old Made $31k Google VRP Protobuf Chain (Proof Blind Fuzzing Works)
+
+**Source:** https://rand0m-unk0n.netlify.app/ + Google VRP $10,203.30 bounty
+**Date Added:** 2026-05-17
+**Type:** Write-up, Methodology, Protobuf, OAuth
+**Priority:** High
+
+**Content:**
+
+rand0m_unk0n, a 15-year-old who started bug hunting March 2025 with zero security background, made $31k total — including a $10,203.30 Google VRP bug. He never did PortSwigger labs, never learned JS properly, and used LLMs as a crutch. But he **blind-fuzzed protobuf parameters** and found a 1-click OAuth client takeover.
+
+**Key Background:**
+- Started March 2025, zero security/software background (firmware dev + PCB design)
+- First 2-3 months: everything marked duplicate on H1
+- Switched to Google VRP specifically because "if it's hard, I'll actually learn something"
+- Never did a single PortSwigger lab
+- Jumped straight into manual Burp Suite hunting
+- Total bounties: ~$31k
+
+**The $10,203 Bug: Google Henhouse Protobuf Chain**
+
+Found by reproducing David Schütz's "Unexpected Google-Wide Domain Check Bypass" (https://bugs.xdavidhu.me/google/2020/03/08/the-unexpected-google-wide-domain-check-bypass/).
+
+The URL had a `pb` parameter with a protobuf array controlling the entire page flow:
+
+```
+https://console.developers.google.com/henhouse/?pb=["hh-0","gmail",null,[],...
+```
+
+**Discovery Process:**
+1. Changed `"Create API key"` text in protobuf → UI spoofing confirmed (text appeared on page)
+2. Realized full array controls: UI flow selector, API selection, origins, title text, owner accounts
+3. Changed flow selector `0` → `1` → completely different UI mode appeared
+4. Built Python fuzzer → discovered every field controllable
+5. Could auto-fill forms by stuffing values at end of array:
+   `"WEB_BROWSER","WEB_BROWSER","https:%2F%2Fattacker.com",...`
+6. Toggling true/false values made "Next" button click automatically
+
+**Attack Chain (1-click):**
+- **Scenario A**: Single link overwrites authorized JS origins on ALL victim's OAuth client IDs + creates new malicious client IDs
+- **Scenario B**: Flow parameter `2` or `3` → creates Service Account with Owner permissions. With one more protobuf tweak (`["owner"]`), forces victim to drag-and-drop permanent credentials to attacker
+
+**Timeline:**
+- 2025-06-27: Submitted
+- 2025-08-26: Initial $3,133.70
+- 2025-10-16: After re-evaluation, final $10,203.30
+
+**Key Insight:** "Sometimes not knowing what to do is good" — blind fuzzing found things that knowledge would have prevented. If he knew how protobufs worked, he wouldn't have tried the crazy stuff.
+
+**Lessons for Our Work:**
+
+1. **Blind fuzzing array/JSON parameters is undervalued.** Our MoonPay bundle had GraphQL mutations, but we didn't blind-fuzz every field of existing requests. The `confirmEmailAddress` returns `adminRole` and `permissions` — we never tested sending unexpected values for those.
+
+2. **Reproduce old bugs.** He found the $10k bug by reproducing a known write-up. We should revisit old H1 reports and try to chain/find variants.
+
+3. **Switch programs.** Stuck on H1 dupes? Switch to a harder program (Google VRP) — the learning curve forces growth.
+
+4. **Re-evaluation works.** He got $3k initial, pushed back, got $10k. Don't accept first offer if impact is clear.
+
+5. **Go manual, skip the hype.** He didn't follow the "recon-only" YouTube grind. Manual Burp testing found his biggest bugs.
+
+**Relevance:** Directly parallels our MoonPay approach — we found unexpected behavior by testing GraphQL mutations that "shouldn't" work without re-auth. The protobuf fuzzing methodology applies to any JSON/array-based parameter, including GraphQL variables. The "reproduce old bugs and go deeper" approach is exactly how we should hunt on Uphold/next target.
+
+**Reference:** https://rand0m-unk0n.netlify.app/
+
+---
+
+### Entry #122 — Bex01: Unauthenticated SSRF via /api/cors on Demo Subdomains (Crt.sh + Serverless Runtime)
+
+**Source:** Bex01 on Medium (Apr 28, 2026)
+**Date Added:** 2026-05-17
+**Type:** Write-up, SSRF, Recon, Serverless
+**Priority:** High
+
+**Content:**
+
+Unauthenticated SSRF on multiple subdomains of a large organization via misconfigured CORS proxy endpoint `/api/cors?uri=`.
+
+**Recon Process:**
+1. Subdomain enumeration via crt.sh:
+   ```
+   curl -s "https://crt.sh/?q=%25.redacted.com&output=json" | jq -r '.[].name_value' | sort -u
+   ```
+2. Manual inspection of subdomains containing `demo` keyword — often less secure
+3. Used "FindSomething" browser extension to extract endpoints
+4. Found `/api/cors?uri=` with user-controlled `uri` parameter
+
+**SSRF Progression:**
+1. `/api/cors?uri=https://example.com` → fetched and returned content (confirmed)
+2. Direct internal IPs blocked (`127.0.0.1` returned nothing)
+3. Used SSRFmap for deeper discovery
+4. Payload hitting serverless runtime:
+   `http://localhost:9001/2018-06-01/runtime/invocation/next`
+5. **Result:** Serverless runtime token leak — `x-vercel-oidc-token`, `Authorization: Bearer`
+
+**Infrastructure Insight:** App running on Vercel in serverless environment. Exposed:
+- Internal auth tokens
+- Serverless runtime execution context
+- Owner/employee secrets, project names, data
+
+**Affected Subdomains (all `demo`-keyword subdomains):**
+- noisecancelling-music-demo.redacted.com
+- immersive-audio-demo.redacted.com
+- soundbars-ar-demo.redacted.com
+- hometheater-demo.redacted.com
+- ultraopenearbuds-audio.redacted.com
+
+**Lessons for Our Work:**
+
+1. **Crt.sh → filter by keyword.** Don't just collect subdomains — filter for `demo`, `test`, `staging`, `dev`, `api` keywords. These are consistently less hardened.
+
+2. **Vercel serverless runtime endpoint.** The path `/2018-06-01/runtime/invocation/next` on `localhost:9001` is a known SSRF target for Vercel-deployed apps. Add to our SSRF wordlist.
+
+3. **CORS proxy endpoints.** Any `/api/cors`, `/proxy`, `/fetch`, `/api/url` endpoint is worth testing with internal URLs.
+
+4. **Pattern recognition.** Once one `demo` subdomain was vulnerable, all others with same pattern were too. Always spray same payload across similar subdomains.
+
+5. **FindSomething extension.** Browser extension for extracting JS endpoints — alternative to manual bundle analysis. Add to toolchain.
+
+**Relevance:** Our MoonPay work had SSRF findings (Entry #008 in INBOX) but we never tested serverless runtime endpoints. The Vercel `localhost:9001` path is a must-try on any target running on Vercel. Also reinforces the TLS cert → keyword filter methodology from Entry #115.
+
+**Reference:** Bex01 on Medium (Apr 28, 2026) — "Unauthenticated SSRF via /api/cors on Multiple Subdomains"
+
+---
+
+### Entry #123 — skraft9 API Key Leak Write-up: Front-End Secrets + IDOR → $Bounty
+
+**Source:** Seth Kraft (@skraft9) — https://github.com/skraft9/vulnerability-research/blob/main/write-ups/api_key_leak.md
+**Date Added:** 2026-05-17
+**Type:** Write-up, API Security, IDOR, Recon
+**Priority:** Medium
+
+**Content:**
+
+Full write-up of API key leak in front-end source code leading to insurance policy enumeration. (Already summarized in Entry #118, but full details now available.)
+
+**Attack Flow:**
+1. Subdomain enumeration via `subfinder` against wildcard domain
+2. Manual page source inspection → found `env.js` exposed in front-end build
+3. `env.js` contained multiple API keys in plain text
+4. Keys required API key + 6-digit numeric Policy ID
+5. Brute-forced keyspace with Bash script (sleep 0.2s between requests to avoid rate limits)
+6. Found **300+ valid insurance policies**
+
+**Root Cause:**
+- Exposed secrets in front-end build (env.js in client bundle)
+- BOLA/IDOR — API trusted valid key without verifying authorization to specific policyId
+- Low entropy — 6-digit numeric IDs (1M keyspace, easily brute-forceable)
+- No rate limiting on enumeration
+
+**PoC Script (Bash):**
+```bash
+#!/bin/bash
+for ((id=START; id>=END; id--)); do
+  resp=$(curl -sk "https://target/api/policies/$id?subscription-key=$API_KEY")
+  if [[ $resp != *"InvalidPolicyNumber"* ]]; then
+    echo "$id → $resp" >> valid_policies.txt
+  fi
+  sleep 0.2
+done
+```
+
+**Hunting Tips (from the write-up):**
+- Trace build artifacts — `env.js` is often a symptom of poor CI/CD hygiene
+- Chain leaks with IDOR for real bounty (leak alone = informational)
+- 6-digit numeric ID = assume brute-forceable until proven otherwise
+- Script the enumeration before scaling up (test rate limits on small range first)
+- Providing a clean PoC script removes triage guesswork
+
+**Relevance:** Directly mirrors our MoonPay bundle analysis methodology. The `env.js` finding is the same class as discovering secrets in `dashboard-bundle.js`. The key lesson is that weaponizing the leak (chaining with IDOR/enumeration) is what gets the bounty, not the leak itself.
+
+---
+
+### Entry #124 — WordPress User Enumeration via REST API: Still Works 2026
+
+**Source:** @rootxvishal on X
+**Date Added:** 2026-05-17
+**Type:** Recon, WordPress, ATO Chain
+**Priority:** High
+
+**Content:**
+
+WordPress user enumeration via REST API still works in 2026. Takes 2 seconds.
+
+**Check:**
+```bash
+curl https://target.com/wp-json/wp/v2/users/
+```
+Returns: `name`, `slug` (= login username), user ID, profile URL.
+
+**ATO Chain:**
+1. Username known via slug → `curl /wp-json/wp/v2/users/`
+2. `wp-login.php?action=lostpassword` → password reset email
+3. Host header injection in reset email → attacker intercepts
+4. Full ATO
+
+**Takeaway:** Add to every target's recon checklist. The slug field is almost always the WordPress login username. Chaining with host header injection = ATO in minutes.
+
+**Relevance:** Quick win on any WordPress target. Takes 2 seconds to test, potential for high severity chain. Add to our target recon script for next program.
+
+---
+
+### Entry #125 — bugbounty.zip: Browser-Based Recon Toolkit (No Install)
+
+**Source:** @rootxvishal on X — http://bugbounty.zip
+**Date Added:** 2026-05-17
+**Type:** Tool, Recon
+**Priority:** Medium
+
+**Content:**
+
+Browser-based toolkit for handling URL and domain lists. No installation required.
+
+**Features:**
+- Add HTTPS, remove duplicates, replace words in URLs
+- Extract endpoints, parameters, path words
+- JS Scanner, SubTreasure, OTP generator
+- Export to CSV/JSON
+
+**Relevance:** Quick recon tool for when we don't have our full toolchain available. Useful for rapid testing of new targets. The JS Scanner feature may help find endpoints similar to our MoonPay bundle analysis.
+
+**Reference:** http://bugbounty.zip
+
+---
+
+### Entry #127 — WAF Bypass: URL-Encoded Path Avoids /admin Blocks
+
+**Source:** @OriginalSicksec on X
+**Date Added:** 2026-05-17
+**Type:** WAF Bypass, Recon
+**Priority:** High
+
+**Content:**
+```
+/admin_users/sign_in ❌
+/%61dmin_users/sign_in ✅
+```
+`%61` = `a` — the WAF/reverse proxy checks `/admin` patterns on the raw path without decoding. The backend decodes before routing, so the request reaches the admin endpoint.
+
+**Takeaway:**
+- Add to every recon checklist: try URL-encoded first letter of admin paths
+- Extends beyond `/admin`: apply to any blocked path (`/api`, `/internal`, `/debug`, `/graphql`, `/wp-admin`, etc.)
+- First letter encoding often bypasses string-matching WAF rules
+- Combine with double URL encoding (`%2561`) for deeper proxy bypasses
+
+**Quick test list:**
+```
+/%61dmin
+/%61pi
+/%67raphql
+/%64ebug
+/%69nternal
+/%61dmin_users
+/%61dmin/login
+/%77p-admin
+/%61ssets
+/%63onfig
+```
+
+**Relevance:** Quick win for recon phase. Most WAFs have static rule sets that match literal `/admin` — encoding the first character bypasses them entirely. Cost: 2 seconds per path. Payoff: admin panel exposure.
+
+---
+
+### Entry #126 — Pwn2Own Berlin 2026: Splitline Chained 2 Bugs for $100k (SharePoint)
+
+**Source:** @thezdi / DEVCORE Research Team — Pwn2Own Berlin
+**Date Added:** 2026-05-17
+**Type:** Pwn2Own, Exploit Chaining
+**Priority:** High
+
+**Content:**
+
+splitline (@_splitline_) of DEVCORE Research Team chained 2 bugs to exploit Microsoft SharePoint, earning $100,000 and 10 Master of Pwn points at Pwn2Own Berlin.
+
+**Key Insight from Quote:**
+> "Wait until they find out that we chain 10 bugs in web3 security."
+> "Imagine only chaining two bugs lol"
+
+**Takeaways:**
+- Pwn2Own proving that chaining bugs is where the real money is
+- 2 bugs → $100k = $50k per bug on average
+- The quote about "10 bugs in web3" implies even higher bounties available in web3 for complex chains
+- Contrast with our HackerOne approach: we chain 2-3 auth bypass mutations → Medium/High. The same logic applies but at enterprise scale.
+
+**Relevance:** Reinforces Entry #075 (Orange Tsai chained 4 logic bugs → $175k). The pattern is consistent: low individual bugs → high combined impact. Our MoonPay chain (initiateEmailChange + confirmEmailAddress + requestResetTwoFactorAuth) is exactly this pattern at web application level. The principle scales: find more bugs in the same system, chain them, and severity compounds.

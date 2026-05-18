@@ -254,7 +254,6 @@ STEP 2: Based on findings, use:
 | OAuth/SSO | 01-web-app-hunt.md | CRITICAL | High bounties, common vulns |
 | AI/LLM | 03-ai-app-hunt.md | CRITICAL | New attack surface, high impact |
 | Crypto/DeFi | 04-crypto-hunt.md | CRITICAL | High bounties, complex vulns |
-| GitLab | 06-gitlab-hunt.md | CRITICAL | $547k/90d, CI/CD + permission chains |
 | REST API | 02-api-security-hunt.md | HIGH | IDOR, mass assignment common |
 | GraphQL | 02-api-security-hunt.md | HIGH | Introspection, batching issues |
 | Unknown | 05-adaptive-hunt.md | MEDIUM | Tries multiple techniques |
@@ -308,7 +307,7 @@ Load skill: router-simple.md
 - AI chatbot/assistant → 03-ai-app-hunt.md
 - Smart contract → 04-crypto-hunt.md
 - Unknown → 05-adaptive-hunt.md
-- GitLab → 06-gitlab-hunt.md
+
 ```
 
 ---

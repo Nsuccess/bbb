@@ -16,6 +16,7 @@ Critical methodology for reducing false positives in AI-powered security testing
 **Sources:**
 - Entry #005 - AI Agent Self-Validation Methodology (Walid Ladeb)
 - Entry #039 - AI Agent Self-Validation (80% FP reduction)
+- Entry #109 — 94 Vulnerability Detection papers + 83 LLM Assisted Attack papers
 
 ---
 
@@ -276,6 +277,13 @@ Devil's Advocate Agent: Tries to disprove it
 Arbiter Agent: Makes final decision
 ```
 
+**Warning — Validator as Attack Surface:**
+The devil's advocate agent itself can be attacked. If the hunter agent can prompt-inject the validator, it can bypass validation entirely. This is a documented attack vector:
+- Entry #109, LLM Attack #16 — "Cybersecurity AI: Hacking the AI Hackers via Prompt Injection": demonstrates prompt injection on security AI agents to make them approve false findings
+- Entry #109, Defense #6 — SecureCAI: injection-resilient LLM assistants for cybersecurity operations. Use SecureCAI patterns when building validators.
+
+**Countermeasure:** 1) Isolate validator from hunter — no shared context, 2) Use different model for validator than hunter, 3) Implement input sanitization on validator prompts, 4) Log all validator inputs for audit
+
 **Devil's Advocate Responsibilities:**
 - Challenge every assumption
 - Test all protection mechanisms
@@ -389,6 +397,12 @@ Result: Either confirmed unreachable → REJECT
 - PoC must bypass all protections
 - PoC must be reproducible
 
+**Validation Levels** (from Entry #109, Program Repair #4 — VulnRepairEval):
+- **Level A:** Crash reproduction — does the target crash?
+- **Level B:** Controlled primitive — can we control the crash behavior?
+- **Level C:** Full exploit — does it achieve the claimed impact?
+Target Level C for all submissions.
+
 **Example:**
 ```
 Finding: Possible IDOR in /api/user/{id}
@@ -402,7 +416,37 @@ Agent attempts PoC:
 PoC fails → REJECT finding
 ```
 
-### Pattern 4: External Grader (from Entry #011)
+### Pattern 5: Prompt-as-Static-Analysis Pre-Check
+
+**Concept:** Before attempting exploit validation, use LLM prompting to simulate static analysis and identify protections.
+
+**Academic Reference:** Entry #109, Vuln Detection #40 — "Can LLM Prompting Serve as a Proxy for Static Analysis in Vulnerability Detection": finds LLM prompting can identify security protections with reasonable accuracy, serving as a fast pre-filter before deep validation.
+
+**Workflow:**
+```
+1. Found potential vuln
+2. Prompt LLM: "Analyze this endpoint for security protections. List all authentication, authorization, input validation, and output encoding mechanisms."
+3. LLM enumerates protections
+4. Quick-check each protection (can often be done in same prompt)
+5. If protections are solid → REJECT early (saves validation effort)
+6. If protections are weak or missing → proceed to full validation
+```
+
+**Implementation:**
+```
+Prompt template:
+"Given this endpoint: [endpoint details]
+List every security protection that would prevent [vuln type] exploitation:
+1. Authentication mechanisms
+2. Authorization checks
+3. Input validation
+4. Output encoding/escaping
+5. Rate limiting / WAF
+6. Any other controls
+For each, indicate if you can verify it exists based on the information provided."
+```
+
+### Pattern 6: External Grader (from Entry #011)
 
 **Architecture:**
 ```
@@ -490,6 +534,20 @@ External Grader: Independent validation
 - [ ] Attempt actual bypass
 - [ ] Confirm access to protected resources
 - [ ] Develop working PoC or REJECT
+
+### Smart Contract / DeFi Validation (NEW — from Entry #109)
+- [ ] Access control (onlyOwner, role-based modifiers)
+- [ ] Reentrancy protection (checks-effects-interactions pattern)
+- [ ] Flash loan attack surface
+- [ ] Price oracle manipulation
+- [ ] Precision loss / rounding errors
+- [ ] tx.origin vs msg.sender misuse
+- [ ] Uninitialized storage pointers
+- [ ] Unchecked external call return values
+- [ ] Front-running resistance
+- [ ] Cross-contract invocation safety
+
+**Academic Reference:** Entry #109, Vuln Detection #82 — GPTScan: logic vuln detection in smart contracts via GPT + program analysis; Entry #109, Vuln Detection #23 — MOS: Mixture-of-Experts for smart contract vuln detection.
 
 ---
 
@@ -724,9 +782,10 @@ Reality: Authorization check returns 403 for other users
 
 ## Related Methodologies
 
-- **Multi-Agent Orchestration** (Entry #011): External grader pattern
+- **Multi-Agent Orchestration** (Entry #011, #109): External grader pattern — backed by 56 Agent4Cyc papers
 - **Prompt Injection Framework** (Entry #044): Similar validation approach
 - **OAuth Security Testing** (Entry #018, #048): Systematic testing methodology
+- **Entry #109 LLM Assisted Attack** (83 papers): Understanding attacker techniques helps build better validators
 
 ---
 

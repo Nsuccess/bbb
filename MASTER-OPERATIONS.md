@@ -141,7 +141,8 @@ Every cloned repo is mapped to the skill/workflow it powers:
 | `Bug-Bounty-Agents/engagement-planner.md` | — | Test planning (75 lines) |
 | `cve-lite-cli/` | — | OWASP dependency vuln scanner (offline) |
 | `Vibecode-Cleaner-Fartrun/` | — | Code health scanner + safety net |
-| `bugSkills/` | — | Convert H1 reports → reuseable AI skills |
+| `bugSkills/`                    | — | Convert H1 reports → reuseable AI skills |
+| `Awesome-LLM4Cybersecurity/` | ALL methodologies, workflows | 612 papers across 11 categories — academic backing for every technique |
 
 ---
 
@@ -166,9 +167,10 @@ Based on target type, load the corresponding weapon stack:
 | **Crypto/DeFi** | `crypto-defi-auditor` `ai-self-validator` | `Bug-Bounty-Agents/crypto-analyst.md` | #16, #26 |
 | **Cloud/Infra** | `bucket-squatting-detector` `ai-self-validator` | `grype/` `syft/` `dive/` `tracee/` `tetragon/` | #29, #30 |
 | **Enterprise/.NET** | `enterprise-software-auditor` `ai-self-validator` | `ILSpy/` `Bug-Bounty-Agents/ad-attacker.md` | #19 |
-| **Logic Bug / Supply Chain** | `methodologies/07-logic-bug-hunting.md` `ai-self-validator` | `tracee/` `ironcurtain/` `Bug-Bounty-Agents/bizlogic-hunter.md` `Bug-Bounty-Agents/exploit-chainer.md` | #075, #011, #042 |
-| **Race Condition / Kernel** | `methodologies/07-logic-bug-hunting.md` `methodologies/03-ai-self-validation.md` | `tracee/` `tetragon/` | #076, #075 |
-| **Unknown** | `recon-basic` `router-simple` `ai-self-validator` | `05-adaptive-hunt.md` + all tools | #1, #22 |
+| **Logic Bug / Supply Chain** | `methodologies/07-logic-bug-hunting.md` `ai-self-validator` | `tracee/` `ironcurtain/` `Bug-Bounty-Agents/bizlogic-hunter.md` `Bug-Bounty-Agents/exploit-chainer.md` | #075, #011, #042, #109 |
+| **Race Condition / Kernel** | `methodologies/07-logic-bug-hunting.md` `methodologies/03-ai-self-validation.md` | `tracee/` `tetragon/` | #076, #075, #109 |
+| **Crypto/Payment (MoonPay)** | `methodologies/07` `methodologies/03` `methodologies/01` | All INBOX #040, #050, #075, #088, #108 | #110, #099, #040, #050 |
+| **Unknown** | `recon-basic` `router-simple` `ai-self-validator` | `05-adaptive-hunt.md` + all tools | #1, #22, #109 |
 
 ### STEP 3: Execute Methodology
 ```
@@ -222,6 +224,7 @@ E:\cantin MEZO\
     ├── tetragon\                    # eBPF monitoring (16k files)
     ├── tracee\                      # Runtime security
     └── Vibecode-Cleaner-Fartrun\    # Code health + safety net
+    └── Awesome-LLM4Cybersecurity\  # 612 papers: LLM x security
 ```
 
 ---
@@ -243,6 +246,7 @@ E:\cantin MEZO\
 | **🔶 P2** | Enterprise .NET / AD vulns | #19, #20 | $5k-$30k |
 | **🔶 P2** | Crypto/DeFi accounting errors | #16, #26 | $5k-$50k |
 | **🔥 P0** | Race condition (kernel/app) | #076 | $20k+ |
+| **🔥 P0** | LLM-assisted attack / agent pentesting | #109 | varies — 83 papers |
 
 ---
 
@@ -256,3 +260,4 @@ E:\cantin MEZO\
 6. **Reverse Devil's Advocate** — When AI says "not exploitable", push harder. The AI doesn't know what it can't do — prove it wrong. (Entry #076 — chompie: Claude gaslit her, $20k Pwn2Own win)
 7. **80% on verification, 20% on finding** — Microsoft's insight: finding bugs is solved. Proving them with zero FPs is the real challenge. Put engineering effort into debate, dedup, and prove stages. (Entry #077)
 8. **Patch diffing for N-day** — A Patch Tuesday + ~$300 in API tokens + open-source tools = verified exploit. Tyler Holmwood proved one researcher can build Mythos-class capability. (Entry #078, `methodologies/08-patch-diffing-pipeline.md`)
+9. **Academic-backed methodology** — Every technique is backed by papers from Awesome-LLM4Cybersecurity (Entry #109, 612+ papers). Search LITERATURES.md for the relevant category when building new approaches.

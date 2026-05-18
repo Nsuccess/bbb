@@ -7,6 +7,7 @@ Methodology for discovering and chaining **logic bugs** — vulnerabilities in a
 **Source:** Entry #075 — Orange Tsai: 4 Logic Bugs → Edge Sandbox Escape, $175k
 **Source:** Entry #011 — Multi-agent system (30+ CVEs)
 **Source:** Entry #035 — IronCurtain agent runtime
+**Academic Backing:** Entry #109 — 83 LLM Assisted Attack papers + 56 Agent4Cyc papers + 94 Vuln Detection papers
 
 ---
 
@@ -60,6 +61,9 @@ Methodology for discovering and chaining **logic bugs** — vulnerabilities in a
 | **Atomicity Violation** | Multi-step operation not atomic | Step 1 succeeds, step 2 fails → inconsistent state |
 | **Assumption Violation** | Code assumes something that isn't guaranteed | "This function is only called from the UI thread" |
 | **Supply Chain Logic** | Dependency introduces conflicting logic | Patch in library changes behavior assumptions |
+| **Agent-in-the-Middle** | AI agent proxies user requests with escalated privileges | User request → Agent API call with agent's auth context (see Entry #109, Agent4Cyc #40, #52) |
+| **Session Desync** | User session state differs from agent session state | User logs out but agent retains session token |
+| **Tool Confusion** | Agent uses wrong tool or wrong tool parameters for context | Agent uses read tool where write was intended, bypassing access controls |
 
 ### Step 1.3 — Chain Identification
 
@@ -76,6 +80,7 @@ Bug 4 → Critical sandbox escape
 - **Parallel combination:** Multiple bugs targeting same boundary
 - **Dependency chain:** Bug B requires Bug A's output
 - **Supply chain trigger:** Library update enables new attack path
+- **Agent chain:** Multiple AI agents each contribute one step in the chain — validated by Entry #109, Agent4Cyc #36 (Teams of LLM Agents Exploit 0-Day) and Agent4Cyc #40 (Autonomous 1-Day Exploitation)
 
 ---
 
@@ -114,9 +119,44 @@ Chain with another logic bug for escalation
 
 ---
 
-## Phase 3: Browser/Application IPC Testing
+## Phase 3: LLM-Agent Logic Bugs (NEW — from Entry #109)
 
-### Step 3.1 — IPC Surface Mapping
+### Step 3.1 — Agent-in-the-Middle Attacks
+
+**Concept:** When an AI agent proxies requests between users and APIs, it can introduce logic bugs at the privilege boundary.
+
+**Academic Reference:** Entry #109, Agent4Cyc #42 — WIPI: New Web Threat for LLM-Driven Web Agents; Entry #109, Agent4Cyc #41 — InjecAgent: Indirect Prompt Injection in Tool-Integrated LLM Agents.
+
+**Test for:**
+- Can user make agent perform actions at agent's privilege level?
+- Can user poison agent's tool call parameters?
+- Does agent verify authorization before each tool call, or cache it?
+- Can user feed data to agent that gets interpreted as tool instructions?
+
+### Step 3.2 — Tool Confusion Attacks
+
+**Test for:**
+- Agent uses wrong tool for the context
+- Agent misinterprets tool output (type confusion in tool results)
+- Agent uses cached/outdated tool output
+- Race condition between tool result arrival and state change
+
+### Step 3.3 — Smart Contract Logic Bugs
+
+**Academic Reference:** Entry #109, Vuln Detection #82 — GPTScan: combines GPT with program analysis for logic vulnerability detection in smart contracts.
+
+**Logic Categories Specific to Smart Contracts:**
+- Access control confusion (onlyOwner bypass, role hierarchy gaps)
+- Flash loan + price oracle manipulation (economic logic bugs)
+- Precision loss rounding favoring attackers
+- Cross-contract invocation order manipulation
+- Front-running through transaction ordering dependency
+
+---
+
+## Phase 4: Browser/Application IPC Testing
+
+### Step 4.1 — IPC Surface Mapping
 
 **Identify IPC channels:**
 - Process-to-process communication
@@ -145,9 +185,9 @@ Chain with another logic bug for escalation
 
 ---
 
-## Phase 4: Multi-Step Exploit Construction
+## Phase 5: Multi-Step Exploit Construction
 
-### Step 4.1 — Find the Entry Point
+### Step 5.1 — Find the Entry Point
 
 **Look for:**
 - User-controlled input that crosses a trust boundary
@@ -155,7 +195,7 @@ Chain with another logic bug for escalation
 - Shared resources writable by low-privilege and read by high-privilege
 - Race windows in multi-step operations
 
-### Step 4.2 — Build the Chain
+### Step 5.2 — Build the Chain
 
 **Chain Construction Process:**
 ```
@@ -167,7 +207,7 @@ Bug 3: Escalate privilege
 Bug 4: Access target (sandbox escape / data access / RCE)
 ```
 
-### Step 4.3 — Test Each Link
+### Step 5.3 — Test Each Link
 
 **For each bug in the chain:**
 1. Can it be triggered reliably?
@@ -178,7 +218,7 @@ Bug 4: Access target (sandbox escape / data access / RCE)
 
 ---
 
-## Phase 5: Supply Chain Logic Bug Playbook
+## Phase 6: Supply Chain Logic Bug Playbook
 
 ### Pattern 1: Dependency Behavior Change
 
@@ -220,7 +260,7 @@ Result: Double-encoded data stored
 
 ---
 
-## Phase 6: Tooling & Automation
+## Phase 7: Tooling & Automation
 
 ### For Logic Bug Discovery
 
@@ -231,6 +271,14 @@ Result: Double-encoded data stored
 | `Android-Pentesting-Skill/` | Mobile IPC testing, intent analysis |
 | `Bug-Bounty-Agents/bizlogic-hunter.md` | Business logic vulnerability hunting |
 | `Bug-Bounty-Agents/exploit-chainer.md` | Multi-step exploit chain construction |
+
+### For LLM-Agent Logic Bugs
+
+| Tool | Use Case |
+|------|----------|
+| Entry #109, Agent4Cyc papers | Academic guidance for agent-specific bug patterns |
+| `Bug-Bounty-Agents/llm-redteam.md` | LLM red-teaming for agent testing |
+| Prompt injection toolkit | Test agent prompt boundaries |
 
 ### For Supply Chain Analysis
 
@@ -250,6 +298,12 @@ Result: Double-encoded data stored
 - Entry #035: IronCurtain secure agent runtime
 - Entry #042: Chrome V8 RCE ($55k)
 - Entry #036: Big Sleep AI zero-day discovery
+- Entry #109, Agent4Cyc #36: Teams of LLM Agents Exploit Zero-Day
+- Entry #109, Agent4Cyc #40: LLM Agents Autonomously Exploit One-Day
+- Entry #109, Agent4Cyc #42: WIPI — Web Threat for LLM-Driven Agents
+- Entry #109, Agent4Cyc #52: LLM Agents Hack Websites
+- Entry #109, Vuln Detection #82: GPTScan — Logic Vulns in Smart Contracts
+- Entry #109, Vuln Detection #15: Let the Trial Begin — Mock-Court Approach
 
 ## Priority Assessment
 

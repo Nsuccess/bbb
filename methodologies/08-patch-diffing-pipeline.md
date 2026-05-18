@@ -7,6 +7,7 @@ Complete methodology for building an automated patch-diffing → exploit generat
 **Source:** Entry #078 — Tyler Holmwood: The Mythos We Have At Home
 **Cost:** ~$300 in API tokens per CVE (Opus-4.7)
 **Open-Source Tools:** PatchWatch, hyperv-mcp, kd-mcp, pocsmith-mcp, pyghidra-mcp
+**Academic Backing:** Entry #109 — 83 LLM Assisted Attack papers + 25 FUZZ papers + 66 Program Repair papers
 
 ---
 
@@ -135,6 +136,10 @@ Patch Tuesday (MSRC)
 | **B** | Controlled primitive | Reliable read/write or controlled corruption |
 | **C** | Full exploit | Code execution or privilege escalation |
 
+**Academic Reference for Level Progression:**
+- Entry #109, Program Repair #4 — VulnRepairEval: validates this 3-level framework with exploit-based evaluation methodology
+- Entry #109, LLM Attack #35 — PwnGPT (ACL 2025): automatic exploit generation via LLM fine-tuned on real exploits. Can replace or augment pocsmith for Level C generation on known CVE patterns.
+
 **Each level has:**
 - Time budget
 - Iteration budget
@@ -154,6 +159,9 @@ Phase 3: Write POC → Compile → Execute → Capture result
 Phase 4: If success → Restore clean VM → Re-verify (2x)
          If fail → Write notes.md → Reset context → New phase
 ```
+
+**Multi-Agent Enhancement** (from Entry #109, Agent4Cyc #10 — From CVE to Verifiable Exploits):
+Instead of a single agent, run 3 agents in parallel on the same report.md. Each independently generates an exploit hypothesis. Compare results — consensus across agents increases reliability. This catches agent-specific blind spots.
 
 **Key Design Decisions:**
 - **Phase boundary** = checkpoint where agent writes state to `notes.md`
@@ -195,6 +203,12 @@ Phase 4: If success → Restore clean VM → Re-verify (2x)
 | WIL/telemetry changes | Usually noise, filter out |
 | Feature flag gating | New code paths behind flags |
 
+**Web-Specific Pattern** (from Entry #109, Vuln Detection #2 — LLM Agents for Automated Web Vuln Reproduction):
+For web application patches, look for: parameter validation changes, authZ check additions, response header changes (CSP, CORS), rate limiting introduction, input sanitization changes. LLM agents can test web vuln reproduction autonomously — extend the pipeline beyond binaries.
+
+**Patch-Analysis with Binary LLMs** (from Entry #109, LLM Attack #30 — ReCopilot):
+Use LLM-assisted reverse engineering to understand decompiled patch diffs. ReCopilot specifically targets binary analysis and can explain what a patch does at a higher level than raw decompiler output.
+
 ### From the Demo: CVE-2026-41096
 
 **ws2_32.dll pattern:** Unsafe inline NUL-walk → `StringLengthWorkerW` bounded helper
@@ -208,6 +222,19 @@ Phase 4: If success → Restore clean VM → Re-verify (2x)
 - Bulk: Opus-4.7 inference
 - PatchWatch: modest (summary + synthesis passes)
 - Pocsmith: bulk (exploit iteration)
+
+### Expanding Pipeline Beyond Windows Binaries
+
+**Academic Reference:** Entry #109, FUZZ #8 — "Your Fix Is My Exploit: Enabling Comprehensive DL Library API Fuzzing with Large Language Models": demonstrates that patch analysis + LLM-based exploit generation works for non-Windows targets too. Key insight: patches reveal not just the fix, but the vulnerability class — enabling variant analysis across similar code patterns.
+
+**Web Application Patch Diffing:**
+- Diff JavaScript bundles instead of binaries
+- LLM analyzes minified JS diffs for security-relevant changes
+- Test reproduced vuln against live target
+
+**Linux Kernel Patch Diffing:**
+- Diff kernel module sources or decompiled modules
+- Follow same 3-level framework (crash → primitive → exploit)
 
 ### Optimization Strategies
 
@@ -251,6 +278,11 @@ Phase 4: If success → Restore clean VM → Re-verify (2x)
 - Entry #077: Microsoft debate/dedup/prove pipeline
 - Entry #036: Big Sleep AI zero-day
 - Entry #042: Chrome V8 RCE $55k
+- Entry #109, LLM Attack #35 — PwnGPT: automated exploit generation
+- Entry #109, Agent4Cyc #10 — Multi-agent CVE reproduction
+- Entry #109, Vuln Det #2 — LLM agents for web vuln reproduction
+- Entry #109, FUZZ #8 — Your Fix Is My Exploit
+- Entry #109, LLM Attack #30 — ReCopilot: reverse engineering copilot
 
 ## Priority Assessment
 
