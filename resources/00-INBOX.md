@@ -16619,3 +16619,231 @@ splitline (@_splitline_) of DEVCORE Research Team chained 2 bugs to exploit Micr
 - Contrast with our HackerOne approach: we chain 2-3 auth bypass mutations → Medium/High. The same logic applies but at enterprise scale.
 
 **Relevance:** Reinforces Entry #075 (Orange Tsai chained 4 logic bugs → $175k). The pattern is consistent: low individual bugs → high combined impact. Our MoonPay chain (initiateEmailChange + confirmEmailAddress + requestResetTwoFactorAuth) is exactly this pattern at web application level. The principle scales: find more bugs in the same system, chain them, and severity compounds.
+
+---
+
+### Entry #128 — VMware ESXi Memory Corruption: $200k Pwn2Own (Cross-Tenant Code Execution)
+
+**Source:** @thezdi / TrendAI Zero Day Initiative — P2OBerlin 2026
+**Date Added:** 2026-05-17
+**Type:** Pwn2Own, Memory Corruption, Hypervisor
+**Priority:** High
+
+**Content:**
+Nguyen Hoang Thach of STARLabs SG exploited VMware ESXi via memory corruption + Cross-tenant Code Execution add-on = $200,000 + 20 Master of Pwn points.
+
+**Key Details:**
+- Researcher: Nguyen Hoang Thach @hi_im_d4rkn3ss (STARLabs SG @starlabs_sg)
+- Target: VMware ESXi hypervisor
+- Bug class: Memory corruption
+- Achievement: Cross-tenant VM escape → code execution in another tenant's context
+- Reward: $200,000 + 20 Master of Pwn points
+
+**Why This Matters for Crypto:**
+Memory corruption bugs apply directly to crypto infra:
+- **Blockchain clients**: Geth, Nethermind, Solana validator, Firedancer — all written in Go/Rust/C++ with memory safety surface
+- **Wasm runtimes**: CosmWasm, Near, Polkadot ink! — linear memory model sandboxed but vulnerable to buffer overflows, use-after-free
+- **Nodes/infrastructure**: Solana ELF loader bugs, alignment vulnerabilities, JIT cache issues — have caused DoS, crashes
+- **Bridges**: Proof verifiers, RLP parsers, MPT libraries — memory issues in low-level parsing = direct drainage (Polygon Plasma $800M at risk)
+- **Clients**: Bitcoin Core use-after-free (patched), wallet extension memory bugs → seed leak
+
+**Key Quote:** "Memory corruption-style bugs in crypto's lower layers (nodes, bridges, runtimes) pay six figures on Immunefi — the VMware payout proves the model works at Pwn2Own scale."
+
+**Relevance:** Directly transferable to crypto VM/runtime auditing. Instead of hypervisor → cross-VM, think: Wasm runtime → cross-contract, or bridge parser → cross-chain drainage. Same class, different target, often higher payout potential on Immunefi (up to $250k–$2M+).
+
+---
+
+### Entry #129 — High-ROI Crypto Targets for Memory-Style Bugs (Immunefi Focus)
+
+**Source:** Web search synthesis + Immunefi program analysis, May 2026
+**Date Added:** 2026-05-17
+**Type:** Target Analysis, Immunefi, Bridge, Node, Runtime
+**Priority:** High
+
+**Content:**
+
+High-risk/high-ROI crypto targets for memory corruption and logic bug hunting, ranked by payout potential + technical match.
+
+#### Tier 1: Bridges & Cross-Chain (Highest Drainage Potential)
+| Program | Max Bounty | Why |
+|---------|-----------|-----|
+| **Wormhole** | $1M–$10M | Go/Rust/Move/Python scope, message passing, proof verification, parser bugs |
+| **LayerZero** | $15M | Highest cap, cross-chain, proof forging, endpoint isolation |
+| **Polygon** | $250k–$2M | Bor client, bridge contracts, memory issues in proof verifiers |
+| **Lombard Finance** | $250k | BTC.b bridge, CCIP + Consortium dual verification — fresh migration surface |
+
+#### Tier 2: L1/L2 Node & Client Software
+| Program | Max Bounty | Why |
+|---------|-----------|-----|
+| **Firedancer (Solana)** | $500k–$1M | C/C++ validator client, active comp, memory bugs |
+| **Optimism** | ~$2M | OP Stack, sequencer, Go/Solidity |
+| **Ethereum clients** | $1M | Geth, Nethermind, Reth — fuzz networking, blob handling |
+| **Rootstock** | $200k | Bitcoin sidechain, lower-level work |
+
+#### Tier 3: Wasm / Rust-Heavy Runtimes
+- CosmWasm, Near, Polkadot/Substrate, Sei, Flare
+- Linear memory + unsafe Rust = buffer overflows, OOB, sandbox escapes
+
+**Strategy:**
+1. Start on Immunefi — filter Blockchain/DLT or Infrastructure scope
+2. Fuzz edges: network parsers, proof verifiers, Wasm runtimes, unsafe code blocks
+3. Leverage security team contacts for private expanded scope
+4. Solid reproducible PoC = faster/higher payout
+
+**Relevance:** Direct roadmap for next target selection after MoonPay. Focus on bridge + client infrastructure for highest ROI.
+
+---
+
+### Entry #130 — Lombard BTC.b Bridge: Full Target Analysis (May 2026)
+
+**Source:** Immunefi, Lombard Docs, Avax.network, OpenZeppelin audits, web search
+**Date Added:** 2026-05-17
+**Type:** Target Analysis, Bridge, Bitcoin, Avalanche
+**Priority:** HIGH
+
+**Content:**
+
+Lombard Finance acquired BTC.b infrastructure from Ava Labs (Oct 2025, migration complete mid-2026). BTC.b is a wrapped Bitcoin on Avalanche with ~$230M TVL (May 2026).
+
+#### Architecture (Current)
+- **Bridge methods**: Chainlink CCIP (primary), LayerZero (extension), IBC (Cosmos), Native Consortium
+- **Dual-layer verification**: CCIP validators + Security Consortium (15 institutions) must BOTH approve
+- **Security Consortium**: OKX, Galaxy, Kraken, DCG, Wintermute, Figment, Kiln, Antpool, F2Pool + others
+- **Key management**: Cubist CubeSigner — HSMs + Nitro Enclaves, policies restrict what Consortium can sign
+- **Collateral verification**: Bascule Drawbridge (Cubist) + Chainlink Proof of Reserve
+- **Burn-and-mint**: BTC is locked on Bitcoin → BTC.b minted on destination
+
+#### Migration Surface (Recent — Fresh Attack Vectors)
+- Migrated from LayerZero to Chainlink CCIP after Kelp DAO $292M exploit (April 2026)
+- Old SGX enclave + Warden network → replaced by Consortium + HSM model
+- Deprecated `unwrap` function → new Lombard adapter for redemptions
+- Multi-chain expansion: BTC.b now native on Ethereum, Solana (not just Avalanche)
+
+#### Bug Bounty
+- **Platform**: Immunefi
+- **Max critical**: $250,000 (10% of funds at risk, min $50k)
+- **Scope**: Smart contracts (LBTC token, Consortium Governance, Proxy Timelock) + web/app
+- **PoC required**: Yes
+- **KYC required**: Yes for payout
+- **Audits available**: OpenZeppelin, Veridise, Halborn — all public
+
+#### Known Audit Findings (Immunefi Audit Competition)
+- #38154: CCIP offchain data not validated against message — funds freezing
+- #38634: Insufficient validation on offchainTokenData in TokenPool.releaseOrMint
+- #38335: PartnerVault mint small amount → LBTC depeg/protocol insolvency
+- #38102: BasculeV2 design flaw — valid transactions reverted
+- #38286: BitcoinUtils.getDustLimitForOutput wrong calculation
+- All Medium severity — no Criticals found in audit comp
+
+#### Logic Bug Hunting Opportunities
+1. **CCIP message handling**: Offchain data validation gaps (audit found Mediums — deeper variants possible)
+2. **Consortium consensus**: Edge cases in 15-member approval threshold, key policy bypass
+3. **Burn/mint matching**: race conditions, replay, desync between CCIP + Consortium verification
+4. **UTXO handling**: Dust edge cases, fee estimation, unconfirmed change (old SGX pattern, may still apply)
+5. **Migration residue**: LayerZero→CCIP cutover left dead code or inconsistent state?
+6. **Redemption flow**: Deprecated `unwrap` replaced by new adapter — migration bugs common
+7. **Multi-chain state sync**: Same bridge logic deployed across 10+ chains — chain-specific edge cases
+
+**Relevance:** Primary high-value bridge target. $250k cap, fresh migration surface, Medium audit findings suggest deeper bugs exist. The researcher's tip about BTC→Avalanche logic bugs is well-founded. Start with CCIP message validation + Consortium approval edge cases.
+
+---
+
+### Entry #131 — Bridge Logic Bug Patterns: The BTC → Avalanche Attack Surface
+
+**Source:** Researcher tip + Lombard docs + historical bridge exploits analysis
+**Date Added:** 2026-05-17
+**Type:** Methodology, Bridge Logic, Attack Surface
+**Priority:** HIGH
+
+**Content:**
+
+The BTC → Avalanche (BTC.b/Lombard) bridge is a prime target for logic bugs due to:
+1. **UTXO → Account model mismatch**: Bitcoin's UTXO model vs EVM account model creates inherent complexity in fee estimation, change handling, dust management
+2. **Multi-party consensus**: Warden network (old) → Consortium (new) — transition adds complexity around approval thresholds and stale validator sets
+3. **Dual verification**: CCIP + Consortium must both approve — what happens when one approves and the other doesn't? Race conditions in cross-chain state
+4. **Burn-and-mint flow**: Two independent chains must stay in sync — burn on source must equal mint on destination
+5. **SGX → HSM migration**: Old Intel SGX enclave replaced by Cubist CubeSigner — migration often leaves edge cases
+
+#### Historical Bridge Bug Patterns That Apply
+- **Polygon Plasma ($800M at risk)**: OOB read in RLP parser + Merkle proof flaw → forge withdrawal proofs
+- **Wormhole ($320M exploit)**: Uninitialized proxy → mint unbacked tokens
+- **Nomad ($190M)**: Trusted root not properly validated → drain all
+- **SkyBridge/LayerZero (April 2026)**: CCIP migration related — Kelp DAO $292M
+- **Mezo (March 2026)**: AssetsBridge precompile — ERC-20 burn not synced, $50k bounty, $1.75M at risk
+
+#### Key Attack Ideas
+1. **Replay burn events**: Same burn event triggers mint on two destinations
+2. **Confirmation counting**: Race on Bitcoin confirmation count → mint before finality
+3. **UTXO dust accumulation**: Bridge ignores dust → what if dust amount is manipulated to bypass minimum?
+4. **Fee manipulation**: Inflate bridge fees to extract value
+5. **SGX/HSM key policy bypass**: Consortium members restricted to specific tx types — find a policy gap
+6. **Multi-chain state desync**: BTC.b on Ethereum, Avalanche, Solana — same bridge, different chains, different finality — can you exploit the difference?
+
+**Relevance:** The researcher's tip about BTC → Avalanche logic bugs is high-value. The bridge has ~$230M TVL, fresh migration, and audit findings at Medium only — Criticals likely remain undiscovered. This is our next deep target.
+
+---
+
+### Entry #132 — Immunefi Payout Model: "10% of Funds at Risk" Explained
+
+**Source:** Immunefi Lombard Finance program page
+**Date Added:** 2026-05-17
+**Type:** Program Policy, Payout Model
+**Priority:** High
+
+**Content:**
+
+Immunefi's scaling bug bounty model for critical smart contract bugs:
+
+**Formula:**
+```
+Reward = 10% of funds directly affected by the bug
+Capped at: $250,000 (varies by program)
+Minimum payout for criticals: $50,000
+```
+
+**Example:**
+- Bug that could drain $2M in locked BTC → $200,000 reward
+- Bug that could drain $3M+ → hits $250k cap
+- Bug that could drain the full bridge ($230M TVL) → still $250k cap
+
+**Important details:**
+- "Funds at risk" calculated at time of report submission
+- For **repeatable attacks** on non-upgradeable/non-pausable contracts: cumulative impact considered (full TVL)
+- For **upgradeable/pausable** contracts: only initial attack considered
+- PoC required to prove funds at risk
+- KYC required for payout
+- First reporter only — duplicates get nothing
+
+**Relevance:** Understanding the payout model is critical for target selection. Lombard's bridge contracts may be upgradeable (which caps to initial attack). But a critical on a non-upgradeable component (like proof verifier) could count cumulative TVL. Check upgradeability before investing time.
+
+---
+
+### Entry #133 — Statemind's $350M+ Whitehat Save: Avalanche Native Asset Call Precompile
+
+**Source:** Statemind.io, Bitcoinist, immunefi
+**Date Added:** 2026-05-17
+**Type:** Writeup, Precompile, Avalanche, Whitehat
+**Priority:** Medium
+
+**Content:**
+
+In September 2022, Statemind discovered a critical vulnerability in Avalanche C-Chain's `NativeAssetCall` precompile — affected also Moonbeam/Moonriver (same bug class in Batch precompile).
+
+**The Bug:**
+- Precompile allowed arbitrary calls to be routed through it while preserving `msg.sender`
+- This meant anyone could call contracts like Abracadabra's `CauldronV3` (or Sushi's Kashi) with the precompile as msg.sender
+- The `_call` method in CauldronV3 restricted calls to `bentoBox` or `this` — but the precompile bypassed this restriction
+- Result: Attacker could drain lending pools by spoofing calls as the protocol contract
+
+**Impact:**
+- ~$350M+ at risk across Avalanche + Abracadabra + Sushi
+- All funds whitehatted, no user losses
+- Fixed within hours of disclosure
+
+**Key Lessons:**
+1. Custom precompiles in EVM chains are a high-risk attack surface — they can break EVM invariants that smart contracts rely on
+2. Statemind systematically audited 10+ protocols for the same bug class — found it in 3
+3. Same vulnerability affecting multiple chains/languages (Avalanche in Go, Moonbeam in Rust)
+4. Precompiles are still being deployed (Mezo's AssetsBridge March 2026, $50k bounty)
+
+**Relevance:** If we target Avalanche ecosystem (BTC.b, Lombard), precompile bugs are a known attack class with proven payout. Check current precompile scope for Lombard and any custom precompiles in the bridge stack.
