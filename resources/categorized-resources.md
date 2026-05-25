@@ -149,28 +149,38 @@
 | 173 | offensive-claude Toolkit | Toolkit | General/Red Team | All | HIGH |
 | 174 | Mephisto WordPress Exploitation Framework | Tool | Web/CMS | RCE, SQLi, CSRF | MEDIUM |
 | 175 | Awesome-Bugbounty-Writeups | Resource List | General | All | MEDIUM |
+| 176 | Blockaid: SquidRouterModule Gnosis Safe Drain (~$3M) | Writeup | Crypto/DeFi | DelegateCall Impersonation | CRITICAL |
+| 177 | WUSD/GLOVE Exploit: Sybil Abuse of Reward Path (~$19.7k) | Writeup | Crypto/DeFi | Sybil, Logic | CRITICAL |
+| 178 | OTP Bypass via Stateless Verification ID (Identity Injection ATO) | Writeup | Web/Auth | OTP Bypass, ATO | CRITICAL |
+| 179 | XML Error-Based Blind SQLi: DeepSeek V4 Pro (19 Databases) | Methodology | Web/API | Blind SQLi, WAF Bypass | CRITICAL |
+| 180 | Critical Admin Takeover via Open Registration on CMS Origin | Writeup | Web/Recon | Auth Bypass, CSP Leakage | CRITICAL |
+| 181 | Subdomain Takeover: Complete Playbook ($500-$5k) | Methodology | Web/Recon | Subdomain Takeover | HIGH |
+| 182 | AI-Powered Scanner Vulnerabilities: Indirect Prompt Injection & SSRF | Methodology | AI Security | Prompt Injection, SSRF | CRITICAL |
+| 183 | Full ATO via OTP Verification Logic Flaw ($3k, HackerOne) | Writeup | Web/Auth | OTP Bypass, ATO | CRITICAL |
+| 184 | Awesome-LLMs-for-Vulnerability-Detection | Resource List | General/AI | All | HIGH |
+| 185 | AI Scanner Prompt Injection Labs (PortSwigger Academy) | Lab | AI Security | Prompt Injection, SSRF | HIGH |
 
 ---
 
 ## By Niche
 
 ### Web Application Security
-**High Priority:** #004, #008, #010, #022, #024, #025, #040, #041, #049, #056, #057, #062, #067, #068, #069, #079, #088, #089, #106, #107, #108, #111, #113, #121, #122, #123, #127, #167, #168, #169
+**High Priority:** #004, #008, #010, #022, #024, #025, #040, #041, #049, #056, #057, #062, #067, #068, #069, #079, #088, #089, #106, #107, #108, #111, #113, #121, #122, #123, #127, #167, #168, #169, #179, #180, #181
 **Medium Priority:** #012, #013, #073, #081, #086, #112, #115, #124, #125
 
 ### API Security
-**High Priority:** #007, #023, #025, #041, #079, #108, #122, #167, #168
+**High Priority:** #007, #023, #025, #041, #079, #108, #122, #167, #168, #179
 **Medium Priority:** #073
 
 ### OAuth/Authentication
-**High Priority:** #018, #048, #053, #054, #056, #059, #060, #064, #089, #107, #111, #113, #117
+**High Priority:** #018, #048, #053, #054, #056, #059, #060, #064, #089, #107, #111, #113, #117, #178, #183
 
 ### AI/LLM Application Security
-**High Priority:** #005, #038, #044, #045, #047, #052, #070, #082, #103, #104, #109
+**High Priority:** #005, #038, #044, #045, #047, #052, #070, #082, #103, #104, #109, #182, #185
 **Medium Priority:** #028, #030, #033, #034, #077, #080, #091, #097
 
 ### Crypto/DeFi / Web3
-**High Priority:** #016, #027, #095, #099, #100, #116, #129, #130, #131, #133, #134, #164, #165, #166, #171
+**High Priority:** #016, #027, #095, #099, #100, #116, #129, #130, #131, #133, #134, #164, #165, #166, #171, #176, #177
 
 ### Cloud Security
 **High Priority:** #006, #071, #093
@@ -203,7 +213,7 @@
 ## By Vulnerability Type
 
 ### SSRF / Server-Side Request Forgery
-#079, #122, #168, #021, #047, #052, #069
+#079, #122, #168, #021, #047, #052, #069, #182
 
 ### IDOR / Insecure Direct Object Reference
 #025, #041, #108, #123, #106, #021, #040, #113
@@ -218,16 +228,16 @@
 #049
 
 ### SQL / NoSQL Injection
-#023, #071, #169
+#023, #071, #169, #179
 
 ### Prompt Injection
-#038, #044, #070, #103, #104
+#038, #044, #070, #103, #104, #182, #185
 
 ### Race Condition
 #076, #088
 
 ### Logic Bugs / Business Logic
-#075, #107, #021, #040, #041, #121, #131, #134
+#075, #107, #021, #040, #041, #121, #131, #134, #177
 
 ### Oracle Manipulation (Web3)
 #027, #166, #171
@@ -251,7 +261,7 @@
 #026, #076, #105, #093
 
 ### Authentication Bypass
-#056, #089, #102, #111, #113
+#056, #089, #102, #111, #113, #178, #180, #183
 
 ### Information Disclosure
 #073, #082, #086, #087, #106, #114, #123
@@ -260,7 +270,7 @@
 #127
 
 ### Reconnaissance
-#004, #012, #013, #081, #086, #092, #112, #115, #125
+#004, #012, #013, #081, #086, #092, #112, #115, #125, #180, #181
 
 ### Container / Cloud Escape
 #009, #071
@@ -276,16 +286,16 @@
 ## By Resource Type
 
 ### Methodologies & Workflows
-#001, #004, #005, #006, #007, #008, #013, #018, #022, #024, #025, #028, #031, #044, #054, #072, #077, #078, #089, #091, #104, #107, #108, #112, #115, #120, #131, #166, #167, #168, #172
+#001, #004, #005, #006, #007, #008, #013, #018, #022, #024, #025, #028, #031, #044, #054, #072, #077, #078, #089, #091, #104, #107, #108, #112, #115, #120, #131, #166, #167, #168, #172, #179, #181, #182
 
 ### Writeups & Case Studies
-#010, #012, #016, #021, #023, #026, #027, #040, #041, #042, #045, #048, #049, #050, #051, #052, #053, #055, #056, #057, #058, #059, #060, #061, #062, #063, #064, #065, #067, #068, #069, #070, #071, #073, #075, #076, #082, #086, #087, #088, #097, #102, #105, #106, #111, #113, #114, #116, #117, #121, #122, #123, #124, #126, #127, #128, #133, #134, #170, #171
+#010, #012, #016, #021, #023, #026, #027, #040, #041, #042, #045, #048, #049, #050, #051, #052, #053, #055, #056, #057, #058, #059, #060, #061, #062, #063, #064, #065, #067, #068, #069, #070, #071, #073, #075, #076, #082, #086, #087, #088, #097, #102, #105, #106, #111, #113, #114, #116, #117, #121, #122, #123, #124, #126, #127, #128, #133, #134, #170, #171, #176, #177, #178, #180, #183
 
 ### Tools & Software
 #019, #029, #030, #034, #035, #037, #038, #046, #079, #080, #081, #083, #084, #085, #092, #100, #103, #125, #173, #174
 
 ### Resource Lists & Collections
-#009, #015, #020, #033, #036, #043, #047, #066, #093, #094, #095, #096, #098, #099, #101, #109, #118, #129, #164, #165, #175
+#009, #015, #020, #033, #036, #043, #047, #066, #093, #094, #095, #096, #098, #099, #101, #109, #118, #129, #164, #165, #175, #184
 
 ### Target Evaluations
 #110, #130, #135
@@ -301,4 +311,4 @@
 
 ---
 
-*This file is auto-updated as resources are processed. Last updated: 2026-05-22*
+*This file is auto-updated as resources are processed. Last updated: 2026-05-25*
