@@ -1,6 +1,6 @@
 # Bug Bounty Automation Framework
 
-A comprehensive, AI-first bug bounty hunting framework built from 72+ real-world resources, methodologies, and successful writeups. Designed for use with Claude Code, Cursor, or any AI coding assistant.
+A comprehensive, AI-first bug bounty hunting framework built from 185+ real-world resources, methodologies, and successful writeups. Designed for use with Claude Code, Cursor, or any AI coding assistant.
 
 ## 🎯 What This Is
 
@@ -22,7 +22,7 @@ bug-bounty-automation/
 ├── skills/             # 12 specialized AI agent skills
 ├── steering/           # 7 persistent context files
 ├── workflows/          # 6 declarative hunting workflows
-├── resources/          # 72 curated bug bounty resources
+├── resources/          # 185 curated bug bounty resources
 └── docs/              # Integration guides and documentation
 ```
 
@@ -67,7 +67,7 @@ Apply: @methodologies/02-oauth-security-testing.md
 
 ## 📚 Key Components
 
-### Methodologies (7 Files)
+### Methodologies (9 Files)
 
 Complete testing frameworks extracted from real-world findings:
 
@@ -77,8 +77,11 @@ Complete testing frameworks extracted from real-world findings:
 4. **Yandex Recon** - Advanced dorking and asset discovery
 5. **Prompt Injection Framework** - AI application security testing
 6. **MCP Security Audit** - Model Context Protocol vulnerabilities
+7. **Logic Bug Hunting** - Business logic & supply chain exploitation
+8. **Patch Diffing Pipeline** - N-day exploit generation
+9. **Submission Format** - Report structure and optimization
 
-### Skills (12 Files)
+### Skills (14 Files)
 
 Specialized AI agent personas for specific vulnerability classes:
 
@@ -94,6 +97,8 @@ Specialized AI agent personas for specific vulnerability classes:
 - `crypto-defi-auditor.md` - Blockchain security
 - `recon-basic.md` - Asset discovery
 - `router-simple.md` - Workflow routing
+- `framework-librarian.md` - Resource & methodology librarian
+- `cosmos-evm-precompile-auditor.md` - Cosmos/EVM precompile audit
 
 ### Steering (7 Files)
 
@@ -107,7 +112,7 @@ Persistent context files with `inclusion: auto` frontmatter:
 - `cloud-security-standards.md` - Cloud testing guidelines
 - `ai-security-testing.md` - AI/ML security standards
 
-### Workflows (6 Files)
+### Workflows (8 Files)
 
 Declarative, step-by-step hunting processes:
 
@@ -117,12 +122,14 @@ Declarative, step-by-step hunting processes:
 4. **AI App Hunt** (`03-ai-app-hunt.md`) - AI/ML application testing
 5. **Crypto Hunt** (`04-crypto-hunt.md`) - Blockchain/DeFi testing
 6. **Adaptive Hunt** (`05-adaptive-hunt.md`) - Dynamic workflow
+7. **Claude Code Security Review** (`05-claude-code-security-review.md`) - AI agent code security
+8. **Xalgorix 22-Phase** (`06-xalgorix-22-phase.md`) - AI pentesting methodology
 
-### Resources (72 Entries)
+### Resources (185 Entries)
 
 Curated from real bug bounty findings:
 
-- **$180,000+** in documented bounties
+- **$3,400,000+** in documented bounties
 - **60+ CVEs** referenced
 - **30+ tools** and techniques
 - **Real-world writeups** from successful hunters
@@ -335,7 +342,7 @@ MIT License - Use freely, attribute sources where applicable.
 
 ## 🙏 Credits
 
-Built from 72 resources including:
+Built from 185+ resources including:
 
 - Cassim (@aituglo) - Complete methodology
 - Walid Ladeb (@ladebw) - AI self-validation

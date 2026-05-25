@@ -37,6 +37,7 @@
 | **SSRF → RCE escalation** | #052 | MCP tree deep dive — SSRF in agent infra |
 | **Blocklist bypass** | #168 | Decimal IP, IPv6, 302 redirect bypasses |
 | **Cloud SSRF patterns** | #047 | MCP server SSRF patterns |
+| **AI scanner routing-based SSRF** | #182 | Host header manipulation + prompt injection → scanner as SSRF pivot inside internal network |
 
 **Workflows:** `02-api-security-hunt.md`, `03-ai-app-hunt.md`
 **Methodologies:** `06-mcp-security-audit.md`
@@ -85,6 +86,8 @@
 | **Hidden reset APIs** | ATO-Via-Password-Reset | Scan for `/api/su/resetPwd`, `/admin/reset`, `/graphql` mutations |
 | **Email canonicalization** | ATO-Via-Password-Reset | `victim+1@gmail.com`, `vіctim@gmail.com` (unicode) → bypass exact-match checks |
 | **Password reset CSRF** | ATO-Via-Password-Reset | If no CSRF token → victim visits attacker page → password changed silently |
+| **OTP bypass: stateless verificationId** | #178 | Identity field swap at verification step — verificationId not bound to user server-side |
+| **OTP bypass: verification logic flaw ($3k)** | #183 | Swap loginId in PUT body at final verification — server trusts re-supplied identity |
 
 **Workflows:** `01-web-app-hunt.md`
 **Methodologies:** `02-oauth-security-testing.md`
@@ -102,6 +105,7 @@
 | **Drupal pre-auth SQLi (Postgres)** | #169 | CVE-2026-9082 — boolean blind + error-based |
 | **Web3 backend injection** | CROSS-DOMAIN-MAP | Web SQLi techniques that work on crypto backends |
 | **SQLi reference collection** | #175 | 30+ SQLi writeups from Awesome-Bugbounty-Writeups |
+| **XML error-based blind SQLi** | #179 | DeepSeek V4 Pro trick: CASE WHEN + XMLAgg for YES/NO oracle — WAF bypass via XML errors, sqlmap false positive → 19 databases |
 
 **Workflows:** `02-api-security-hunt.md`
 **Cross-Domain:** Web SQLi → NoSQLi on Web3 indexer backends (see CROSS-DOMAIN-MAP.md)
@@ -151,6 +155,8 @@
 | **Lombard BTC.b analysis** | #130 | Full bridge target evaluation |
 | **EVMCallbackReentry (NEW)** | User's Nibiru disclosure | **Critical pattern**: Module-originated calls (chain-level precompiles) during user EVM callbacks (ERC20 transfer, etc.) can be re-entered via delegatecall. The chain sets `IsVMSenderCtx` flag; any mutable path that skips the guard = drain. User found $200k bug, $15k bounty. **Virtuals equivalent**: `_swapTax` callback → Uniswap V2 swap → re-enter FPairV2 (V-003). **Trigger**: "Does the system/contract initiate a privileged call during a user callback window?" |
 | **Password Reset ATO (NEW)** | ATO-Via-Password-Reset repo | Complete password reset methodology: email manipulation (array, \r\n, JSON), host header poison, token reuse, IDOR, race conditions, rate-limit bypass, hidden API scanning, referrer manipulation, email canonicalization bypass, CSRF. **Apply to**: Strapi admin panels, Web3 dashboards, Privy auth flows. **Our target**: acpx.virtuals.io Strapi forgot-password endpoint. |
+| **SquidRouterModule safe drain (~$3M)** | #176 | 86 Gnosis Safes drained via executeSameChainActions() delegatecall impersonation — Foundry exploit contracts |
+| **WUSD/GLOVE sybil reward abuse (~$19.7k)** | #177 | _englove() called before fund pull — balance-based gate bypassed with fresh helper addresses |
 
 **Workflows:** `04-crypto-hunt.md`
 **Methodologies:** `07-logic-bug-hunting.md`
@@ -173,6 +179,9 @@
 | **Claude Code source leak** | #087 | What was inside — full analysis |
 | **Claude Code + AWS creds leak** | #082 | Critical: creds leaked to every subprocess |
 | **Offensive Claude toolkit** | #173 | 25 skills, 6 agents, 47 vuln references |
+| **AI scanner indirect prompt injection** | #182 | Full methodology: inject stored content → AI scanner performs destructive actions / exfiltrates data |
+| **AI scanner routing-based SSRF** | #182 | Host header manipulation + prompt injection → scanner as programmable SSRF vector inside internal network |
+| **PortSwigger AI scanner labs** | #185 | 3 hands-on labs (Apprentice ×2, Practitioner ×1) for AI scanner exploitation |
 
 **Workflows:** `03-ai-app-hunt.md`
 **Methodologies:** `05-prompt-injection-framework.md`, `06-mcp-security-audit.md`
@@ -257,6 +266,8 @@
 | **Email/user enumeration** | #086 | Hidden API endpoint discovery |
 | **Tool list** | #043 / #090 | Burp + ffuf + nuclei consensus |
 | **One-liner scripts** | awesome-oneliner-bugbounty | Collection of single-line commands: LFI, XSS, Open Redirect, Prototype Pollution, CVE scan (CVE-2020-5902, CVE-2020-3452, CVE-2022-0378), subdomain enumeration (RapidDNS, crt.sh, BufferOver, VirusTotal, CertSpotter), JS endpoint extraction, CORS misconfig, port scanning (naabu), subdomain takeover, custom wordlist generation, hidden admin panels, swagger.json endpoint extraction |
+| **Subdomain takeover playbook** | #181 | Complete: subfinder + amass + crt.sh → dnsx CNAME → subzy/nuclei → confirm → report |
+| **CSP header admin takeover** | #180 | CSP connect-src/img-src reveal backend CMS origin → /admin/register open → full admin |
 
 **Workflows:** `01-web-app-hunt.md` (Phase 1)
 **Skills:** `recon-basic.md`, `yandex-recon-specialist.md`

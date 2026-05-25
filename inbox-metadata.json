@@ -1,36 +1,36 @@
 {
   "metadata": {
     "file": "bugbounty/bug-bounty-automation/resources/00-INBOX.md",
-    "total_entries": 92,
-    "extraction_date": "2026-05-14",
-    "total_lines": 13434,
-    "status": "Complete extraction for entries #001-#050, partial for #051-#072"
+    "total_entries": 102,
+    "extraction_date": "2026-05-25",
+    "total_lines": 18000,
+    "status": "Complete extraction for entries #001-#050, #051-#185"
   },
   "statistics": {
     "priority_distribution": {
-      "critical": 15,
-      "high": 30,
+      "critical": 22,
+      "high": 35,
       "medium": 10,
       "low": 2
     },
     "vulnerability_types": {
-      "web_api": 35,
-      "oauth_authorization": 8,
-      "ai_llm_security": 10,
+      "web_api": 40,
+      "oauth_authorization": 10,
+      "ai_llm_security": 15,
       "cloud_container": 5,
-      "crypto_blockchain": 3,
+      "crypto_blockchain": 6,
       "browser_v8": 2,
       "kernel_system": 3,
-      "multi_category": 15
+      "multi_category": 20
     },
     "resource_types": {
-      "methodology_workflow": 25,
-      "writeup_case_study": 20,
-      "tool_framework": 15,
+      "methodology_workflow": 28,
+      "writeup_case_study": 26,
+      "tool_framework": 16,
       "success_story": 8,
-      "research_analysis": 10
+      "research_analysis": 12
     },
-    "total_documented_bounties": 375250,
+    "total_documented_bounties": 398031,
     "total_cves": 63
   },
   "entries": [
@@ -845,6 +845,165 @@
         "methodology": "Index wordlists → tag/filter → export as variables → use in ffuf/hydra",
         "workflow": "wlx config addir → index → search/wlxuse → integrate into fuzzing"
       }
+    },
+    {
+      "id": "176",
+      "title": "Blockaid: SquidRouterModule Gnosis Safe Drain (~$3M)",
+      "niche": "Crypto/DeFi, Ethereum, Base",
+      "vulnerability_type": "DelegateCall Impersonation, Access Control",
+      "priority": "CRITICAL",
+      "resource_type": "Writeup, DeFi Exploit",
+      "bounty": 3000000,
+      "cves": [],
+      "key_concepts": ["DelegateCall impersonation", "Gnosis Safe module exploit", "SquidRouterModule executeSameChainActions"],
+      "kiro_mapping": {
+        "skill": "DeFi exploit analysis",
+        "methodology": "Trace delegatecall chains",
+        "steering": "Safe module authorization checks"
+      }
+    },
+    {
+      "id": "177",
+      "title": "WUSD/GLOVE Exploit: Sybil Abuse of Reward Path (~$19.7k)",
+      "niche": "Crypto/DeFi, Ethereum",
+      "vulnerability_type": "Sybil Attack, Business Logic",
+      "priority": "CRITICAL",
+      "resource_type": "Writeup, DeFi Exploit",
+      "bounty": 19781,
+      "cves": [],
+      "key_concepts": ["Sybil abuse", "Reward path order of operations", "Balance-based eligibility gate"],
+      "kiro_mapping": {
+        "skill": "DeFi reward mechanism auditing",
+        "methodology": "Order of operations analysis",
+        "steering": "Reward before pull = sybil bait"
+      }
+    },
+    {
+      "id": "178",
+      "title": "OTP Bypass via Stateless Verification ID (Identity Injection ATO)",
+      "niche": "Web, API, Authentication",
+      "vulnerability_type": "OTP Bypass, Authentication Bypass, ATO",
+      "priority": "CRITICAL",
+      "resource_type": "Writeup, Methodology",
+      "bounty": null,
+      "cves": [],
+      "key_concepts": ["OTP bypass", "Stateless verification", "Identity injection", "verificationId unbounded"],
+      "kiro_mapping": {
+        "skill": "Authentication logic testing",
+        "methodology": "Probe identity binding at each step",
+        "template": "OTP verification testing checklist"
+      }
+    },
+    {
+      "id": "179",
+      "title": "XML Error-Based Blind SQLi: DeepSeek V4 Pro (19 Databases)",
+      "niche": "Web, API, Database",
+      "vulnerability_type": "Blind SQL Injection, WAF Bypass",
+      "priority": "CRITICAL",
+      "resource_type": "Methodology, SQLi Technique",
+      "bounty": null,
+      "cves": [],
+      "key_concepts": ["XML error-based blind SQLi", "CASE WHEN oracle", "WAF bypass via XML", "DeepSeek V4 Pro"],
+      "kiro_mapping": {
+        "skill": "Blind SQLi techniques",
+        "methodology": "Custom oracle via XML parsing errors",
+        "steering": "When standard tools fail, try XML error side channels"
+      }
+    },
+    {
+      "id": "180",
+      "title": "Critical Admin Takeover via Open Registration on CMS Origin",
+      "niche": "Web, Recon, CMS",
+      "vulnerability_type": "Authentication Bypass, Admin Takeover, CSP Leakage",
+      "priority": "CRITICAL",
+      "resource_type": "Writeup, Methodology",
+      "bounty": null,
+      "cves": [],
+      "key_concepts": ["CSP recon", "CMS admin registration", "Origin exposure via CSP", "admin/register endpoint"],
+      "kiro_mapping": {
+        "skill": "CSP analysis",
+        "methodology": "CSP header extraction -> backend origin discovery",
+        "template": "CSP recon checklist"
+      }
+    },
+    {
+      "id": "181",
+      "title": "Subdomain Takeover: Complete Playbook ($500-$5k)",
+      "niche": "Web, Recon, DNS",
+      "vulnerability_type": "Subdomain Takeover, DNS Misconfiguration",
+      "priority": "HIGH",
+      "resource_type": "Methodology, Playbook",
+      "bounty": null,
+      "cves": [],
+      "key_concepts": ["Dangling CNAME", "Subdomain takeover", "crt.sh", "dnsx", "subzy"],
+      "kiro_mapping": {
+        "skill": "Subdomain takeover detection",
+        "workflow": "Enumerate -> CNAME resolve -> fingerprint -> confirm",
+        "steering": "Impact framing upgrades severity"
+      }
+    },
+    {
+      "id": "182",
+      "title": "AI-Powered Scanner Vulnerabilities: Indirect Prompt Injection & SSRF",
+      "niche": "AI Security, Scanner Security",
+      "vulnerability_type": "Prompt Injection, SSRF, Data Exfiltration",
+      "priority": "CRITICAL",
+      "resource_type": "Methodology, Research",
+      "bounty": null,
+      "cves": [],
+      "key_concepts": ["Indirect prompt injection", "AI scanner SSRF", "Data exfiltration via scanner", "Host header SSRF chain"],
+      "kiro_mapping": {
+        "skill": "AI scanner exploitation",
+        "methodology": "Inject stored content -> trigger scanner -> pivot",
+        "template": "AI security scanner testing checklist"
+      }
+    },
+    {
+      "id": "183",
+      "title": "Full ATO via OTP Verification Logic Flaw ($3k, HackerOne)",
+      "niche": "Web, API, Authentication",
+      "vulnerability_type": "OTP Bypass, ATO, Logic Flaw",
+      "priority": "CRITICAL",
+      "resource_type": "Writeup",
+      "bounty": 3000,
+      "cves": [],
+      "key_concepts": ["OTP logic flaw", "Stateless verificationId", "Identity field swap at verification"],
+      "kiro_mapping": {
+        "skill": "Authentication logic testing",
+        "methodology": "Swap identity field at verification step",
+        "steering": "Re-supplied identity = instant ATO"
+      }
+    },
+    {
+      "id": "184",
+      "title": "Awesome-LLMs-for-Vulnerability-Detection (Resource Collection)",
+      "niche": "General, AI Security",
+      "vulnerability_type": "All (Research Collection)",
+      "priority": "HIGH",
+      "resource_type": "Resource List",
+      "bounty": null,
+      "cves": [],
+      "key_concepts": ["LLM vulnerability detection", "AI security research collection"],
+      "kiro_mapping": {
+        "resource": "LLM vuln detection research",
+        "steering": "Track AI-driven vulnerability discovery continuously"
+      }
+    },
+    {
+      "id": "185",
+      "title": "AI Scanner Prompt Injection Labs (PortSwigger Academy)",
+      "niche": "AI Security, Training",
+      "vulnerability_type": "Prompt Injection, SSRF, Data Exfiltration",
+      "priority": "HIGH",
+      "resource_type": "Lab, Training Resource",
+      "bounty": null,
+      "cves": [],
+      "key_concepts": ["PortSwigger AI labs", "Scanner prompt injection", "AI agent exploitation"],
+      "kiro_mapping": {
+        "skill": "AI scanner exploitation",
+        "resource": "PortSwigger lab walkthroughs",
+        "steering": "Best hands-on AI scanner security training available"
+      }
     }
   ],
   "critical_entries": [
@@ -867,9 +1026,21 @@
     "048",
     "049",
     "075",
-    "076"
+    "076",
+    "176",
+    "177",
+    "178",
+    "179",
+    "180",
+    "182",
+    "183"
   ],
   "high_value_bounties": [
+    {
+      "entry": "176",
+      "amount": 3000000,
+      "description": "Blockaid SquidRouterModule Gnosis Safe drain"
+    },
     {
       "entry": "075",
       "amount": 175000,
@@ -884,6 +1055,16 @@
       "entry": "050",
       "amount": 20300,
       "description": "200-hour challenge"
+    },
+    {
+      "entry": "076",
+      "amount": 20000,
+      "description": "chompie RHEL race condition privesc (Pwn2Own)"
+    },
+    {
+      "entry": "177",
+      "amount": 19781,
+      "description": "WUSD/GLOVE sybil abuse exploit"
     },
     {
       "entry": "041",
@@ -901,9 +1082,9 @@
       "description": "Amazon + cash"
     },
     {
-      "entry": "076",
-      "amount": 20000,
-      "description": "chompie RHEL race condition privesc (Pwn2Own)"
+      "entry": "183",
+      "amount": 3000,
+      "description": "OTP verification logic flaw ATO (HackerOne)"
     }
   ],
   "implementation_priorities": {

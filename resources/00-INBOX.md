@@ -17207,3 +17207,355 @@ Curated list of hundreds of bug bounty writeups organized by vulnerability class
 
 **Notes:** 51 upgradeable contracts scanned in protocol-contracts, 11 missing _disableInitializers(), but only veVirtual confirmed deployed on Base mainnet. To exploit: need funded wallet on Base mainnet (~$5 gas).
 
+---
+
+### Entry #176 — Blockaid: SquidRouterModule Gnosis Safe Drain (~$3M)
+
+**Source:** Blockaid (@blockaid_) — X/Twitter, May 25, 2026
+**Date Added:** 2026-05-25
+**Type:** Writeup, DeFi Exploit, Incident Analysis
+**Priority:** CRITICAL
+
+**Content:**
+Blockaid detected an ongoing exploit targeting the SquidRouterModule on Ethereum and Base. 86 Gnosis Safes drained for ~$3M in ~2 hours. All stolen tokens swapped to DAI via attacker-controlled Uniswap V3 pools.
+
+**Key Addresses:**
+- Exploiter EOA: `0x9bdc730183821b6bb2b51be30b77c964fa645b91`
+- Consolidation wallet (~3.07M DAI): `0xa447f71782135ab96a71374271a749ff7aa54859`
+- Example drain tx: `0xd29d1c8d9a1b424d4e0f472bd7b4a994028d35e9737c591eae51d917543bb854`
+
+**Root Cause:** SquidRouterModule `executeSameChainActions()` vulnerability. Attacker deployed Foundry-based exploit contracts that called the module's DelegateBundler path to impersonate authorized delegates on victim Safes. This allowed executing arbitrary Uniswap V3 swaps from each Safe, swapping real assets for a worthless attacker-deployed token ("u", max supply, 42 holders). Attacker pre-seeded Uniswap V3 pools pairing "u" against target tokens, removed liquidity post-drain, and converted all proceeds to 3.07M DAI.
+
+**Niche:** Crypto/DeFi, Ethereum, Base, Gnosis Safe
+**Vuln Type:** DelegateCall Impersonation, Access Control, DeFi Exploit
+**Priority:** CRITICAL
+**Kiro Mapping:**
+- Skill: DeFi exploit analysis, Gnosis Safe module auditing
+- Methodology: Trace delegatecall chains, check module authorization
+- Workflow: Follow drain tx → identify module path → check authorization logic
+- Steering: Safe module executeSameChainActions paths need delegate authorization checks
+
+---
+
+### Entry #177 — WUSD/GLOVE Exploit: Sybil Abuse of Reward Path (~$19.7k)
+
+**Source:** Defi Nerd (@Defi_Nerd_sec) — X/Twitter, May 25, 2026
+**Date Added:** 2026-05-25
+**Type:** Writeup, DeFi Exploit, Incident Analysis
+**Priority:** CRITICAL
+
+**Content:**
+WUSD / GLOVE on Ethereum was exploited for 11,702 USDC + 8,079 USDT after sybil abuse of the WUSD._englove reward path. Attacker farmed GLO and dumped it into protocol pools.
+
+**Impact:** 11,702 USDC from GLO-USDC pool and 8,079 USDT from GLO-USDT pool (~$19,781 total).
+
+**Root Cause:** WUSD.wrap(address,uint256,address) calls _englove(uint256) BEFORE funds are pulled and gates reward eligibility on Glove.balanceOf(msg.sender) < _MAX_GLOVE. Fresh helper addresses could repeatedly reach Glove.mintCreditless() and mint ~2 GLO each with no durable sybil resistance.
+
+**Attack Trace:**
+1. Attacker EOA borrowed 81,845,577 USDT via Morpho and funded many fresh helper addresses
+2. Each helper called WUSD.wrap(USDT, 100000e6, 0), minting 100,000 WUSD + 1.9998 GLO through _englove()
+3. Helpers unwrapped WUSD, returned USDT, transferred harvested GLO to attacker root
+4. Attacker dumped GLO into GLO-USDT and GLO-USDC Uniswap V3 pools, repaid Morpho, kept proceeds
+
+**Key Addresses:**
+- Attacker EOA: `0x88329A09428778F62BC0C8BAac0997864E5a57f8`
+- Vulnerable Contract: `0x068e3563b1c19590f822c0e13445c4fa1b9eefa5`
+- Victim Pool (GLO-USDT): `0xa2Bd1A142ff49131B8CC70A332bdA0125018c324`
+- Victim Pool (GLO-USDC): `0xB89F65D6c7d33A35Da7C01934e310a6f40E18A1f`
+- Drain Tx: `0x2051c1f8d43730c41cc353b5dffd8cc59f96cb1ca56fdce4b28fb127bdb37712`
+
+**Takeaway:** Incentive mints cannot rely on a caller's current token balance as a one-time eligibility check; durable participation accounting or explicit sybil resistance is required.
+
+**Niche:** Crypto/DeFi, Ethereum
+**Vuln Type:** Sybil Attack, Business Logic, Reward Manipulation
+**Priority:** CRITICAL
+**Kiro Mapping:**
+- Skill: DeFi reward mechanism auditing, sybil resistance analysis
+- Methodology: Check order of operations (reward before pull), balance-based gates
+- Template: Reward distribution security checklist
+- Steering: Any reward path that checks balance < threshold before pulling funds = sybil-bait
+
+---
+
+### Entry #178 — OTP Bypass via Stateless Verification ID (Identity Injection ATO)
+
+**Source:** Private HackerOne Program (anonymized)
+**Date Added:** 2026-05-25
+**Type:** Writeup, Methodology, ATO Technique
+**Priority:** CRITICAL
+
+**Content:**
+Full Account Takeover via backend logic flaw in stateless OTP verification. Server issued a temporary `verificationId` but failed to bind it to a specific user identity.
+
+**Root Cause:** Backend mapped OTP code to `verificationId` but failed to verify which email the ID was generated for. The verificationId was not bound to the initiating user on the server side.
+
+**The Manipulated Request:**
+```json
+PUT /public/auth/email
+{
+  "loginId": "victim@example.com",   // Target email injected at verification step
+  "otp_code": "123456",              // Attacker's valid OTP
+  "verificationId": "KC:6BE2..."     // Attacker's valid verification ID
+}
+```
+
+**Flow:**
+1. Initiation: POST /public/auth/email -> `{"loginId":"attacker@example.com"}` -> returns `{"verificationId":"KC:6BE2..."}`
+2. Receive OTP at attacker's email
+3. Verification: Intercept PUT request, swap loginId from attacker to victim
+4. Server verified OTP code matched verificationId, but blindly trusted loginId in PUT body
+5. Response: 200 OK with full JWT token suite (AccessToken, IdToken, RefreshToken) for victim account
+
+**Niche:** Web, API, Authentication
+**Vuln Type:** OTP Bypass, Authentication Bypass, Account Takeover, Logic Flaw
+**Priority:** CRITICAL
+**Kiro Mapping:**
+- Skill: Authentication logic testing, OTP flow analysis
+- Methodology: Probe whether verificationId is bound to user identity at server level
+- Template: OTP verification testing checklist
+- Steering: Test every step where identity is re-supplied vs server-stored — any identity field modifiable at verification = ATO
+
+---
+
+### Entry #179 — XML Error-Based Blind SQLi: DeepSeek V4 Pro + Claude Code (19 Databases)
+
+**Source:** Self-reported researcher — X/Twitter, May 25, 2026
+**Date Added:** 2026-05-25
+**Type:** Methodology, SQLi Technique, Tooling
+**Priority:** CRITICAL
+
+**Content:**
+Novel blind SQLi technique: make the database answer yes/no questions by crashing on purpose. WAF bypass via XML parsing errors instead of SQL keywords.
+
+**Setup:** Mapped Claude Code to DeepSeek V4 Pro via `ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic` and `ANTHROPIC_MODEL=deepseek-v4-pro`.
+
+**The Trick:** Opus 4.7 confirmed the SQL injection was real but couldn't pull database names. sqlmap said false positive. DeepSeek V4 Pro inside Claude Code figured out a YES/NO oracle using XML error-based blind injection:
+
+```sql
+-- If true: parses broken XML <root>< -> throws HTTP 500
+-- If false: parses clean XML <root/> -> returns HTTP 200
+CASE WHEN (condition) THEN XMLAgg(XMLElement("root", '<')) ELSE XMLAgg(XMLElement("root", '/')) END
+```
+
+WAF was watching for SQL keywords, not XML errors. Extracted 19 database names in ~2 hours for $0.20.
+
+**Key Insight:** This trick differs from standard blind SQLi types — sqlmap has no built-in vector for XML error-based blind injection.
+
+**Niche:** Web, API, Database, AI-Assisted
+**Vuln Type:** Blind SQL Injection, WAF Bypass, Error-Based Injection
+**Priority:** CRITICAL
+**Kiro Mapping:**
+- Skill: Blind SQLi techniques, WAF bypass, custom oracle construction
+- Methodology: Test XML parsing functions for error-based side channels
+- Template: SQLi testing checklist (blind variants)
+- Steering: When standard tools fail, try custom oracle patterns — XML parsing errors bypass keyword-based WAFs
+
+---
+
+### Entry #180 — Critical Admin Takeover: Open Registration on CMS Origin Server
+
+**Source:** Researcher — X/Twitter, May 25, 2026
+**Date Added:** 2026-05-25
+**Type:** Writeup, Methodology, Recon Technique
+**Priority:** CRITICAL
+
+**Content:**
+Publicly accessible administrative registration endpoint on backend CMS origin server, leading to full CMS compromise. CSP headers were the recon goldmine.
+
+**The Process:**
+1. Inspect Content-Security-Policy header on main domain (example.ai)
+2. Notice unusual whitelisted domain: `example.sample.dev` in `connect-src` and `img-src`
+3. Visit that origin and locate `/admin/register` endpoint
+4. Register a new admin account with arbitrary credentials
+5. Instantly logged into the dashboard — full CMS control
+
+**Impact:** Attacker gains full control to delete/modify all site content, inject malicious scripts or phishing links, access internal user lists and backend logs, potentially delete entire database.
+
+**Takeaway for Researchers:** CSP headers are an underrated recon goldmine — staging environments, admin panels, and backend origins exposed via CSP. Always check them, then probe for leftover setup pages like `/admin/register`, `/install`, or `/setup`.
+
+**Takeaway for Organizations:** Disable public registration for admin interfaces immediately after initial setup. Backend origins should not be accessible from the public internet. Regularly audit CSP headers.
+
+**Niche:** Web, Recon, CMS
+**Vuln Type:** Authentication Bypass, Admin Takeover, CSP Leakage, Misconfiguration
+**Priority:** CRITICAL
+**Kiro Mapping:**
+- Skill: CSP analysis, recon, admin panel discovery
+- Methodology: CSP header extraction -> identify backend origins -> test for open registration
+- Template: CSP recon checklist, admin panel discovery checklist
+- Steering: CSP connect-src / img-src often reveal internal origins not visible via other recon
+
+---
+
+### Entry #181 — Subdomain Takeover: Complete Playbook ($500–$5k)
+
+**Source:** Researcher — X/Twitter, May 25, 2026
+**Date Added:** 2026-05-25
+**Type:** Methodology, Playbook
+**Priority:** HIGH
+
+**Content:**
+Complete subdomain takeover playbook. A company points subdomain at Heroku/GitHub Pages/S3/Azure, stops using service, but never deletes DNS record. Claim that service name and own their subdomain.
+
+**The Playbook:**
+1. **Enumerate subs:** subfinder + amass + crt.sh certificate transparency logs (old certs leak subdomains DNS no longer shows)
+2. **Resolve + find dangling CNAMEs:** `dnsx -l subs.txt -cname -resp`
+3. **Fingerprint dead ones:** subzy or `nuclei -t takeovers` — "There isn't a GitHub Pages site here" = signal
+4. **Confirm unclaimed:** Screenshot of error page + DNS record = solid PoC
+5. **Report around IMPACT:** Phishing on trusted domain, cookie theft scoped to `*.company.com`, bypassing OAuth redirect whitelists — moves it from low to high
+
+**Pro tip:** Don't only check CNAMEs — dangling NS records, expired buckets, and abandoned SaaS trials all count. Re-scan old targets; a domain clean last month may be live today.
+
+**Niche:** Web, Recon, DNS
+**Vuln Type:** Subdomain Takeover, DNS Misconfiguration
+**Priority:** HIGH
+**Kiro Mapping:**
+- Skill: Subdomain takeover detection, DNS recon
+- Tool: subfinder, amass, crt.sh, dnsx, subzy, nuclei
+- Workflow: Enumerate -> resolve CNAMEs -> fingerprint dead services -> confirm -> report
+- Steering: Impact framing (phishing, cookie theft, OAuth bypass) is what upgrades severity
+
+---
+
+### Entry #182 — AI-Powered Scanner Vulnerabilities: Indirect Prompt Injection & SSRF
+
+**Source:** PortSwigger Research (Web Security Academy)
+**Date Added:** 2026-05-25
+**Type:** Methodology, Research, AI Security
+**Priority:** CRITICAL
+
+**Content:**
+AI-powered security scanners that use LLMs introduce a new attack surface. If a scanner can be influenced by attacker-controlled content, it may be manipulated into performing unintended actions, accessing internal resources, or exfiltrating sensitive information.
+
+**Indirect Prompt Injection:**
+- Malicious instructions embedded in stored content (comments, blog posts)
+- Scanner reads content during crawl -> LLM interprets injected text as actionable instructions
+- Scanner executes tool calls based on injected text
+
+**Consequences:**
+- State-changing actions (delete users, modify settings)
+- Accessing sensitive data (database records, config files)
+- Making unauthorized internal requests
+- Essentially a CSRF equivalent where the privileged actor is an LLM agent instead of a browser
+
+**Crafting Injection Prompts:**
+- Adopting a persona (security researcher, sysadmin)
+- Social engineering (present as legitimate request)
+- Urgency and consequence (prevent harm or data loss)
+
+**Data Exfiltration via AI Scanners:**
+- Scanner retrieves sensitive data as normal testing workflow (admin page, internal API)
+- Injected prompt directs LLM to disclose data
+- Scanner outputs data to attacker-visible location (public form, feedback field)
+
+**Routing-Based SSRF:**
+- Host header manipulation to redirect scanner requests to internal services
+- Chains: prompt injection + Host header manipulation + scanner's privileged network position
+- Scanner becomes a programmable SSRF vector from inside the internal network
+
+**Defenses:**
+- Principle of least privilege for scanner credentials
+- Separate scanning identity from admin identity
+- Enforce access controls at application/API level (don't rely on LLM refusal)
+- Treat all user-modifiable content as untrusted input
+
+**Niche:** AI Security, Scanner Security, Cloud
+**Vuln Type:** Prompt Injection, SSRF, Data Exfiltration, Tool Misuse
+**Priority:** CRITICAL
+**Kiro Mapping:**
+- Skill: AI scanner testing, indirect prompt injection, SSRF chain exploitation
+- Methodology: Inject stored content -> trigger scanner -> exfiltrate data or access internals
+- Workflow: Identify scanner injection points -> craft prompts -> chain with Host header manipulation
+- Template: AI security scanner testing checklist
+- Steering: Scanners run inside internal networks with elevated access — perfect pivot point
+
+---
+
+### Entry #183 — Full ATO via OTP Verification Logic Flaw ($3,000, HackerOne)
+
+**Source:** HackerOne Private Program — Researcher
+**Date Added:** 2026-05-25
+**Type:** Writeup, ATO Technique
+**Priority:** CRITICAL
+
+**Content:**
+$3,000 bounty for a devastatingly simple logic flaw. The login system had a two-step process but failed to bind the verification ID to the user.
+
+**Root Cause:** Stateless approach — server issued temporary `verificationId` to track process but this ID was not bound to a specific user identity on the server side.
+
+**The Suspected Backend Logic:**
+```json
+{
+  "verificationId": "KC:6BE2634:7FD2...",
+  "meta": {
+    "otp_code": "123456",
+    "is_verified": false
+  }
+}
+```
+
+**Flow:**
+1. POST /public/auth/email with `{"loginId":"attacker@example.com"}` -> returns `{"verificationId":"KC:6BE2..."}`
+2. PUT /public/auth/email — swapped loginId to victim's email at final verification step
+3. Server verified OTP was correct for the verificationId, but blindly trusted the loginId in PUT body
+4. Response: 200 OK + full JWT token suite (AccessToken, IdToken, RefreshToken) for victim account
+
+**Lessons:** Modern stateless systems must bind verification IDs to specific user identities server-side. Any identity field re-supplied at verification step that isn't validated against the stored identity = instant ATO.
+
+**Niche:** Web, API, Authentication
+**Vuln Type:** OTP Bypass, Authentication Bypass, Account Takeover, Logic Flaw
+**Priority:** CRITICAL
+**Kiro Mapping:**
+- Skill: Authentication logic testing, identity binding verification
+- Methodology: Test identity fields at each step — are they stored server-side or re-supplied?
+- Template: OTP/Auth flow testing checklist
+- Steering: If verification body re-supplies an identity field, swap it at verification time
+
+---
+
+### Entry #184 — Awesome-LLMs-for-Vulnerability-Detection (Resource Collection)
+
+**Source:** https://github.com/huhusmang/Awesome-LLMs-for-Vulnerability-Detection
+**Date Added:** 2026-05-25
+**Type:** Resource List, Tool Collection
+**Priority:** HIGH
+
+**Content:**
+Curated collection of LLM-based vulnerability detection resources, papers, tools, and frameworks. Covers academic research, open-source tools, and practical applications of LLMs for finding security vulnerabilities across web, binary, blockchain, and cloud targets.
+
+**Niche:** General, AI Security, Resource Collection
+**Vuln Type:** All (Research Collection)
+**Priority:** HIGH
+**Kiro Mapping:**
+- Resource: LLM-for-vuln-detection research collection
+- Skill: AI-assisted vulnerability research
+- Workflow: Leverage LLM techniques documented for automated bug hunting
+- Steering: Frontier for AI-driven vulnerability discovery — track continuously
+
+---
+
+### Entry #185 — AI Scanner Prompt Injection Lab: PortSwigger Academy (NEW)
+
+**Source:** PortSwigger Web Security Academy — AI Scanner Vulnerabilities Module
+**Date Added:** 2026-05-25
+**Type:** Lab, Training Resource, Methodology
+**Priority:** HIGH
+
+**Content:**
+PortSwigger released dedicated labs for AI-powered scanner vulnerabilities covering:
+1. Exploiting AI agents to perform destructive actions
+2. Exploiting AI agents to exfiltrate sensitive information
+3. Exploiting AI agents to trigger secondary vulnerabilities (routing-based SSRF)
+
+**Key Lab Techniques:**
+- **Lab 1 (Apprentice):** Exploiting AI agents to perform destructive actions — inject prompts that trick scanner into deleting users or modifying settings
+- **Lab 2 (Apprentice):** Exploiting AI agents to exfiltrate sensitive data — scanner reads admin config, injected prompt makes it post credentials publicly
+- **Lab 3 (Practitioner):** Exploiting AI agents to trigger secondary vulnerabilities — chain prompt injection + Host header manipulation for internal SSRF
+
+**Niche:** AI Security, Scanner Security, Training
+**Vuln Type:** Prompt Injection, SSRF, Data Exfiltration
+**Priority:** HIGH
+**Kiro Mapping:**
+- Skill: AI scanner exploitation, prompt injection, SSRF chaining
+- Resource: PortSwigger labs for hands-on AI scanner testing
+- Workflow: Complete lab walkthrough for all 3 AI scanner vulnerability labs
+- Steering: PortSwigger's new AI security track is the best hands-on training available
