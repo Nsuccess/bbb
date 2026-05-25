@@ -445,6 +445,23 @@ solana program invoke \
 
 ---
 
+## When Stuck
+
+> **Primary lookup:** `resources/VULN-INDEX.md` → Web3/DeFi section (12 sub-entries), `resources/CROSS-DOMAIN-MAP.md` → Web→Web3 (17 mappings)
+
+| Stuck On... | VULN-INDEX Section | Key Entry |
+|---|---|---|
+| No visible accounting bug | Web3 → Bridge logic patterns, oracle basics | #131, #166, #116 |
+| Oracle seems secure | Web3 → dYdX case-sensitivity, ElevateFi spot manipulation | #027, #171 |
+| Access control all looks correct | Web3 → Blend oracle chain, EchoProtocol admin abuse | #161, #147 |
+| Reentrancy guarded everywhere | Race Conditions → Web3 flash loan parallel | #076, #088, #171 |
+| Decompiling bytecode | Web3 → CDSecurity Solidity skills, AI x Web3 tools | #164, #165 |
+
+**Cross-domain pivot:** `resources/CROSS-DOMAIN-MAP.md` — Apply every web2 technique to the Web3 off-chain surface: SQLi on subgraph GraphQL, SSRF on custom RPC endpoint, IDOR on agent token management
+**Fallback:** Try `05-adaptive-hunt.md` (systematic pivot through every technique)
+
+---
+
 ## Next Steps After This Workflow
 
 1. **If web interface found:** Try `01-web-app-hunt.md`

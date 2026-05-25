@@ -667,7 +667,7 @@ done < proxies.txt
 ## Related Methodologies
 
 - **Multi-Agent Orchestration** (Entry #011): Automate Yandex dorking with agents
-- **AI Agent Self-Validation** (Entry #005, #039): Validate findings before reporting
+- **AI Agent Self-Validation** (Entry #005): Validate findings before reporting
 - **MCP Security Audit** (Entry #047): Use mcp-recon for orchestration
 
 ---

@@ -528,7 +528,7 @@ ffuf -u "https://oauth.target.com/authorize?redirect_uri=FUZZ" \
 ## Related Methodologies
 
 - **Multi-Agent Orchestration** (Entry #011): Use agents for systematic OAuth testing
-- **AI Agent Self-Validation** (Entry #005, #039): Validate findings before reporting
+- **AI Agent Self-Validation** (Entry #005): Validate findings before reporting
 - **Prompt Injection Framework** (Entry #044): Similar systematic approach
 
 ---

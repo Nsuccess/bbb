@@ -15,7 +15,7 @@ Critical methodology for reducing false positives in AI-powered security testing
 
 **Sources:**
 - Entry #005 - AI Agent Self-Validation Methodology (Walid Ladeb)
-- Entry #039 - AI Agent Self-Validation (80% FP reduction)
+- Entry #005 - AI Agent Self-Validation (primary — 80% FP reduction)
 - Entry #109 — 94 Vulnerability Detection papers + 83 LLM Assisted Attack papers
 
 ---

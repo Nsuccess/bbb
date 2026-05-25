@@ -285,6 +285,20 @@ STEP 2: Based on findings, use:
 
 ---
 
+## When Stuck
+
+> **Primary resource files:** `resources/VULN-INDEX.md` (vuln-class lookup), `resources/CROSS-DOMAIN-MAP.md` (domain pivoting), `resources/categorized-resources.md` (master index)
+
+| Stuck Point | Resource | Action |
+|---|---|---|
+| "I don't know what to try next" | `resources/VULN-INDEX.md` → Generic "I'm Stuck" Recovery | 6-step recovery: adaptive workflow → parallel agents → change vuln class → change domain → ask router → cross-domain map |
+| "This technique is blocked in this domain" | `resources/CROSS-DOMAIN-MAP.md` | Pick the equivalent technique in a different domain (e.g., SQLi blocked on web → try on Web3 subgraph) |
+| "I need a specific resource for [vuln class]" | `resources/VULN-INDEX.md` → [vuln class] section | Exact INBOX entry numbers with "what it gives you" descriptions |
+| "I'm on a Virtuals-specific hunt" | `resources/VIRTUAL/00-VIRTUAL-INBOX.md` | 28 entries (#136-#163) specific to Virtuals Protocol audit |
+| "Show me everything by niche/vuln type" | `resources/categorized-resources.md` | Sorted 3 ways: By Niche (13 categories), By Vuln Type (18), By Resource Type (8) |
+
+---
+
 ## Quick Start Commands
 
 ### For Kiro IDE:
@@ -352,6 +366,14 @@ Load skill: router-simple.md
 ---
 
 ## References
+
+### Resource Indexes
+- `resources/VULN-INDEX.md` — 13 vuln classes, "when stuck" lookup with exact entry numbers
+- `resources/CROSS-DOMAIN-MAP.md` — 17 Web→Web3 + AI/Mobile/Enterprise technique transfers
+- `resources/categorized-resources.md` — Master index by Niche (13), Vuln Type (18), Resource Type (8)
+- `resources/VIRTUAL/00-VIRTUAL-INBOX.md` — Virtuals Protocol specific resources (#136-#163)
+
+### INBOX Entries
 - Entry #22: Bug Bounty Methodology 2026 (workflow design)
 - Entry #5: AI Self-Validation (challenge findings)
 - Entry #11: Multi-Agent Orchestration (parallel hunting)

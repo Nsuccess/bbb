@@ -455,6 +455,23 @@ curl https://target.com/api/user/$ACCOUNT_B_ID \
 
 ---
 
+## When Stuck
+
+> **Primary lookup:** `resources/VULN-INDEX.md` — 13 vuln classes mapped to exact INBOX entries
+
+| Stuck On... | VULN-INDEX Section | Key Entry |
+|---|---|---|
+| IDOR — all numeric IDs blocked | IDOR → UUID, deep link, mass export | #025, #041, #108, #123 |
+| SQLi — WAF blocks everything | SQL/NoSQL → Drupal blind, NoSQL alt | #023, #169, #071 |
+| Mass assignment — role param rejected | Logic Bugs → privilege confusion, state confusion | #007, #075, #141 |
+| SSRF — blocked by allowlist | SSRF → blocklist bypass, blind detection | #168, #079, #122 |
+| Rate limiting — can't brute force | Logic Bugs → race condition, TOCTOU | #088, #076 |
+
+**Cross-domain pivot:** `resources/CROSS-DOMAIN-MAP.md` — Web SQLi → Web3 subgraph injection, API IDOR → EVM transfer param IDOR
+**Fallback:** Try `05-adaptive-hunt.md` (systematic pivot through every technique)
+
+---
+
 ## Next Steps After This Workflow
 
 1. **If OAuth found:** Try `01-web-app-hunt.md` (OAuth testing)

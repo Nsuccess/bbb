@@ -743,7 +743,7 @@ Try:
 ## Related Methodologies
 
 - **Multi-Agent Orchestration** (Entry #011): Automate prompt injection testing with agents
-- **AI Agent Self-Validation** (Entry #005, #039): Validate findings before reporting
+- **AI Agent Self-Validation** (Entry #005): Validate findings before reporting
 - **MCP Security Audit** (Entry #047): Test MCP servers for prompt injection
 
 ---

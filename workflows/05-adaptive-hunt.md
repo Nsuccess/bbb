@@ -326,7 +326,23 @@ curl "https://crt.sh/?q=%.target.com&output=json" \
 
 ---
 
-## When to Pivot
+## When Stuck
+
+> **Primary lookup:** `resources/VULN-INDEX.md` → Generic "I'm Stuck" Recovery (bottom section)
+
+| When This Happens | What To Do |
+|---|---|
+| All techniques exhausted | Run `05-adaptive-hunt.md` Phase 7 (Creative Pivoting) |
+| Every vuln class blocked | `resources/CROSS-DOMAIN-MAP.md` — switch domains, keep same technique |
+| Can't find any entry point | `resources/VULN-INDEX.md` → Recon section (#004, #013, #112, #115) |
+| Finding too many FPs | `resources/VULN-INDEX.md` → Logic Bugs → happy path trap (#160) |
+| Need inspiration | `resources/VULN-INDEX.md` → Target Evaluation (#022, #120, #135) |
+
+**Ultimate recovery:** `resources/VULN-INDEX.md` → "Generic I'm Stuck Recovery" (6-step: adaptive workflow → parallel agents → change vuln class → change domain → ask router → cross-domain map)
+
+---
+
+### When to Pivot
 
 ### Pivot Triggers:
 - ✅ Technique found nothing after time limit

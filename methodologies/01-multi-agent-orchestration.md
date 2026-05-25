@@ -478,7 +478,7 @@ Output: Steering commands + resource allocation
 
 ## Related Methodologies
 
-- **AI Agent Self-Validation** (Entry #005, #039, #109): Complements with validation principles — backed by 83 LLM Assisted Attack papers
+- **AI Agent Self-Validation** (Entry #005, #109): Complements with validation principles — backed by 83 LLM Assisted Attack papers
 - **Prompt Injection Framework** (Entry #044): Similar multi-step approach
 - **Bug Bounty Methodology 2026** (Entry #022): Skill-based hunting aligns with agent roles
 - **Entry #109 Agent4Cyc Papers** (56 papers): Academic foundation for multi-agent security systems

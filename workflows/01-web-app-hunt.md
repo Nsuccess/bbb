@@ -339,6 +339,23 @@ echo "$(date) | target.com | OAuth redirect_uri bypass | CRITICAL | $14,000" >> 
 
 ---
 
+## When Stuck
+
+> **Primary lookup:** `resources/VULN-INDEX.md` — 13 vuln classes mapped to exact INBOX entries
+
+| Stuck On... | VULN-INDEX Section | Key Entry |
+|---|---|---|
+| XSS blocked by CSP/WAF | XSS → CSP bypass, Sanitizer API | #062, #170, #175 |
+| OAuth hardened, no popup | OAuth → redirect_uri, non-happy path | #048, #053, #054 |
+| CSRF tests failing | CSRF → Content-Type bypass + XS-Leak | #049 |
+| Can't find injection points | Recon → Yandex, subdomain, CT logs | #004, #013, #112, #115 |
+| Parser diff not working | XSS → Parser differential, URL authority | #057, #069 |
+
+**Cross-domain pivot:** `resources/CROSS-DOMAIN-MAP.md` — Web OAuth → Mobile custom URL scheme hijacking (#018, #064)
+**Fallback:** Try `05-adaptive-hunt.md` (systematic pivot through every technique)
+
+---
+
 ## Next Steps After This Workflow
 
 1. **If stuck:** Try `02-api-security-hunt.md` (focus on API endpoints)
