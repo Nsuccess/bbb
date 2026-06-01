@@ -83,6 +83,36 @@
 
 ---
 
+### Rule 4b: Auth/OTP/2FA Flow Detected
+**Indicators:**
+- OTP / magic link login flows
+- 2FA / MFA challenges
+- Password reset via email/SMS
+- Email verification on signup
+- Stateless verificationId patterns
+- "Verify OTP to Continue" pages
+- JWT issuance on email + code
+
+**→ Recommend:** `08-otp-auth-bypass.md`
+**Priority:** CRITICAL (one-click ATO, identity field swap = instant full account takeover)
+**Source:** Entries #178, #183, #053
+
+---
+
+### Rule 4c: AI-Powered Security Scanner Detected
+**Indicators:**
+- Target is an AI-driven DAST/SAST scanner
+- Vega / XBOW / AURA / custom Claude-based pentest agent
+- Bug bounty auto-hunter
+- Internal red team agent
+- Any LLM-driven security testing tool
+
+**→ Recommend:** `07-ai-scanner-audit.md`
+**Priority:** CRITICAL (new 2026 attack surface, scanners run inside internal networks with elevated access)
+**Source:** Entries #182, #185
+
+---
+
 ### Rule 5: Multiple Indicators
 **If multiple types detected:**
 
@@ -111,7 +141,9 @@
 2. API (REST, GraphQL, endpoints)
 3. AI application (chatbot, assistant)
 4. Crypto/DeFi (smart contracts)
-5. Unknown (try everything)"
+5. Auth/OTP/2FA flow
+6. AI-powered security scanner
+7. Unknown (try everything)"
 ```
 
 ---
@@ -252,7 +284,9 @@ STEP 2: Based on findings, use:
 | Target Type | Workflow | Priority | Reason |
 |-------------|----------|----------|--------|
 | OAuth/SSO | 01-web-app-hunt.md | CRITICAL | High bounties, common vulns |
-| AI/LLM | 03-ai-app-hunt.md | CRITICAL | New attack surface, high impact |
+| Auth/OTP/2FA | 08-otp-auth-bypass.md | CRITICAL | One-click ATO, identity swap = instant takeover |
+| AI/LLM app | 03-ai-app-hunt.md | CRITICAL | New attack surface, high impact |
+| AI Scanner | 07-ai-scanner-audit.md | CRITICAL | 2026 surface, internal network pivot |
 | Crypto/DeFi | 04-crypto-hunt.md | CRITICAL | High bounties, complex vulns |
 | REST API | 02-api-security-hunt.md | HIGH | IDOR, mass assignment common |
 | GraphQL | 02-api-security-hunt.md | HIGH | Introspection, batching issues |
@@ -320,6 +354,8 @@ Load skill: router-simple.md
 - REST/GraphQL API → 02-api-security-hunt.md
 - AI chatbot/assistant → 03-ai-app-hunt.md
 - Smart contract → 04-crypto-hunt.md
+- Auth/OTP/2FA flow → 08-otp-auth-bypass.md
+- AI-powered security scanner → 07-ai-scanner-audit.md
 - Unknown → 05-adaptive-hunt.md
 
 ```

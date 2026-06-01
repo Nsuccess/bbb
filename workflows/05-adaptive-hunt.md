@@ -8,6 +8,14 @@
 
 **Philosophy:** Try everything systematically, pivot when stuck, validate rigorously
 
+**New in 2026-05-25 update:**
+- Phase 1.5: CSP Header Recon (Entry #180)
+- Phase 2.0: OTP / Auth Bypass (Entry #178, #183)
+- Phase 2.1: AI Scanner Audit (if target is a scanner — Entry #182, #185)
+- Phase 4.5: Subdomain Takeover (Entry #181)
+- Phase 5.5: DeFi Module / Sybil Resistance (Entry #176, #177)
+- Phase 6.5: XML Error-Based Blind SQLi (Entry #179)
+
 ---
 
 ## Overview
@@ -68,6 +76,31 @@ done
 - All file uploads
 - All user inputs
 
+### Step 1.5: CSP Header Recon (NEW — Entry #180)
+
+**Quick win most hunters miss.** CSP headers often leak backend origins.
+
+```bash
+# Get CSP from main domain
+curl -I https://target.com | grep -i "content-security-policy"
+# For each whitelisted domain in connect-src/img-src:
+#   - Visit it directly
+#   - Check for /admin/register, /install, /setup
+#   - Try to register an admin account
+```
+
+**Time limit:** 10 min — often one-shot full admin takeover.
+
+### Step 1.6: Subdomain Takeover Quick Scan (NEW — Entry #181)
+
+```bash
+subfinder -d target.com -o subs.txt
+dnsx -l subs.txt -cname -resp -o dangling.txt
+nuclei -l subs.txt -t takeovers/ -o takeover_findings.txt
+```
+
+**Time limit:** 15 min.
+
 ---
 
 ## Phase 2: Try High-Value Techniques First (90-120 min)
@@ -108,6 +141,28 @@ done
 **Time limit:** 30 min
 **If nothing found:** Move to next technique
 
+### Technique 3b: OTP / Auth Bypass (NEW — Entries #178, #183)
+
+**For any auth flow with OTP, magic link, email verification, or 2FA:**
+
+```bash
+# Initiate as attacker → swap identity to victim at verification
+curl -X POST https://target.com/api/auth/email -d '{"loginId":"attacker@you.com"}'
+# Save verificationId + read OTP
+# At verification step, swap loginId to victim
+curl -X PUT https://target.com/api/auth/email -d '{"loginId":"victim@target.com","otp_code":"...","verificationId":"..."}'
+```
+
+**Time limit:** 20 min. **For comprehensive testing:** route to `08-otp-auth-bypass.md`.
+
+### Technique 3c: AI Scanner Audit (NEW — Entries #182, #185)
+
+**If target IS a security scanner:** this is the highest-impact test.
+
+**Plant prompt injection in stored content → scanner performs unauthorized actions.**
+
+**Time limit:** 30 min. **For comprehensive testing:** route to `07-ai-scanner-audit.md`.
+
 ---
 
 ## Phase 3: Parser Differentials (30-45 min)
@@ -137,6 +192,12 @@ Send JSON as form data
 %252F (double encoding)
 file.php%00.jpg (null byte)
 ```
+
+### Test 3.5: XML Error-Based Blind SQLi (NEW — Entry #179)
+
+**When sqlmap reports false positive but injection exists.** Use `CASE WHEN` + `XMLAgg` for HTTP 500/200 oracle.
+
+**Time limit:** 20 min.
 
 **Time limit:** 30-45 min
 **If nothing found:** Move to next technique
@@ -176,6 +237,22 @@ file.php%00.jpg (null byte)
 - [ ] Direct server access
 
 **Time limit:** 30 min
+
+### Technique 7: DeFi Safe Module / Sybil Resistance (NEW — Entries #176, #177)
+
+**If target is DeFi or has on-chain components:**
+
+**Safe module audit (SquidRouter pattern):**
+- Check delegate authorization
+- Check module execution paths
+- Test delegatecall impersonation
+
+**Sybil resistance audit (WUSD/GLOVE pattern):**
+- Check if rewards are calculated before fund pull
+- Check if eligibility uses balance check (bypassable)
+- Test repeated claims from fresh addresses
+
+**Time limit:** 30 min.
 
 ---
 
@@ -492,10 +569,21 @@ echo "Bounty: $3,500" >> hunt-log.txt
 ---
 
 ## References
-- All 72 resources (comprehensive approach)
+- All 72+ resources (comprehensive approach)
 - Entry #22: Bug Bounty Methodology 2026 (systematic hunting)
 - Entry #5: AI Self-Validation (challenge findings)
 - Entry #11: Multi-Agent Orchestration (parallel techniques)
 - Entry #075: Orange Tsai Edge sandbox escape (4 logic bugs, $175k)
 - Entry #042: Chrome V8 RCE memory corruption ($55k)
 - Entry #036: Big Sleep AI zero-day discovery
+- **Entry #180: CSP Header Recon → CMS Admin Takeover**
+- **Entry #181: Subdomain Takeover Complete Playbook**
+- **Entry #178: OTP Bypass via Stateless Verification ID**
+- **Entry #183: Full ATO via OTP Verification Logic Flaw ($3k)**
+- **Entry #179: XML Error-Based Blind SQLi**
+- **Entry #176: SquidRouterModule Safe Drain (~$3M)**
+- **Entry #177: WUSD/GLOVE Sybil Reward Abuse (~$19.7k)**
+- **Entry #182: AI-Powered Scanner Vulnerabilities**
+- **Entry #185: PortSwigger AI Scanner Labs**
+- **Workflow 07: AI-Powered Security Scanner Audit**
+- **Workflow 08: OTP / Auth-Flow Bypass**

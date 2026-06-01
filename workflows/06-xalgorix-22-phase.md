@@ -19,30 +19,34 @@ For full-scope audits, run all phases. For focused bug bounty work, select relev
 
 ### Phase Map
 
-| # | Phase | Web | API | DeFi | Mobile |
-|---|-------|-----|-----|------|--------|
-| 1 | Reconnaissance | ✅ | ✅ | ✅ | ✅ |
-| 2 | Manual vulnerability discovery | ✅ | ✅ | ✅ | ✅ |
-| 3 | Directory and file discovery | ✅ | ✅ | ⬜ | ✅ |
-| 4 | CORS and cookie analysis | ✅ | ✅ | ⬜ | ✅ |
-| 5 | Authentication and session testing | ✅ | ✅ | ✅ | ✅ |
-| 6 | Injection testing | ✅ | ✅ | ⬜ | ⬜ |
-| 7 | SSRF testing | ✅ | ✅ | ✅ | ⬜ |
-| 8 | IDOR and broken access control | ✅ | ✅ | ✅ | ✅ |
-| 9 | API and GraphQL testing | ✅ | ✅ | ⬜ | ✅ |
-| 10 | File upload testing | ✅ | ✅ | ⬜ | ✅ |
-| 11 | Deserialization and RCE | ✅ | ✅ | ✅ | ✅ |
-| 12 | Race conditions and business logic | ✅ | ✅ | ✅ | ✅ |
-| 13 | Subdomain takeover | ✅ | ⬜ | ⬜ | ⬜ |
-| 14 | Open redirect testing | ✅ | ⬜ | ⬜ | ⬜ |
-| 15 | Email security testing | ✅ | ✅ | ⬜ | ✅ |
-| 16 | Cloud and infrastructure | ✅ | ⬜ | ⬜ | ⬜ |
-| 17 | WebSocket testing | ✅ | ✅ | ✅ | ⬜ |
-| 18 | CMS-specific testing | ✅ | ⬜ | ⬜ | ⬜ |
-| 19 | Broken link hijacking and content spoofing | ✅ | ⬜ | ⬜ | ⬜ |
-| 20 | Exploit verification | ✅ | ✅ | ✅ | ✅ |
-| 21 | Zero-day discovery | ✅ | ✅ | ✅ | ✅ |
-| 22 | Final report | ✅ | ✅ | ✅ | ✅ |
+| # | Phase | Web | API | DeFi | Mobile | Scanner |
+|---|-------|-----|-----|------|--------|---------|
+| 1 | Reconnaissance | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 2 | Manual vulnerability discovery | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 3 | Directory and file discovery | ✅ | ✅ | ⬜ | ✅ | ⬜ |
+| 4 | CORS and cookie analysis | ✅ | ✅ | ⬜ | ✅ | ⬜ |
+| 5 | Authentication and session testing | ✅ | ✅ | ✅ | ✅ | ⬜ |
+| 6 | Injection testing | ✅ | ✅ | ⬜ | ⬜ | ✅ |
+| 7 | SSRF testing | ✅ | ✅ | ✅ | ⬜ | ✅ |
+| 8 | IDOR and broken access control | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 9 | API and GraphQL testing | ✅ | ✅ | ⬜ | ✅ | ✅ |
+| 10 | File upload testing | ✅ | ✅ | ⬜ | ✅ | ✅ |
+| 11 | Deserialization and RCE | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 12 | Race conditions and business logic | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 13 | Subdomain takeover | ✅ | ⬜ | ⬜ | ⬜ | ⬜ |
+| 14 | Open redirect testing | ✅ | ⬜ | ⬜ | ⬜ | ✅ |
+| 15 | Email security testing | ✅ | ✅ | ⬜ | ✅ | ⬜ |
+| 16 | Cloud and infrastructure | ✅ | ⬜ | ⬜ | ⬜ | ✅ |
+| 17 | WebSocket testing | ✅ | ✅ | ✅ | ⬜ | ⬜ |
+| 18 | CMS-specific testing | ✅ | ⬜ | ⬜ | ⬜ | ⬜ |
+| 19 | Broken link hijacking and content spoofing | ✅ | ⬜ | ⬜ | ⬜ | ⬜ |
+| 20 | Exploit verification | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 21 | Zero-day discovery | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 22 | Final report | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **23 (NEW)** | **OTP / Stateless VerificationId Auth Bypass** | ✅ | ✅ | ✅ | ✅ | ⬜ |
+| **24 (NEW)** | **AI Scanner Prompt Injection / SSRF** | ⬜ | ⬜ | ⬜ | ⬜ | ✅ |
+| **25 (NEW)** | **DeFi Safe Module / Sybil Resistance** | ⬜ | ⬜ | ✅ | ⬜ | ⬜ |
+| **26 (NEW)** | **CSP Header Recon** | ✅ | ⬜ | ⬜ | ⬜ | ⬜ |
 
 ---
 
@@ -92,6 +96,56 @@ For full-scope audits, run all phases. For focused bug bounty work, select relev
 ### Phase 20 — Exploit Verification
 - Build and test PoC for each finding
 - Validate before reporting
+
+---
+
+### Phase 23 — OTP / Stateless VerificationId Auth Bypass (NEW — Entries #178, #183)
+
+**For any auth flow with OTP, magic link, email verification, or 2FA:**
+- Initiate flow as Attacker
+- At verification, swap identity field (loginId/email/userId) to Victim
+- Check if server validates identity binding to verificationId
+- If swap works → full ATO
+- Also test: 2FA brute force, Host header poisoning, email canonicalization bypass
+
+**Source:** Entry #178, #183, 053. **Full methodology:** `08-otp-auth-bypass.md`
+
+---
+
+### Phase 24 — AI Scanner Prompt Injection / SSRF (NEW — Entries #182, #185)
+
+**For when TARGET is an AI-powered security scanner:**
+- Map scanner's injection points (user-generated content, files, comments)
+- Plant prompt injection in stored content
+- Test destructive actions, data exfiltration, routing-based SSRF
+- Chain: prompt injection + Host header manipulation = scanner as SSRF pivot
+
+**Source:** Entry #182, 185. **Full methodology:** `07-ai-scanner-audit.md`
+
+---
+
+### Phase 25 — DeFi Safe Module / Sybil Resistance (NEW — Entries #176, #177)
+
+**For DeFi protocols:**
+- Check Safe module delegatecall authorization (SquidRouter $3M pattern)
+- Check reward path order of operations (WUSD/GLOVE $19.7k pattern)
+- Test fresh-address claim repetition
+- Test balance-based eligibility gates
+
+**Source:** Entry #176, 177.
+
+---
+
+### Phase 26 — CSP Header Recon (NEW — Entry #180)
+
+**Quick recon win:**
+- Extract CSP headers from main domain
+- For each whitelisted origin: visit directly
+- Check for /admin/register, /install, /setup
+- Try to register an admin account
+- Often one-shot full admin takeover
+
+**Source:** Entry #180.
 
 ---
 

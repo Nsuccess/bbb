@@ -5,8 +5,13 @@
 **Skills Used:**
 - crypto-defi-auditor.md
 - ai-self-validator.md
+- (OPTIONAL: route to `08-otp-auth-bypass.md` if DeFi protocol has web-based auth)
 
 **Expected Time:** 4-8 hours per protocol
+
+**New in 2026-05-25 update:**
+- Phase 4.3: Safe Module / DelegateCall Impersonation (Entry #176 — SquidRouter $3M)
+- Phase 8: Reward Path Sybil Resistance (Entry #177 — WUSD/GLOVE $19.7k)
 
 ---
 
@@ -252,6 +257,41 @@ pub fn admin_function(ctx: Context) {
 }
 ```
 
+### Step 4.3: Safe Module / DelegateCall Impersonation (NEW — Entry #176)
+
+**Critical pattern from SquidRouterModule $3M exploit.** Gnosis Safe modules that allow delegatecall can be tricked into executing arbitrary swaps on victim Safes.
+
+**Test for:**
+- Does the module validate the delegate's authorization?
+- Does it check that the Safe is actually owned by the caller?
+- Can external contracts impersonate the delegate?
+
+**PoC pattern (SquidRouter exploit):**
+```solidity
+// Vulnerable: SquidRouterModule.executeSameChainActions()
+// - Did not validate delegate authorization
+// - Allowed arbitrary delegatecall from any "delegate"
+// - Attacker deployed Foundry exploit contracts
+// - Called module's DelegateBundler path
+// - Impersonated authorized delegates on victim Safes
+// - Executed arbitrary Uniswap V3 swaps from each Safe
+// - Swapped real assets for worthless attacker token
+```
+
+**What to check in any Safe module:**
+- [ ] Is `msg.sender` validated as a registered delegate?
+- [ ] Is the Safe address validated as owned by the expected party?
+- [ ] Does `executeSameChainActions` (or similar) have proper access control?
+- [ ] Are delegate operations limited to specific actions?
+
+**For EVM/Account Abstraction:**
+- [ ] EntryPoint delegatecall paths
+- [ ] Module installation / uninstallation auth
+- [ ] Multi-sig threshold bypass
+- [ ] ERC-4337 UserOperation validation
+
+**Source:** Entry #176 — Blockaid: SquidRouterModule Gnosis Safe Drain (~$3M)
+
 ---
 
 ## Phase 5: Solana-Specific Testing (45-60 min)
@@ -313,7 +353,74 @@ if strings.EqualFold(market.Pair, marketParam.Pair) {
 
 ---
 
-## Phase 7: Validation (30-45 min)
+## Phase 7: Reward Path Sybil Resistance (NEW — Entry #177)
+
+**Critical pattern from WUSD/GLOVE $19.7k exploit.** Incentive mints gated only on `balanceOf(msg.sender) < threshold` are sybil-bait when the reward is calculated BEFORE funds are pulled.
+
+**Vulnerable pattern:**
+```solidity
+// VULNERABLE: WUSD.wrap() pattern
+function wrap(address token, uint256 amount, address to) external {
+    _englove(amount);  // ❌ Reward called BEFORE fund pull
+
+    // Funds pulled AFTER reward
+    IERC20(token).transferFrom(msg.sender, address(this), amount);
+    _mint(to, amount);
+}
+
+function _englove(uint256 amount) internal {
+    require(Glove.balanceOf(msg.sender) < _MAX_GLOVE, "Too much GLO");
+    // Mint reward based on msg.sender
+    Glove.mintCreditless(msg.sender, amount * 2 / 1000);
+}
+```
+
+**Attack (WUSD/GLOVE):**
+1. Attacker borrows 81M USDT via Morpho
+2. Funds 100+ fresh helper addresses
+3. Each helper calls `wrap(USDT, 100k, 0)` → mints 100k WUSD + 1.9998 GLO
+4. Helpers unwrap WUSD, return USDT, send GLO to attacker
+5. Attacker dumps GLO into GLO-USDT/USDC pools
+6. Repays Morpho, keeps ~$19.7k
+
+**What to check in any reward/claim function:**
+- [ ] Is the reward calculated BEFORE or AFTER funds are pulled?
+- [ ] Is eligibility based on balance at point of check or on a stored history?
+- [ ] Can a fresh address (zero balance) repeatedly claim?
+- [ ] Is there a nonce / replay protection per claim?
+- [ ] Is there rate-limiting per address?
+- [ ] Are there unique participation requirements (proof of holding, lock-up)?
+
+**Secure patterns:**
+```solidity
+// SECURE: Pull funds FIRST
+function wrap(address token, uint256 amount, address to) external {
+    IERC20(token).transferFrom(msg.sender, address(this), amount);  // Pull first
+    _mint(to, amount);
+    _englove(amount, to);  // Reward calculated after pull
+}
+
+// SECURE: Persistent balance history
+mapping(address => uint256) public totalEarned;
+function _englove(uint256 amount, address to) internal {
+    require(totalEarned[to] + amount <= _MAX_LIFETIME_CLAIM, "Lifetime cap");
+    totalEarned[to] += amount;
+    Glove.mintCreditless(to, amount * 2 / 1000);
+}
+
+// SECURE: Time-locked / vesting
+function _englove(uint256 amount, address to) internal {
+    Glove.mintCreditless(to, amount * 2 / 1000);
+    // Lock GLO for 30 days
+    Glove.lock(amount * 2 / 1000, block.timestamp + 30 days);
+}
+```
+
+**Source:** Entry #177 — WUSD/GLOVE Sybil Abuse Exploit (~$19.7k)
+
+---
+
+## Phase 7.5: Validation (30-45 min)
 
 **Activate:** `ai-self-validator.md`
 
@@ -473,5 +580,7 @@ solana program invoke \
 ## References
 - Entry #16: Solana Router Critical Vulnerabilities
 - Entry #27: dYdX v4 Oracle Hijacking
+- **Entry #176: Blockaid SquidRouterModule Gnosis Safe Drain (~$3M)**
+- **Entry #177: WUSD/GLOVE Sybil Reward Abuse (~$19.7k)**
 - Solana Security Best Practices
 - DeFi Security Resources
