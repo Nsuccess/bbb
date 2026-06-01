@@ -159,28 +159,45 @@
 | 183 | Full ATO via OTP Verification Logic Flaw ($3k, HackerOne) | Writeup | Web/Auth | OTP Bypass, ATO | CRITICAL |
 | 184 | Awesome-LLMs-for-Vulnerability-Detection | Resource List | General/AI | All | HIGH |
 | 185 | AI Scanner Prompt Injection Labs (PortSwigger Academy) | Lab | AI Security | Prompt Injection, SSRF | HIGH |
+| 186 | OAuth Open Redirect → OAuth Token Theft Chain (P1) | Writeup | Web/OAuth | Open Redirect + OAuth ATO | CRITICAL |
+| 187 | Filename XSS → Admin Panel Stored XSS (P1) | Writeup | Web/Upload | Stored XSS, Legacy Component | CRITICAL |
+| 188 | PortSwigger Business Logic Labs: Complete 9-Lab Walkthrough | Lab | Web/Business Logic | Logic, State Machine | HIGH |
+| 189 | Web Cache Poisoning: Complete Playbook | Methodology | Web/CDN | Cache Poisoning | HIGH |
+| 190 | javascript: URL Scheme Steals sessionStorage / OAuth Tokens | Writeup | Web/Auth | javascript: Scheme, Session Theft | CRITICAL |
+| 191 | 403 ≠ Always Denied: Keep Testing Access Control | Methodology | Web/Authz | 403 Bypass, IDOR | HIGH |
+| 192 | $575 CSRF: Triggering Payment Receipt Emails Without User Consent | Writeup | Web/CSRF | CSRF, Email Abuse | HIGH |
+| 193 | Verus Bridge Exploit: $11.5M Lost Due to Missing Input Validation | Post-Mortem | Crypto/Bridge | Input Validation | CRITICAL |
+| 194 | SSO Account Takeover via Custom Okta / Auth0 Misconfigurations | Writeup | Web/SSO | SSO ATO, JWT/SAML | CRITICAL |
+| 195 | $40M in Exolix Swaps Exposed via API Broken Access Control | Writeup | Crypto/API | Broken Access Control, IDOR | CRITICAL |
+| 196 | Web Cache Deception: $2000 JWT Theft via SameSite Bypass (cTino) | Writeup | Web/Cache | Cache Deception, JWT Theft | CRITICAL |
+| 197 | $500 UUID Swap IDOR: Mobile App Endpoint Rewriting (tinopreter) | Writeup | Mobile/API | IDOR, Mobile API | HIGH |
+| 198 | GraphQL Bug Bounty Goldmines: 8-Step Methodology | Methodology | API/GraphQL | GraphQL All | HIGH |
+| 199 | Zcash Zebra: Autonomous AI Agent Discovered High+Medium in 24h | Research | Crypto/AI | Consensus, DoS | HIGH |
+| 200 | AI Engineering for Bug Hunting: Hunt Conditions, Not Bugs | Philosophy | General/AI | All | HIGH |
+| 201 | Threat Modeling > Bug Hunting | Philosophy | General | All | HIGH |
+| 202 | $50M+ Lost in Crypto in One Month — 90% From Protocol Logic Bugs | Analysis | Crypto/Industry | Logic | HIGH |
 
 ---
 
 ## By Niche
 
 ### Web Application Security
-**High Priority:** #004, #008, #010, #022, #024, #025, #040, #041, #049, #056, #057, #062, #067, #068, #069, #079, #088, #089, #106, #107, #108, #111, #113, #121, #122, #123, #127, #167, #168, #169, #179, #180, #181
+**High Priority:** #004, #008, #010, #022, #024, #025, #040, #041, #049, #056, #057, #062, #067, #068, #069, #079, #088, #089, #106, #107, #108, #111, #113, #121, #122, #123, #127, #167, #168, #169, #179, #180, #181, #186, #187, #188, #189, #190, #191, #192, #196
 **Medium Priority:** #012, #013, #073, #081, #086, #112, #115, #124, #125
 
 ### API Security
-**High Priority:** #007, #023, #025, #041, #079, #108, #122, #167, #168, #179
+**High Priority:** #007, #023, #025, #041, #079, #108, #122, #167, #168, #179, #195, #197, #198
 **Medium Priority:** #073
 
 ### OAuth/Authentication
-**High Priority:** #018, #048, #053, #054, #056, #059, #060, #064, #089, #107, #111, #113, #117, #178, #183
+**High Priority:** #018, #048, #053, #054, #056, #059, #060, #064, #089, #107, #111, #113, #117, #178, #183, #186, #190, #194
 
 ### AI/LLM Application Security
-**High Priority:** #005, #038, #044, #045, #047, #052, #070, #082, #103, #104, #109, #182, #185
+**High Priority:** #005, #038, #044, #045, #047, #052, #070, #082, #103, #104, #109, #182, #185, #199, #200
 **Medium Priority:** #028, #030, #033, #034, #077, #080, #091, #097
 
 ### Crypto/DeFi / Web3
-**High Priority:** #016, #027, #095, #099, #100, #116, #129, #130, #131, #133, #134, #164, #165, #166, #171, #176, #177
+**High Priority:** #016, #027, #095, #099, #100, #116, #129, #130, #131, #133, #134, #164, #165, #166, #171, #176, #177, #193, #195, #202
 
 ### Cloud Security
 **High Priority:** #006, #071, #093
@@ -193,7 +210,7 @@
 **High Priority:** #042, #058, #075, #096, #170
 
 ### Mobile Security
-**High Priority:** #061, #102
+**High Priority:** #061, #102, #197
 **Medium Priority:** #031
 
 ### Kernel/Linux
@@ -208,6 +225,21 @@
 **High Priority:** #047, #052
 **Medium Priority:** #038
 
+### GraphQL
+**High Priority:** #198
+
+### SSO / Identity
+**High Priority:** #194
+
+### Web Cache
+**High Priority:** #189, #196
+
+### CSRF
+**High Priority:** #049, #192
+
+### Methodology & Philosophy
+**High Priority:** #188, #191, #200, #201
+
 ---
 
 ## By Vulnerability Type
@@ -216,16 +248,16 @@
 #079, #122, #168, #021, #047, #052, #069, #182
 
 ### IDOR / Insecure Direct Object Reference
-#025, #041, #108, #123, #106, #021, #040, #113
+#025, #041, #108, #123, #106, #021, #040, #113, #195, #197
 
 ### XSS / Cross-Site Scripting
-#010, #045, #057, #068, #069, #170, #058, #062
+#010, #045, #057, #068, #069, #170, #058, #062, #187
 
 ### OAuth Hijacking / Token Theft
-#018, #048, #053, #054, #059, #060, #064, #117
+#018, #048, #053, #054, #059, #060, #064, #117, #186, #190, #194
 
 ### CSRF / Cross-Site Request Forgery
-#049
+#049, #192
 
 ### SQL / NoSQL Injection
 #023, #071, #169, #179
@@ -237,7 +269,7 @@
 #076, #088
 
 ### Logic Bugs / Business Logic
-#075, #107, #021, #040, #041, #121, #131, #134, #177
+#075, #107, #021, #040, #041, #121, #131, #134, #177, #188, #193, #202
 
 ### Oracle Manipulation (Web3)
 #027, #166, #171
@@ -261,7 +293,10 @@
 #026, #076, #105, #093
 
 ### Authentication Bypass
-#056, #089, #102, #111, #113, #178, #180, #183
+#056, #089, #102, #111, #113, #178, #180, #183, #194
+
+### Authorization Bypass / 403 Bypass
+#191
 
 ### Information Disclosure
 #073, #082, #086, #087, #106, #114, #123
@@ -281,15 +316,39 @@
 ### CSP Bypass
 #062
 
+### Web Cache Poisoning
+#189
+
+### Web Cache Deception
+#196
+
+### GraphQL
+#198
+
+### Cross-Chain Bridge
+#131, #176, #193
+
+### Mobile API
+#031, #061, #197
+
+### Autonomous AI Agent
+#199, #200
+
+### Threat Modeling / Philosophy
+#200, #201
+
+### javascript: URL Scheme
+#190
+
 ---
 
 ## By Resource Type
 
 ### Methodologies & Workflows
-#001, #004, #005, #006, #007, #008, #013, #018, #022, #024, #025, #028, #031, #044, #054, #072, #077, #078, #089, #091, #104, #107, #108, #112, #115, #120, #131, #166, #167, #168, #172, #179, #181, #182
+#001, #004, #005, #006, #007, #008, #013, #018, #022, #024, #025, #028, #031, #044, #054, #072, #077, #078, #089, #091, #104, #107, #108, #112, #115, #120, #131, #166, #167, #168, #172, #179, #181, #182, #188, #189, #191, #198, #200, #201
 
 ### Writeups & Case Studies
-#010, #012, #016, #021, #023, #026, #027, #040, #041, #042, #045, #048, #049, #050, #051, #052, #053, #055, #056, #057, #058, #059, #060, #061, #062, #063, #064, #065, #067, #068, #069, #070, #071, #073, #075, #076, #082, #086, #087, #088, #097, #102, #105, #106, #111, #113, #114, #116, #117, #121, #122, #123, #124, #126, #127, #128, #133, #134, #170, #171, #176, #177, #178, #180, #183
+#010, #012, #016, #021, #023, #026, #027, #040, #041, #042, #045, #048, #049, #050, #051, #052, #053, #055, #056, #057, #058, #059, #060, #061, #062, #063, #064, #065, #067, #068, #069, #070, #071, #073, #075, #076, #082, #086, #087, #088, #097, #102, #105, #106, #111, #113, #114, #116, #117, #121, #122, #123, #124, #126, #127, #128, #133, #134, #170, #171, #176, #177, #178, #180, #183, #186, #187, #190, #192, #193, #194, #195, #196, #197
 
 ### Tools & Software
 #019, #029, #030, #034, #035, #037, #038, #046, #079, #080, #081, #083, #084, #085, #092, #100, #103, #125, #173, #174
@@ -309,6 +368,15 @@
 ### Toolkits & Skills
 #100, #164, #173
 
+### Labs & Training
+#185, #188
+
+### Research & Autonomous Agent
+#199
+
+### Industry Analysis
+#202
+
 ---
 
-*This file is auto-updated as resources are processed. Last updated: 2026-05-25*
+*This file is auto-updated as resources are processed. Last updated: 2026-06-01*

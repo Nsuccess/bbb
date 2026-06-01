@@ -1,6 +1,7 @@
 # Bug Bounty Automation Framework
 
-A comprehensive, AI-first bug bounty hunting framework built from 185+ real-world resources, methodologies, and successful writeups. Designed for use with Claude Code, Cursor, or any AI coding assistant.
+A comprehensive, AI-first bug bounty hunting framework built from 202+ real-world resources, 
+methodologies, and successful writeups. Designed for use with Claude Code, Cursor, or any AI coding assistant.
 
 ## 🎯 What This Is
 
@@ -22,7 +23,7 @@ bug-bounty-automation/
 ├── skills/             # 12 specialized AI agent skills
 ├── steering/           # 7 persistent context files
 ├── workflows/          # 6 declarative hunting workflows
-├── resources/          # 185 curated bug bounty resources
+├──   resources/          # 202 curated bug bounty resources
 └── docs/              # Integration guides and documentation
 ```
 
@@ -125,12 +126,12 @@ Declarative, step-by-step hunting processes:
 7. **Claude Code Security Review** (`05-claude-code-security-review.md`) - AI agent code security
 8. **Xalgorix 22-Phase** (`06-xalgorix-22-phase.md`) - AI pentesting methodology
 
-### Resources (185 Entries)
+### Resources (202 Entries)
 
 Curated from real bug bounty findings:
 
-- **$3,400,000+** in documented bounties
-- **60+ CVEs** referenced
+- **$3,401,106+** in documented bounties (Verus Bridge $11.5M loss + Exolix $40M exposure disclosed separately)
+- **63 CVEs** referenced
 - **30+ tools** and techniques
 - **Real-world writeups** from successful hunters
 
@@ -342,7 +343,7 @@ MIT License - Use freely, attribute sources where applicable.
 
 ## 🙏 Credits
 
-Built from 185+ resources including:
+Built from 202+ resources including:
 
 - Cassim (@aituglo) - Complete methodology
 - Walid Ladeb (@ladebw) - AI self-validation

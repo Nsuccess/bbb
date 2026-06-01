@@ -1,36 +1,38 @@
 {
   "metadata": {
     "file": "bugbounty/bug-bounty-automation/resources/00-INBOX.md",
-    "total_entries": 102,
-    "extraction_date": "2026-05-25",
-    "total_lines": 18000,
-    "status": "Complete extraction for entries #001-#050, #051-#185"
+    "total_entries": 202,
+    "extraction_date": "2026-06-01",
+    "total_lines": 19800,
+    "status": "Complete extraction for entries #001-#050, #051-#202"
   },
   "statistics": {
     "priority_distribution": {
-      "critical": 22,
-      "high": 35,
+      "critical": 29,
+      "high": 45,
       "medium": 10,
       "low": 2
     },
     "vulnerability_types": {
-      "web_api": 40,
-      "oauth_authorization": 10,
-      "ai_llm_security": 15,
+      "web_api": 50,
+      "oauth_authorization": 12,
+      "ai_llm_security": 17,
       "cloud_container": 5,
-      "crypto_blockchain": 6,
+      "crypto_blockchain": 10,
       "browser_v8": 2,
       "kernel_system": 3,
-      "multi_category": 20
+      "multi_category": 22
     },
     "resource_types": {
-      "methodology_workflow": 28,
-      "writeup_case_study": 26,
+      "methodology_workflow": 32,
+      "writeup_case_study": 32,
       "tool_framework": 16,
       "success_story": 8,
-      "research_analysis": 12
+      "research_analysis": 14
     },
-    "total_documented_bounties": 398031,
+    "total_documented_bounties": 401106,
+    "total_exposure_disclosed": 40000000,
+    "total_loss_disclosed": 11500000,
     "total_cves": 63
   },
   "entries": [
@@ -1004,6 +1006,270 @@
         "resource": "PortSwigger lab walkthroughs",
         "steering": "Best hands-on AI scanner security training available"
       }
+    },
+    {
+      "id": "186",
+      "title": "OAuth Open Redirect → OAuth Token Theft Chain (P1)",
+      "niche": "Web, OAuth, Authorization",
+      "vulnerability_type": "Open Redirect + OAuth Misconfig → ATO",
+      "priority": "CRITICAL",
+      "resource_type": "Writeup, Exploit Chain",
+      "bounty": null,
+      "cves": [],
+      "key_concepts": ["OAuth redirect_uri path allow-list", "Same-domain open redirect chain", "P4 → P1 escalation"],
+      "kiro_mapping": {
+        "skill": "OAuth flow analysis, redirect_uri enumeration",
+        "methodology": "Chain P4 open redirect with OAuth to escalate to P1",
+        "template": "OAuth + open redirect chain checklist"
+      }
+    },
+    {
+      "id": "187",
+      "title": "Filename XSS → Admin Panel Stored XSS (P1)",
+      "niche": "Web, Uploads, Admin Panels",
+      "vulnerability_type": "Stored XSS via Filename, Legacy Component",
+      "priority": "CRITICAL",
+      "resource_type": "Writeup, Exploit Chain",
+      "bounty": null,
+      "cves": [],
+      "key_concepts": ["Filename XSS", "Legacy admin panel", "Multi-frontend testing"],
+      "kiro_mapping": {
+        "skill": "Filename XSS payload crafting",
+        "methodology": "Test filename XSS in legacy/admin views, not just modern UI"
+      }
+    },
+    {
+      "id": "188",
+      "title": "PortSwigger Business Logic Labs: Complete 9-Lab Walkthrough",
+      "niche": "Web, Business Logic, Training",
+      "vulnerability_type": "Business Logic, Workflow Bypass, State Machine Flaws",
+      "priority": "HIGH",
+      "resource_type": "Lab, Training Resource, Methodology",
+      "bounty": null,
+      "cves": [],
+      "key_concepts": ["Business logic labs", "State machine flaws", "Client-side trust", "Integer overflow", "Unicode normalization"],
+      "kiro_mapping": {
+        "skill": "Business logic pattern recognition",
+        "resource": "PortSwigger 9-lab track",
+        "workflow": "05-adaptive-hunt business logic phase"
+      }
+    },
+    {
+      "id": "189",
+      "title": "Web Cache Poisoning: Complete Playbook (Methodology)",
+      "niche": "Web, CDN, Cache",
+      "vulnerability_type": "Cache Poisoning, Cache Deception",
+      "priority": "HIGH",
+      "resource_type": "Methodology, Playbook",
+      "bounty": null,
+      "cves": [],
+      "key_concepts": ["Cache fingerprinting", "Unkeyed inputs", "X-Forwarded-Host", "Fat GET", "Request smuggling"],
+      "kiro_mapping": {
+        "skill": "Cache fingerprinting, unkeyed input discovery",
+        "methodology": "4-phase cache poisoning playbook",
+        "tool": "Param Miner, Smuggler"
+      }
+    },
+    {
+      "id": "190",
+      "title": "javascript: URL Scheme Steals sessionStorage / OAuth Tokens",
+      "niche": "Web, Authentication, Post-Auth Flows",
+      "vulnerability_type": "javascript: URL Scheme, DOM XSS, Session Theft",
+      "priority": "CRITICAL",
+      "resource_type": "Writeup, Raw Exploit Pattern",
+      "bounty": null,
+      "cves": [],
+      "key_concepts": ["javascript: scheme", "sessionStorage theft", "OAuth token exfil", "post-auth redirect"],
+      "kiro_mapping": {
+        "skill": "javascript: scheme exploitation",
+        "methodology": "Test every redirect param with javascript: payload"
+      }
+    },
+    {
+      "id": "191",
+      "title": "403 ≠ Always Denied: Keep Testing Access Control",
+      "niche": "Web, Authorization",
+      "vulnerability_type": "Broken Access Control, IDOR, Authorization Bypass",
+      "priority": "HIGH",
+      "resource_type": "Philosophy, Methodology",
+      "bounty": null,
+      "cves": [],
+      "key_concepts": ["403 bypass", "Path confusion", "Method tampering", "Header injection", "20+ bypass techniques"],
+      "kiro_mapping": {
+        "skill": "403-bypass enumeration",
+        "methodology": "Comprehensive 403-bypass checklist",
+        "steering": "403 is a question, not an answer"
+      }
+    },
+    {
+      "id": "192",
+      "title": "$575 CSRF: Triggering Payment Receipt Emails Without User Consent",
+      "niche": "Web, CSRF, Email Abuse",
+      "vulnerability_type": "CSRF, Unauthorized State Change, Email Abuse",
+      "priority": "HIGH",
+      "resource_type": "Writeup, CSRF",
+      "bounty": 575,
+      "cves": [],
+      "key_concepts": ["CSRF on non-financial endpoints", "Email abuse", "State change enumeration"],
+      "kiro_mapping": {
+        "skill": "CSRF testing on non-financial endpoints",
+        "methodology": "Enumerate every state-changing endpoint"
+      }
+    },
+    {
+      "id": "193",
+      "title": "Verus Bridge Exploit: $11.5M Lost Due to Missing Input Validation",
+      "niche": "Crypto/DeFi, Cross-Chain Bridges",
+      "vulnerability_type": "Input Validation, Cross-Chain Verification, Signature Forgery",
+      "priority": "CRITICAL",
+      "resource_type": "Post-Mortem, DeFi Exploit",
+      "bounty": null,
+      "cves": [],
+      "key_concepts": ["Cross-chain bridge", "Source chain ID not validated", "75% white-hat recovery"],
+      "kiro_mapping": {
+        "skill": "Cross-chain bridge auditing",
+        "methodology": "Map every user-supplied field → check signed/validated"
+      }
+    },
+    {
+      "id": "194",
+      "title": "SSO Account Takeover via Custom Okta / Auth0 Misconfigurations",
+      "niche": "Web, SSO, Authentication",
+      "vulnerability_type": "SSO Misconfig, ATO, JWT/SAML Validation",
+      "priority": "CRITICAL",
+      "resource_type": "Writeup, Authentication Bypass",
+      "bounty": null,
+      "cves": [],
+      "key_concepts": ["Custom SSO misconfig", "Email not bound at JWT issue", "SAML response replay", "Auth0 redirect_uri open redirect"],
+      "kiro_mapping": {
+        "skill": "SSO flow analysis, IdP trust boundary testing",
+        "methodology": "4-misconfig SSO audit checklist",
+        "template": "Okta/Auth0/WorkOS/OneLogin-specific tests"
+      }
+    },
+    {
+      "id": "195",
+      "title": "$40M in Exolix Swaps Exposed via API Broken Access Control",
+      "niche": "Crypto/DeFi, API Security, Authorization",
+      "vulnerability_type": "Broken Access Control, IDOR, Data Exposure",
+      "priority": "CRITICAL",
+      "resource_type": "Writeup, API Authorization",
+      "bounty": null,
+      "cves": [],
+      "key_concepts": ["Partner API broken access control", "355,944 swaps exposed", "7 partner integrations", "XMR-heavy KYC data leak"],
+      "kiro_mapping": {
+        "skill": "Partner API authorization testing, multi-tenant isolation",
+        "methodology": "Cross-tenant partner_id swap testing"
+      }
+    },
+    {
+      "id": "196",
+      "title": "Web Cache Deception: $2000 JWT Theft via SameSite Bypass (cTino)",
+      "niche": "Web, Cache, JWT, Authentication",
+      "vulnerability_type": "Web Cache Deception, SameSite Bypass, Information Disclosure",
+      "priority": "CRITICAL",
+      "resource_type": "Writeup, Cache Deception, JWT Theft",
+      "bounty": 2000,
+      "cves": [],
+      "key_concepts": ["Web cache deception", "SameSite=Lax bypass", ".css path suffix", "JWT theft"],
+      "kiro_mapping": {
+        "skill": "Web cache deception testing, SameSite cookie analysis",
+        "methodology": "Path suffix attack enumeration"
+      }
+    },
+    {
+      "id": "197",
+      "title": "$500 UUID Swap IDOR: Mobile App Endpoint Rewriting (tinopreter)",
+      "niche": "Web, Mobile, API Security",
+      "vulnerability_type": "IDOR, Mobile API Authorization, UUID Enumeration",
+      "priority": "HIGH",
+      "resource_type": "Writeup, IDOR, Mobile API",
+      "bounty": 500,
+      "cves": [],
+      "key_concepts": ["Mobile API IDOR", "Static partner API key", "UUID swap", "APK decompilation"],
+      "kiro_mapping": {
+        "skill": "Mobile decompilation (jadx), API key extraction",
+        "methodology": "Extract endpoints from APK → swap UUIDs"
+      }
+    },
+    {
+      "id": "198",
+      "title": "GraphQL Bug Bounty Goldmines: 8-Step Methodology",
+      "niche": "API Security, GraphQL",
+      "vulnerability_type": "Information Disclosure, IDOR, DoS, SSRF, SQLi",
+      "priority": "HIGH",
+      "resource_type": "Methodology, GraphQL",
+      "bounty": null,
+      "cves": [],
+      "key_concepts": ["Introspection", "Field-level authz", "Alias batching DoS", "Subscription SSRF", "Directive abuse", "APQ hash confusion"],
+      "kiro_mapping": {
+        "skill": "GraphQL introspection, alias batching, field authz",
+        "tool": "InQL, graphql-cop, clairvoyance",
+        "workflow": "02-api-security-hunt Phase 4"
+      }
+    },
+    {
+      "id": "199",
+      "title": "Zcash Zebra: Autonomous AI Agent Discovered High+Medium in 24h",
+      "niche": "Crypto/DeFi, AI Security, Autonomous Agents",
+      "vulnerability_type": "Consensus, DoS, All",
+      "priority": "HIGH",
+      "resource_type": "Research, AI Agent, Crypto",
+      "bounty": null,
+      "cves": [],
+      "key_concepts": ["Autonomous AI agent", "Zebra consensus bug", "$1,500 token cost", "24h discovery"],
+      "kiro_mapping": {
+        "skill": "AI-driven vulnerability discovery at scale",
+        "workflow": "04-crypto-hunt + 05-adaptive-hunt",
+        "steering": "AI agents now find consensus bugs humans miss"
+      }
+    },
+    {
+      "id": "200",
+      "title": "AI Engineering for Bug Hunting: Hunt Conditions, Not Bugs",
+      "niche": "General, AI Engineering, Methodology",
+      "vulnerability_type": "All",
+      "priority": "HIGH",
+      "resource_type": "Philosophy, Methodology",
+      "bounty": null,
+      "cves": [],
+      "key_concepts": ["Condition enumeration", "Auth × Param × Value matrix", "Parallel validation", "Bug chaining"],
+      "kiro_mapping": {
+        "philosophy": "Hunt conditions, bugs emerge",
+        "skill": "Condition enumeration agent",
+        "tool": "Vector DB for (endpoint, param, value) triples"
+      }
+    },
+    {
+      "id": "201",
+      "title": "Threat Modeling > Bug Hunting (Philosophy)",
+      "niche": "General, Methodology",
+      "vulnerability_type": "All",
+      "priority": "HIGH",
+      "resource_type": "Philosophy, Methodology",
+      "bounty": null,
+      "cves": [],
+      "key_concepts": ["Threat modeling", "STRIDE", "Trust boundaries", "Assumption auditing"],
+      "kiro_mapping": {
+        "philosophy": "Threat modelers find where bugs MUST exist",
+        "workflow": "05-adaptive-hunt Phase 0",
+        "skill": "Threat model generation agent"
+      }
+    },
+    {
+      "id": "202",
+      "title": "$50M+ Lost in Crypto in One Month — 90% From Protocol Logic Bugs",
+      "niche": "Crypto/DeFi, Industry Analysis",
+      "vulnerability_type": "Business Logic, Protocol Design",
+      "priority": "HIGH",
+      "resource_type": "Industry Analysis, Statistics",
+      "bounty": null,
+      "cves": [],
+      "key_concepts": ["$50M+ in 30 days", "90% logic bugs", "Input validation, access control, state machine"],
+      "kiro_mapping": {
+        "steering": "Logic bugs = 90% of crypto losses",
+        "workflow": "04-crypto-hunt Phase 5 (Logic) priority elevation"
+      }
     }
   ],
   "critical_entries": [
@@ -1033,7 +1299,14 @@
     "179",
     "180",
     "182",
-    "183"
+    "183",
+    "186",
+    "187",
+    "190",
+    "193",
+    "194",
+    "195",
+    "196"
   ],
   "high_value_bounties": [
     {
@@ -1085,6 +1358,41 @@
       "entry": "183",
       "amount": 3000,
       "description": "OTP verification logic flaw ATO (HackerOne)"
+    },
+    {
+      "entry": "196",
+      "amount": 2000,
+      "description": "Web cache deception JWT theft via SameSite bypass (cTino)"
+    },
+    {
+      "entry": "192",
+      "amount": 575,
+      "description": "CSRF triggering payment receipt emails (Abhi Sharma)"
+    },
+    {
+      "entry": "197",
+      "amount": 500,
+      "description": "UUID swap IDOR via mobile app endpoint rewriting (tinopreter)"
+    }
+  ],
+  "notable_losses_and_exposures": [
+    {
+      "entry": "193",
+      "type": "loss",
+      "amount": 11500000,
+      "description": "Verus Bridge exploit — 75% (4052.4 ETH) white-hat recovered"
+    },
+    {
+      "entry": "195",
+      "type": "exposure",
+      "amount": 40000000,
+      "description": "Exolix partner API broken access control — 355,944 swaps, 7 partner integrations"
+    },
+    {
+      "entry": "202",
+      "type": "industry_loss",
+      "amount": 50000000,
+      "description": "$50M+ lost across 12 crypto exploits in May 2026 — 90% from protocol logic bugs"
     }
   ],
   "implementation_priorities": {
@@ -1122,7 +1430,18 @@
     "Cloud security gaps (bucket squatting, multi-tenant)",
     "Methodology > Tools (5 mastered > 40 installed)",
     "OSINT game-changer (60 domains from blog posts)",
-    "Persistence pays (200 hours, 2-year monitoring)"
+    "Persistence pays (200 hours, 2-year monitoring)",
+    "P4 chains to P1 (open redirect → OAuth ATO, filename XSS → admin stored XSS)",
+    "403 is not denial — it's a question (20+ bypass techniques)",
+    "javascript: scheme steals sessionStorage (post-auth flows)",
+    "Web cache deception + SameSite=Lax = JWT theft",
+    "Partner/B2B APIs are 5x more likely to have broken access control",
+    "Cross-chain bridges: input validation is the new attack surface",
+    "AI agents autonomously finding consensus-level crypto bugs (Zebra)",
+    "Threat modeling > bug hunting (find where bugs MUST exist)",
+    "Logic bugs = 90% of crypto losses (shift focus from Solidity to spec)",
+    "Mobile apps = most under-tested surface (APK = source code)",
+    "GraphQL: 8-step methodology is the new gold standard"
   ],
   "tools_referenced": {
     "essential": ["Burp Suite", "ffuf", "nuclei", "jq"],
